@@ -22,11 +22,16 @@ class _TextField_BuilderState extends State<TextField_Builder> {
           borderRadius: BorderRadius.circular(90),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.15),
-                blurRadius: 4,
-                offset: Offset(1, 3))
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 4,
+              offset: Offset(1, 3),
+            )
           ]),
       child: TextFormField(
+        style: TextStyle(
+          color: Color(textColor),
+          fontSize: 18,
+        ),
         obscureText: widget.obscure ?? false,
         decoration: InputDecoration(
             prefixIcon: widget.icon ??

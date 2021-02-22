@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
             children: [
               Image.asset('assets/images/signin_image.png'),
               SizedBox(
-                height: Get.height / 25,
+                height: Get.height / 30,
               ),
               Row(
                 children: [
@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
                 ],
               ),
               SizedBox(
-                height: Get.height / 25,
+                height: Get.height / 30,
               ),
               TextField_Builder(),
               SizedBox(
@@ -69,12 +69,25 @@ class _LoginState extends State<Login> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: Get.height / 60,
+              ),
               Text(
                 'Enter code provided by Company',
                 style:
                     TextStyle(color: Color(textColor), fontSize: 18),
               ),
+              SizedBox(
+                height: Get.height / 60,
+              ),
               PinCodeTextField(
+                boxShadows: [
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 4,
+                      offset: Offset(1, 3))
+                ],
+                enableActiveFill: true,
                 length: 6,
                 backgroundColor: Colors.black.withOpacity(0),
                 obscureText: false,
@@ -82,8 +95,11 @@ class _LoginState extends State<Login> {
                   color: Color(0xff3F3D56),
                 ),
                 pinTheme: PinTheme(
+                  selectedFillColor: Colors.white,
                   selectedColor: Color(0xffFF6366),
-                  inactiveColor: Colors.black26,
+                  activeFillColor: Colors.white,
+                  inactiveFillColor: Colors.white,
+                  inactiveColor: Colors.white,
                   activeColor: Color(0xff3F3D56),
                   shape: PinCodeFieldShape.box,
                   borderRadius: BorderRadius.circular(90),
@@ -93,6 +109,35 @@ class _LoginState extends State<Login> {
                 appContext: context,
                 onChanged: (String value) {},
               ),
+              SizedBox(
+                height: Get.height / 60,
+              ),
+              FlatButton(
+                onPressed: () {},
+                child: Container(
+                  child: Center(
+                      child: Text(
+                    'Login',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  )),
+                  width: 200,
+                  height: 50,
+                  //color: Color(0xffFF6366),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 4,
+                          offset: Offset(1, 3),
+                        ),
+                      ],
+                      color: Color(0xffFF6366),
+                      borderRadius: BorderRadius.circular(90)),
+                ),
+              )
             ],
           ),
         ),
