@@ -5,7 +5,7 @@ import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 
 class ButtonBuilder extends StatelessWidget {
   final VoidCallback onPress;
-  final text, textColor, fontWeight, width, height;
+  final text, textColor, fontWeight, width, height, edge, color;
   const ButtonBuilder({
     Key key,
     this.text,
@@ -14,6 +14,8 @@ class ButtonBuilder extends StatelessWidget {
     this.width,
     this.height,
     this.onPress,
+    this.edge,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -27,22 +29,27 @@ class ButtonBuilder extends StatelessWidget {
       // },
       child: Container(
         child: Center(
-            child: Text(
-          text ?? 'PLACEHOLDER',
-          style: TextStyle(
-              color: textColor ?? Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.w600),
-        )),
+          child: Text(
+            text ?? 'PLACEHOLDER',
+            style: TextStyle(
+                color: textColor ?? Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w600),
+          ),
+        ),
         width: width ?? Get.width / 2,
         height: height ?? defaultHeight,
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.15),
-            blurRadius: 4,
-            offset: Offset(1, 3),
-          ),
-        ], color: Color(0xffFF6366), borderRadius: BorderRadius.circular(90)),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 4,
+              offset: Offset(1, 3),
+            ),
+          ],
+          color: color ?? Color(0xffFF6366),
+          borderRadius: BorderRadius.circular(edge ?? 90),
+        ),
       ),
     );
   }
