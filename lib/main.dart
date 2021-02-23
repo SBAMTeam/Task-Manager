@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/Login.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Pages/CreateServer.dart';
+import 'package:taskmanager/View/Pages/Login.dart';
 
 main() => runApp(
       GetMaterialApp(
         theme: ThemeData(fontFamily: 'OpenSans'),
         home: Scaffold(
-          backgroundColor: Color(0xffF0F0F0),
-          body: Login(),
+          backgroundColor: Color(backgroundColor),
+          body: CreateServer(),
         ),
       ),
     );
