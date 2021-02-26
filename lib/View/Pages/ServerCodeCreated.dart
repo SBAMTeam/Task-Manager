@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
-import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:flutter/services.dart';
 
 class ServerCodeCreated extends StatelessWidget {
@@ -13,7 +12,7 @@ class ServerCodeCreated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var serverCode = serverCodeFromDB; //uncomment when we get data from db
-    var serverCode = 'placeholder';
+    var serverCode = placeholder;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

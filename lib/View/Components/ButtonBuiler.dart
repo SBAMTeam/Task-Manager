@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
+// ignore: unused_import
 import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 
 class ButtonBuilder extends StatelessWidget {
@@ -22,11 +23,6 @@ class ButtonBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: onPress ?? () {},
-      // onPressed: () {
-      //   Future.delayed(Duration.zero, () {
-      //     Get.to(ServerCodeCreated());
-      //   });
-      // },
       child: Container(
         child: Center(
           child: Text(

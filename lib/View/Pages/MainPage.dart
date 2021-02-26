@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
+import 'package:taskmanager/View/Pages/CreateServer.dart';
+import 'package:taskmanager/View/Pages/Login.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -59,6 +60,7 @@ class _MainPageState extends State<MainPage> {
                     height: 55.0,
                     edge: 22.0,
                     text: 'Create Server',
+                    onPress: () => Get.to(() => CreateServer()),
                   ),
                 ],
               ),
@@ -72,6 +74,7 @@ class _MainPageState extends State<MainPage> {
                     text: 'Join Server',
                     textColor: Color(textColor),
                     color: Colors.white,
+                    onPress: () => Get.to(() => Login()),
                   ),
                 ],
               ),

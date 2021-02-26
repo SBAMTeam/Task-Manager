@@ -9,3 +9,5 @@ var sizedBoxBigSpace = Get.height / 30;
 var sizedBoxSmallSpace = Get.height / 60;
 var email = 'Email Address';
 var password = 'Password';
+var placeholder = 'PLACEHOLDER';
+var phone = 'Phone Number';
