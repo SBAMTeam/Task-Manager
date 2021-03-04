@@ -33,7 +33,7 @@ class ButtonBuilder extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           ),
         ),
-        width: width ?? Get.width / 2,
+        width: width ?? Get.width / 2.5,
         height: height ?? defaultHeight,
         decoration: BoxDecoration(
           boxShadow: [
@@ -43,8 +43,8 @@ class ButtonBuilder extends StatelessWidget {
               offset: Offset(1, 3),
             ),
           ],
-          color: color ?? Color(0xffFF6366),
-          borderRadius: BorderRadius.circular(edge ?? 90),
+          color: color ?? Color(buttonColorOne),
+          borderRadius: BorderRadius.circular(edge ?? 9),
         ),
       ),
     );

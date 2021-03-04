@@ -23,24 +23,26 @@ class _LoginState extends State<Login> {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 8, vertical: Get.height / 13),
+                horizontal: Get.width / 12,
+                vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/signin_image.png'),
+                  Image.asset('assets/images/signin_image_dark.png'),
                   SizedBox(
                     height: Get.height / 30,
                   ),
                   Row(
                     children: [
-                      TextBuilder(text: 'Sign In:'),
+                      TextBuilder(text: 'Login:'),
                     ],
                   ),
                   SizedBox(
@@ -82,80 +84,66 @@ class _LoginState extends State<Login> {
                         child: Text(
                           'Forgot Password?',
                           style: TextStyle(
-                            color: Color(
-                              textColor,
-                            ),
-                          ),
+                              color: Color(
+                                textColor,
+                              ),
+                              fontSize: 13),
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: Get.height / 60,
+                    height: Get.height / 200,
                   ),
-                  Text(
-                    'Enter code provided by your company',
-                    style: TextStyle(color: Color(textColor), fontSize: 18),
-                  ),
-                  SizedBox(
-                    height: Get.height / 60,
-                  ),
-                  PinCodeTextField(
-                    enabled: _enabled,
-                    validator: (value) {
-                      if (value.length < 6) {
-                        return 'Please enter a valid code';
-                      } else
-                        return null;
-                    },
-                    onSaved: (value) {
-                      _companyCode = value;
-                      print(_companyCode);
-                    },
-                    boxShadows: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.15),
-                          blurRadius: 4,
-                          offset: Offset(1, 3))
-                    ],
-                    enableActiveFill: true,
-                    length: 6,
-                    backgroundColor: Colors.black.withOpacity(0),
-                    obscureText: false,
-                    textStyle: TextStyle(
-                      color: Color(0xff3F3D56),
-                    ),
-                    pinTheme: PinTheme(
-                      selectedFillColor: Colors.white,
-                      selectedColor: Color(0xffFF6366),
-                      activeFillColor: Colors.white,
-                      inactiveFillColor: Colors.white,
-                      inactiveColor: Colors.white,
-                      activeColor: Color(0xff3F3D56),
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(90),
-                      fieldHeight: 50,
-                      fieldWidth: 42,
-                    ),
-                    appContext: context,
-                    onChanged: (String value) {
-                      if (value.length > 5) {
-                        _companyCode = value;
-                        setState(() {
-                          _enabled = false;
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: sizedBoxSmallSpace),
-                  ButtonBuilder(
-                    text: 'Clear All',
-                    onPress: () {
-                      setState(() {
-                        _enabled = true;
-                      });
-                    },
-                  ),
+
+                  // PinCodeTextField(
+                  //   enabled: _enabled,
+                  //   validator: (value) {
+                  //     if (value.length < 6) {
+                  //       return 'Please enter a valid code';
+                  //     } else
+                  //       return null;
+                  //   },
+                  //   onSaved: (value) {
+                  //     _companyCode = value;
+                  //     print(_companyCode);
+                  //   },
+                  //   boxShadows: [
+                  //     BoxShadow(
+                  //         color: Colors.black.withOpacity(0.15),
+                  //         blurRadius: 4,
+                  //         offset: Offset(1, 3))
+                  //   ],
+                  //   enableActiveFill: true,
+                  //   length: 6,
+                  //   backgroundColor: Colors.black.withOpacity(0),
+                  //   obscureText: false,
+                  //   textStyle: TextStyle(
+                  //     color: Color(0xff3F3D56),
+                  //   ),
+                  //   pinTheme: PinTheme(
+                  //     selectedFillColor: Colors.white,
+                  //     selectedColor: Color(0xffFF6366),
+                  //     activeFillColor: Colors.white,
+                  //     inactiveFillColor: Colors.white,
+                  //     inactiveColor: Colors.white,
+                  //     activeColor: Color(0xff3F3D56),
+                  //     shape: PinCodeFieldShape.box,
+                  //     borderRadius: BorderRadius.circular(90),
+                  //     fieldHeight: 50,
+                  //     fieldWidth: 42,
+                  //   ),
+                  //   appContext: context,
+                  //   onChanged: (String value) {
+                  //     if (value.length > 5) {
+                  //       _companyCode = value;
+                  //       setState(() {
+                  //         _enabled = false;
+                  //       });
+                  //     }
+                  //   },
+                  // ),
+
                   SizedBox(height: sizedBoxSmallSpace),
                   ButtonBuilder(
                     text: 'Login',

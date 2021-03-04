@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
                     TextSpan(
                       text: '\nSBAM ',
                       style: TextStyle(
-                          color: Color(0xffFF6366),
+                          color: Color(textColorSecondary),
                           fontWeight: FontWeight.bold),
                     ),
                     TextSpan(
@@ -58,7 +58,8 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   ButtonBuilder(
                     height: 55.0,
-                    edge: 22.0,
+                    edge: 9.0,
+                    color: Color(buttonColorOne),
                     text: 'Create Server',
                     onPress: () => Get.to(() => CreateServer()),
                   ),
@@ -70,10 +71,10 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   ButtonBuilder(
                     height: 55.0,
-                    edge: 22.0,
+                    edge: 9.0,
                     text: 'Join Server',
                     textColor: Color(textColor),
-                    color: Colors.white,
+                    color: Color(buttonColorTwo),
                     onPress: () => Get.to(() => Login()),
                   ),
                 ],

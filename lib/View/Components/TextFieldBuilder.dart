@@ -47,7 +47,7 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         borderRadius: BorderRadius.circular(30),
         child: Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(90),
+              borderRadius: BorderRadius.circular(9),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.15),
@@ -69,25 +69,26 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             ),
             obscureText: widget.obscure ?? false,
             decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 1.0),
-                prefixIcon: Icon(
-                  widget.icon ?? Icons.error,
-                  size: widget.iconSize ?? 35,
-                  color: widget.iconColor ?? Color(iconColor),
-                ),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: widget.hint ?? placeholder,
-                hintStyle: TextStyle(
-                  color: Color(textColor),
-                  fontSize: widget.fontSize ?? 18,
-                  height: 0.9,
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(90),
-                ),
-                focusColor: Colors.white),
+              contentPadding: EdgeInsets.symmetric(vertical: 1.0),
+              prefixIcon: Icon(
+                widget.icon ?? Icons.error,
+                size: widget.iconSize ?? 35,
+                color: widget.iconColor ?? Color(iconColor),
+              ),
+              filled: true,
+              fillColor: Color(textFieldColor),
+              hintText: widget.hint ?? placeholder,
+              hintStyle: TextStyle(
+                color: Color(textColor),
+                fontSize: widget.fontSize ?? 18,
+                height: 0.9,
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(9),
+              ),
+              focusColor: Color(textFieldColor),
+            ),
           ),
         ),
       ),
