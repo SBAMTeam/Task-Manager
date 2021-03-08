@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Pages/CreateAccount.dart';
+import 'package:taskmanager/View/Pages/CreateServer.dart';
+import 'package:taskmanager/View/Pages/JoinServer.dart';
 
-import 'Login.dart';
+class LoggedInPage extends StatefulWidget {
+  LoggedInPage({Key key}) : super(key: key);
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key key}) : super(key: key);
+  @override
+  _MainPageState createState() => _MainPageState();
+}
 
+class _MainPageState extends State<LoggedInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,8 +60,8 @@ class MainPage extends StatelessWidget {
                     height: 55.0,
                     edge: 9.0,
                     color: Color(buttonColorOne),
-                    text: 'Register',
-                    onPress: () => Get.to(() => CreateAccount()),
+                    text: 'Create Server',
+                    onPress: () => Get.to(() => CreateServer()),
                   ),
                 ],
               ),
@@ -68,10 +72,10 @@ class MainPage extends StatelessWidget {
                   ButtonBuilder(
                     height: 55.0,
                     edge: 9.0,
-                    text: 'Login',
+                    text: 'Join Server',
                     textColor: Color(textColor),
                     color: Color(buttonColorTwo),
-                    onPress: () => Get.to(() => Login()),
+                    onPress: () => Get.to(() => JoinServer()),
                   ),
                 ],
               ),

@@ -6,12 +6,13 @@ import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 
 class ButtonBuilder extends StatelessWidget {
   final VoidCallback onPress;
-  final text, textColor, fontWeight, width, height, edge, color;
+  final text, textColor, fontWeight, width, height, edge, color, fontSize;
   const ButtonBuilder({
     Key key,
     this.text,
     this.textColor,
     this.fontWeight,
+    this.fontSize,
     this.width,
     this.height,
     this.onPress,
@@ -21,7 +22,7 @@ class ButtonBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
+    return TextButton(
       onPressed: onPress ?? () {},
       child: Container(
         child: Center(
@@ -29,7 +30,7 @@ class ButtonBuilder extends StatelessWidget {
             text ?? 'PLACEHOLDER',
             style: TextStyle(
                 color: textColor ?? Colors.white,
-                fontSize: 20,
+                fontSize: fontSize ?? 18,
                 fontWeight: FontWeight.w600),
           ),
         ),

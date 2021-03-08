@@ -4,6 +4,8 @@ import 'Constants.dart';
 class TextBuilder extends StatelessWidget {
   final text, color, fontWeight;
   final decoration;
+  final fontFamily;
+  final fontStyle;
   final double fontSize;
   const TextBuilder(
       {Key key,
@@ -11,7 +13,9 @@ class TextBuilder extends StatelessWidget {
       this.color,
       this.fontWeight,
       this.fontSize,
-      this.decoration})
+      this.decoration,
+      this.fontFamily,
+      this.fontStyle})
       : super(key: key);
 
   @override
@@ -20,11 +24,12 @@ class TextBuilder extends StatelessWidget {
       text ?? 'PLACEHOLDER',
       textAlign: TextAlign.left,
       style: TextStyle(
-        fontSize: fontSize ?? 43.5,
-        fontWeight: fontWeight ?? FontWeight.w300,
-        color: color ?? Color(textColor),
-        decoration: decoration ?? null,
-      ),
+          fontSize: fontSize ?? 43.5,
+          fontWeight: fontWeight ?? FontWeight.w300,
+          color: color ?? Color(textColor),
+          decoration: decoration ?? null,
+          fontFamily: fontFamily ?? 'Inter',
+          fontStyle: fontStyle ?? FontStyle.normal),
     );
   }
 }

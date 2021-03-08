@@ -18,7 +18,7 @@ class CreateServer extends StatelessWidget {
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 8, vertical: Get.height / 35),
+                horizontal: Get.width / 12, vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
@@ -28,14 +28,14 @@ class CreateServer extends StatelessWidget {
                   Center(
                     child: Image.asset(
                       'assets/images/CreateServerImage.png',
-                      scale: 2.8,
+                      scale: 3.2,
                     ),
                   ),
                   SizedBox(
                     height: sizedBoxBigSpace,
                   ),
                   TextBuilder(
-                    text: 'Server Info:',
+                    text: 'Server Info',
                     fontSize: 41,
                   ),
                   SizedBox(
@@ -82,33 +82,6 @@ class CreateServer extends StatelessWidget {
                   ),
                   SizedBox(
                     height: sizedBoxSmallSpace,
-                  ),
-                  TextBuilder(
-                    text: 'SuperUser Info:',
-                    fontSize: 41,
-                  ),
-                  SizedBox(
-                    height: sizedBoxSmallSpace,
-                  ),
-                  TextFieldBuilder(
-                    icon: Icons.account_circle,
-                    hint: 'Username',
-                  ),
-                  SizedBox(
-                    height: sizedBoxSmallSpace,
-                  ),
-                  TextFieldBuilder(
-                    hint: password,
-                    icon: Icons.lock,
-                    obscure: true,
-                    textInputType: TextInputType.visiblePassword,
-                    validatorFunction: (String value) {
-                      if (value.isEmpty ||
-                          !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
-                              .hasMatch(value.trim())) {
-                        return 'Password must contain uppercase and smallcase letters,\n special characters, and numbers.';
-                      }
-                    },
                   ),
                   SizedBox(
                     height: sizedBoxSmallSpace,

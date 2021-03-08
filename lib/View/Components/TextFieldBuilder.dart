@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'Constants.dart';
 
 class TextFieldBuilder extends StatefulWidget {
-  TextFieldBuilder(
-      {Key key,
-      this.icon,
-      this.hint,
-      this.obscure,
-      this.height,
-      this.fontSize,
-      this.iconSize,
-      this.fillColor,
-      this.hintFontSize,
-      this.iconColor,
-      this.validatorFunction,
-      this.textInputType,
-      this.initialValue})
-      : super(key: key);
+  TextFieldBuilder({
+    Key key,
+    this.icon,
+    this.hint,
+    this.obscure,
+    this.height,
+    this.fontSize,
+    this.iconSize,
+    this.fillColor,
+    this.hintFontSize,
+    this.iconColor,
+    this.validatorFunction,
+    this.textInputType,
+    this.initialValue,
+    this.onSavedFunc,
+  }) : super(key: key);
   final IconData icon;
   final String hint;
   final bool obscure;
@@ -25,6 +26,7 @@ class TextFieldBuilder extends StatefulWidget {
   final validatorFunction;
   final textInputType;
   final initialValue;
+  final onSavedFunc;
   @override
   _TextFieldBuilderState createState() => _TextFieldBuilderState();
 }
@@ -34,34 +36,26 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // decoration:
-      //     BoxDecoration(borderRadius: BorderRadius.circular(90), boxShadow: [
-      //   BoxShadow(
-      //     color: Colors.black.withOpacity(0.15),
-      //     blurRadius: 4,
-      //     offset: Offset(1, 3),
-      //   )
-      // ]),
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(9),
         child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
-                  blurRadius: 4,
-                  offset: Offset(1, 3),
-                )
-              ]),
+          decoration:
+              BoxDecoration(borderRadius: BorderRadius.circular(9), boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.15),
+              blurRadius: 4,
+              offset: Offset(1, 3),
+            )
+          ]),
           child: TextFormField(
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
-            onSaved: (String value) {
-              _data = value.trim();
-              print('${widget.hint} is $_data');
-            },
+            onSaved: widget.onSavedFunc ??
+                (String value) {
+                  _data = value.trim();
+                  print('${widget.hint} is $_data');
+                },
             validator: widget.validatorFunction,
             style: TextStyle(
               color: Color(textColor),
@@ -81,7 +75,7 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
               hintStyle: TextStyle(
                 color: Color(textColor),
                 fontSize: widget.fontSize ?? 18,
-                height: 0.9,
+                height: widget.height ?? 0.9,
               ),
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,

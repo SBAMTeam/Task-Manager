@@ -5,6 +5,8 @@ import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:flutter/services.dart';
 
+import 'Login.dart';
+
 class ServerCodeCreated extends StatelessWidget {
   final serverCodeFromDB;
   const ServerCodeCreated({Key key, this.serverCodeFromDB}) : super(key: key);
@@ -14,7 +16,6 @@ class ServerCodeCreated extends StatelessWidget {
     // var serverCode = serverCodeFromDB; //uncomment when we get data from db
     var serverCode = placeholder;
     return Scaffold(
-      backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -49,10 +50,9 @@ class ServerCodeCreated extends StatelessWidget {
                   height: sizedBoxBigSpace * 2,
                 ),
                 ButtonBuilder(
-                  text: 'Copy to Clipboard',
+                  text: 'Go to login page',
                   onPress: () {
-                    Clipboard.setData(new ClipboardData(
-                        text: serverCode)); //service to copy to clipboard
+                    Get.to(Login());
                   },
                 )
               ],

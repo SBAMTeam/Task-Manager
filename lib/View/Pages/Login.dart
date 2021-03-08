@@ -4,7 +4,7 @@ import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -28,8 +28,7 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 12,
-                vertical: Get.height / 13),
+                horizontal: Get.width / 12, vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
@@ -42,21 +41,19 @@ class _LoginState extends State<Login> {
                   ),
                   Row(
                     children: [
-                      TextBuilder(text: 'Login:'),
+                      TextBuilder(text: 'Login'),
                     ],
                   ),
                   SizedBox(
                     height: Get.height / 30,
                   ),
                   TextFieldBuilder(
-                    hint: email,
-                    icon: Icons.email,
-                    textInputType: TextInputType.emailAddress,
+                    hint: 'Username',
+                    icon: Icons.person,
+                    textInputType: TextInputType.text,
                     validatorFunction: (String value) {
-                      if (value.isEmpty ||
-                          !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                              .hasMatch(value)) {
-                        return 'Please enter a valid $email.';
+                      if (value.isEmpty) {
+                        return 'Please enter your username.';
                       }
                     },
                   ),
@@ -69,17 +66,15 @@ class _LoginState extends State<Login> {
                     obscure: true,
                     textInputType: TextInputType.visiblePassword,
                     validatorFunction: (String value) {
-                      if (value.isEmpty ||
-                          !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
-                              .hasMatch(value.trim())) {
-                        return 'Password must contain uppercase and smallcase letters,\n special characters, and numbers.';
+                      if (value.isEmpty) {
+                        return 'Please enter a $password';
                       }
                     },
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      FlatButton(
+                      TextButton(
                         onPressed: () {},
                         child: Text(
                           'Forgot Password?',
@@ -146,6 +141,7 @@ class _LoginState extends State<Login> {
 
                   SizedBox(height: sizedBoxSmallSpace),
                   ButtonBuilder(
+                    height: 50.0,
                     text: 'Login',
                     onPress: () {
                       if (!_formKey.currentState.validate()) {

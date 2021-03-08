@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
   get: ^3.25.4
-  pin_code_fields: ^6.1.0
+  pin_code_text_field: ^1.7.1
+  crypto: ^3.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -44,9 +45,19 @@ flutter:
   fonts:
     - family: OpenSans
       fonts:
-        - asset: assets/fonts/OpenSans-Regular.ttf
-        - asset: assets/fonts/OpenSans-Bold.ttf
+        - asset: assets/fonts/Opensans/OpenSans-Regular.ttf
+        - asset: assets/fonts/Opensans/OpenSans-Bold.ttf
           style: italic
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Bold.ttf
+        - asset: assets/fonts/Inter/Inter-Regular.ttf
+        - asset: assets/fonts/Inter/Inter-Light.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/NunitoSans-Light.ttf
+        - asset: assets/fonts/Nunito/NunitoSans-Regular.ttf
+        - asset: assets/fonts/Nunito/NunitoSans-Bold.ttf
 
   uses-material-design: true
 
