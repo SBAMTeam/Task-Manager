@@ -26,4 +26,10 @@ class UserController extends GetxController {
       return -1;
     }
   }
+
+  static Future login(Usermodel usermodel) async {
+    var b = usermodel.toJson();
+    final response =
+        await http.post(Uri.parse(loginUrl), body: jsonEncode(b));
+  }
 }
