@@ -31,5 +31,11 @@ class UserController extends GetxController {
     var b = usermodel.toJson();
     final response =
         await http.post(Uri.parse(loginUrl), body: jsonEncode(b));
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return null;
+    } else {
+      return 0;
+    }
   }
 }

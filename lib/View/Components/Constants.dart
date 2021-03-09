@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 var iconColor = 0xffF1F1F1;
 var textColor = 0xffF1F1F1;
 var textColorSecondary = 0xff6C63FF;
-var defaultHeight = Get.height / 14; //testing as a replacement to height = 50;
+var defaultHeight =
+    Get.height / 14; //testing as a replacement to height = 50;
 var backgroundColor = 0xff2F2E41;
 var textFieldColor = 0xff3F3D56;
 var buttonColorOne = 0xff6C63FF;
@@ -15,6 +16,6 @@ var email = 'Email Address';
 var password = 'Password';
 var placeholder = 'PLACEHOLDER';
 var phone = 'Phone Number';
-final baseAPIURL = 'http://c09b1d7564c9.ngrok.io/taskm';
+final baseAPIURL = 'http://97e3bf42b645.ngrok.io/taskm';
 final loginUrl = baseAPIURL + '/user/login.php';
 final registerUrl = baseAPIURL + '/user/Register.php';

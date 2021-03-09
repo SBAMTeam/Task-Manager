@@ -1,19 +1,20 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/Usercontroller.dart';
+import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:crypto/crypto.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:taskmanager/View/Pages/LoggedInPage.dart';
+import 'package:taskmanager/View/Pages/Register.dart';
 
-class Login extends StatefulWidget {
-  Login({Key key}) : super(key: key);
-
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
+class Login extends StatelessWidget {
+  Usermodel usermodel = Usermodel();
   var _emailAddress = null,
       _password = null,
       _companyCode = null,
@@ -28,7 +29,8 @@ class _LoginState extends State<Login> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 12, vertical: Get.height / 13),
+                horizontal: Get.width / 12,
+                vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
@@ -49,6 +51,9 @@ class _LoginState extends State<Login> {
                   ),
                   TextFieldBuilder(
                     hint: 'Username',
+                    onSavedFunc: (String value) {
+                      usermodel.username = value;
+                    },
                     icon: Icons.person,
                     textInputType: TextInputType.text,
                     validatorFunction: (String value) {
@@ -62,6 +67,12 @@ class _LoginState extends State<Login> {
                   ),
                   TextFieldBuilder(
                     hint: password,
+                    onSavedFunc: (String value) {
+                      var bytes = utf8.encode(value.trim());
+                      var digest = sha256.convert(bytes).toString();
+                      print("$digest");
+                      usermodel.userhash = digest;
+                    },
                     icon: Icons.lock,
                     obscure: true,
                     textInputType: TextInputType.visiblePassword,
@@ -148,6 +159,10 @@ class _LoginState extends State<Login> {
                         return;
                       }
                       _formKey.currentState.save();
+                      if ((UserController.login(usermodel)) != null) {
+                        Get.off(LoggedInPage());
+                        return;
+                      }
                     },
                   ),
                 ],
