@@ -19,18 +19,15 @@ class UserController extends GetxController {
   static Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
         body: jsonEncode(usermodel.toJson()));
-    print(response.body);
-    if (response.statusCode != 200) {
+    print(response.statusCode);
+    if (response.statusCode == 200) {
       return null;
-    } else {
-      return -1;
     }
   }
 
   static Future login(Usermodel usermodel) async {
     var b = usermodel.toJson();
-    final response =
-        await http.post(Uri.parse(loginUrl), body: jsonEncode(b));
+    final response = await http.post(Uri.parse(loginUrl), body: jsonEncode(b));
     print(response.statusCode);
     if (response.statusCode == 200) {
       return null;

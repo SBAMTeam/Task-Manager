@@ -11,6 +11,7 @@ import 'package:crypto/crypto.dart';
 import 'RegistrationComplete.dart';
 import 'ServerCodeCreated.dart';
 import 'dart:convert';
+import 'package:toast/toast.dart';
 
 class Register extends StatelessWidget {
   Register({Key key}) : super(key: key);
@@ -132,9 +133,14 @@ class Register extends StatelessWidget {
                           return;
                         }
                         _formKey.currentState.save();
-                        if ((UserController.register(usermodel)) == null) {
-                          Get.to(() => RegistrationComplete());
-                          return;
+
+                        var data = (UserController.register(usermodel));
+                        if (data != null) {
+                          Get.off(() => RegistrationComplete());
+                        }
+                        if (data == null) {
+                          Toast.show('Server Error. Sorry!', context,
+                              duration: 4, backgroundColor: Colors.grey);
                         }
                       },
                     ),
