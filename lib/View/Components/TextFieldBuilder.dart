@@ -54,7 +54,10 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             onSaved: widget.onSavedFunc ??
                 (String value) {
                   _data = value.trim();
-                  print('${widget.hint} is $_data');
+                  if (widget.hint != password &&
+                      widget.hint != 'Confirm Password') {
+                    print('${widget.hint} is $_data');
+                  }
                 },
             validator: widget.validatorFunction,
             style: TextStyle(

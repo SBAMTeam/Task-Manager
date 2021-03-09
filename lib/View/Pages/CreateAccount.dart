@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/Usercontroller.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
@@ -16,7 +17,6 @@ class CreateAccount extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     var passwordOne, passwordTwo;
-
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -82,7 +82,7 @@ class CreateAccount extends StatelessWidget {
                     hint: password,
                     onSavedFunc: (String value) {
                       var bytes = utf8.encode(value.trim());
-                      var digest = md5.convert(bytes).toString();
+                      var digest = sha256.convert(bytes).toString();
                       print('password hash is : $digest');
                       usermodel.userhash = digest;
                     },
@@ -124,6 +124,7 @@ class CreateAccount extends StatelessWidget {
                           return;
                         }
                         _formKey.currentState.save();
+                        UserController.register(usermodel);
                         Get.to(() => ServerCodeCreated());
                       },
                     ),

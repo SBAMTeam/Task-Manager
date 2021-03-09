@@ -15,3 +15,6 @@ var email = 'Email Address';
 var password = 'Password';
 var placeholder = 'PLACEHOLDER';
 var phone = 'Phone Number';
+final baseAPIURL = 'http://c09b1d7564c9.ngrok.io/taskm';
+final loginUrl = baseAPIURL + '/user/login.php';
+final registerUrl = baseAPIURL + '/user/Register.php';
