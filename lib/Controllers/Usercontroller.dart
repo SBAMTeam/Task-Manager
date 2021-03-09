@@ -17,11 +17,13 @@ class UserController extends GetxController {
   Usermodel usermodel = Usermodel();
 
   static Future register(Usermodel usermodel) async {
-    var a = usermodel.toJson();
-    final response =
-        await http.post(Uri.parse(registerUrl), body: jsonEncode(a));
-    // var data = jsonDecode(response.body);
-    print("I eat ass");
+    final response = await http.post(Uri.parse(registerUrl),
+        body: jsonEncode(usermodel.toJson()));
     print(response.body);
+    if (response.statusCode != 200) {
+      return null;
+    } else {
+      return -1;
+    }
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Pages/CreateAccount.dart';
+import 'package:taskmanager/View/Pages/Register.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/CreateServer.dart';
 // ignore: unused_import
@@ -18,7 +18,7 @@ main() => runApp(
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: CreateAccount(),
+          body: Register(),
         ),
       ),
     );

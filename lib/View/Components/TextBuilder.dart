@@ -28,7 +28,7 @@ class TextBuilder extends StatelessWidget {
           fontWeight: fontWeight ?? FontWeight.w300,
           color: color ?? Color(textColor),
           decoration: decoration ?? null,
-          fontFamily: fontFamily ?? 'Inter',
+          fontFamily: fontFamily ?? 'Nunito',
           fontStyle: fontStyle ?? FontStyle.normal),
     );
   }

@@ -2,22 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/Usercontroller.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/View/Components/Backbutton.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:crypto/crypto.dart';
+import 'RegistrationComplete.dart';
 import 'ServerCodeCreated.dart';
 import 'dart:convert';
 
-class CreateAccount extends StatelessWidget {
-  CreateAccount({Key key}) : super(key: key);
+class Register extends StatelessWidget {
+  Register({Key key}) : super(key: key);
   final Usermodel usermodel = Usermodel();
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     var passwordOne, passwordTwo;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        leading: Backbutton(),
+      ),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -118,14 +126,16 @@ class CreateAccount extends StatelessWidget {
                   ),
                   Center(
                     child: ButtonBuilder(
-                      text: 'Create Account',
+                      text: 'Register',
                       onPress: () {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         _formKey.currentState.save();
-                        UserController.register(usermodel);
-                        Get.to(() => ServerCodeCreated());
+                        if ((UserController.register(usermodel)) == null) {
+                          Get.to(() => RegistrationComplete());
+                          return;
+                        }
                       },
                     ),
                   )

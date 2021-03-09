@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Pages/CreateAccount.dart';
+import 'package:taskmanager/View/Pages/Register.dart';
 
 import 'Login.dart';
 
@@ -57,7 +57,7 @@ class MainPage extends StatelessWidget {
                     edge: 9.0,
                     color: Color(buttonColorOne),
                     text: 'Register',
-                    onPress: () => Get.to(() => CreateAccount()),
+                    onPress: () => Get.to(() => Register()),
                   ),
                 ],
               ),
