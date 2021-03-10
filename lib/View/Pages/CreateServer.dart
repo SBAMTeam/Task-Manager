@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/ServerCodeGenerator.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 
 class CreateServer extends StatelessWidget {
@@ -11,14 +13,17 @@ class CreateServer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var serverCode;
+
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Scaffold(
+      appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 12, vertical: Get.height / 13),
+            padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+            // , vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
@@ -69,7 +74,7 @@ class CreateServer extends StatelessWidget {
                     height: sizedBoxSmallSpace,
                   ),
                   TextFieldBuilder(
-                    hint: '$phone (+963..)',
+                    hint: '$phone (+1..)',
                     icon: Icons.phone,
                     textInputType: TextInputType.phone,
                     validatorFunction: (String value) {
@@ -93,8 +98,12 @@ class CreateServer extends StatelessWidget {
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
+                        serverCode = getRandomString(6);
+                        print(serverCode);
                         _formKey.currentState.save();
-                        Get.to(() => ServerCodeCreated());
+                        Get.to(() => ServerCodeCreated(
+                              serverCode: serverCode,
+                            ));
                       },
                     ),
                   )

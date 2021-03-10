@@ -3,14 +3,16 @@ class Usermodel {
   String userhash;
   String email;
   String nickname;
+  String id;
 
-  Usermodel({this.username, this.userhash, this.email, this.nickname});
+  Usermodel({this.username, this.userhash, this.email, this.nickname, this.id});
 
   Usermodel.fromJson(Map<String, dynamic> json) {
     username = json['username'];
     userhash = json['userhash'];
     email = json['email'];
     nickname = json['nickname'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,7 @@ class Usermodel {
     data['userhash'] = this.userhash;
     data['email'] = this.email;
     data['nickname'] = this.nickname;
+    data['id'] = this.id;
     return data;
   }
 }

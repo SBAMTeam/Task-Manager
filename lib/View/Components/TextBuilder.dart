@@ -6,6 +6,7 @@ class TextBuilder extends StatelessWidget {
   final decoration;
   final fontFamily;
   final fontStyle;
+  final textAlign;
   final double fontSize;
   const TextBuilder(
       {Key key,
@@ -15,15 +16,17 @@ class TextBuilder extends StatelessWidget {
       this.fontSize,
       this.decoration,
       this.fontFamily,
-      this.fontStyle})
+      this.fontStyle,
+      this.textAlign})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text ?? 'PLACEHOLDER',
-      textAlign: TextAlign.left,
+      textAlign: textAlign ?? TextAlign.left,
       style: TextStyle(
+          //letterSpacing: 1,
           fontSize: fontSize ?? 43.5,
           fontWeight: fontWeight ?? FontWeight.w300,
           color: color ?? Color(textColor),

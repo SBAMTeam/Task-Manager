@@ -11,6 +11,8 @@ import 'package:taskmanager/View/Pages/JoinServer.dart';
 import 'package:taskmanager/View/Pages/LoggedInPage.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/MainPage.dart';
+import 'package:taskmanager/View/Pages/RegistrationComplete.dart';
+import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 
 main() => runApp(
       GetMaterialApp(
@@ -19,7 +21,7 @@ main() => runApp(
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: MainPage(),
+          body: CreateServer(),
         ),
       ),
     );

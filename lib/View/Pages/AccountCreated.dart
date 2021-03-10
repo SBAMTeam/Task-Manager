@@ -4,6 +4,7 @@ import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:flutter/services.dart';
+import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 
 import 'Login.dart';
 
@@ -16,11 +17,12 @@ class ServerCodeCreated extends StatelessWidget {
     // var serverCode = serverCodeFromDB; //uncomment when we get data from db
     var serverCode = placeholder;
     return Scaffold(
+      appBar: TransparentAppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 8, vertical: Get.height / 15),
+            padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+            // , vertical: Get.height / 13),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

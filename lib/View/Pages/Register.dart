@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/Usercontroller.dart';
@@ -8,6 +10,7 @@ import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:crypto/crypto.dart';
+import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'RegistrationComplete.dart';
 import 'ServerCodeCreated.dart';
 import 'dart:convert';
@@ -21,20 +24,15 @@ class Register extends StatelessWidget {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     var passwordOne, passwordTwo;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        leading: Backbutton(),
-      ),
+      appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Get.width / 12, vertical: Get.height / 13),
+              padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+              // , vertical: Get.height / 13),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +126,18 @@ class Register extends StatelessWidget {
                   Center(
                     child: ButtonBuilder(
                       text: 'Register',
-                      onPress: () {
+                      onPress: () async {
+                        try {
+                          final result =
+                              await InternetAddress.lookup('example.com');
+                          if (result.isNotEmpty &&
+                              result[0].rawAddress.isNotEmpty) {
+                            print('connected');
+                          }
+                        } on SocketException catch (_) {
+                          Toast.show('Check your internet connection', context,
+                              duration: 2);
+                        }
                         if (!_formKey.currentState.validate()) {
                           return;
                         }

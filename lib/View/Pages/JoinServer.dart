@@ -7,89 +7,7 @@ import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
-
-// class JoinServer extends StatefulWidget {
-//   JoinServer({Key key}) : super(key: key);
-
-//   @override
-//   _LoginState createState() => _LoginState();
-// }
-
-// class _LoginState extends State<JoinServer> implements GetxController {
-//   @override
-//   Widget build(BuildContext context) {
-//     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-//     return Scaffold(
-//       backgroundColor: Color(backgroundColor),
-//       body: SafeArea(
-//         child: SingleChildScrollView(
-//           child: Padding(
-//             padding: EdgeInsets.symmetric(
-//                 horizontal: Get.width / 12, vertical: Get.height / 13),
-//             child: Form(
-//               key: _formKey,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Image.asset('assets/images/signin_image_dark.png'),
-//                   SizedBox(
-//                     height: sizedBoxBigSpace,
-//                   ),
-//                   Row(
-//                     children: [
-//                       TextBuilder(
-//                         text: 'Join Server',
-//                         fontSize: 40,
-//                         fontStyle: FontStyle.normal,
-//                         fontWeight: FontWeight.w100,
-//                       ),
-//                     ],
-//                   ),
-//                   SizedBox(
-//                     height: Get.height / 30,
-//                   ),
-//                   PinCodeTextField(
-//                     defaultBorderColor: Color(buttonColorTwo),
-//                     keyboardType: TextInputType.text,
-//                     autofocus: true,
-//                     maxLength: 6,
-//                     highlight: true,
-//                     pinBoxColor: Color(buttonColorTwo),
-//                     highlightPinBoxColor: Color(buttonColorOne),
-//                     highlightAnimation: true,
-//                     pinBoxRadius: 9.0,
-//                     onTextChanged: (text) =>
-//                         {text = text.toUpperCase(), print(text)},
-//                     pinTextStyle:
-//                         TextStyle(color: Color(0xffF1F1F1), fontSize: 18),
-//                     pinBoxHeight: 45,
-//                     pinBoxWidth: 45,
-//                     onDone: (text) {},
-//                   ),
-//                   SizedBox(
-//                     height: sizedBoxSmallSpace,
-//                   ),
-//                   SizedBox(height: sizedBoxSmallSpace),
-//                   ButtonBuilder(
-//                     text: 'JoinServer',
-//                     onPress: () {
-//                       if (!_formKey.currentState.validate()) {
-//                         return;
-//                       }
-//                       _formKey.currentState.save();
-//                     },
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 
 class JoinServer extends StatelessWidget {
   const JoinServer({Key key}) : super(key: key);
@@ -99,12 +17,13 @@ class JoinServer extends StatelessWidget {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 12, vertical: Get.height / 13),
+            padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+            // , vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(

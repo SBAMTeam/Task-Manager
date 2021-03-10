@@ -6,47 +6,82 @@ import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:flutter/services.dart';
 
 class ServerCodeCreated extends StatelessWidget {
-  final serverCodeFromDB;
-  const ServerCodeCreated({Key key, this.serverCodeFromDB}) : super(key: key);
+  final serverCode;
+  const ServerCodeCreated({Key key, this.serverCode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // var serverCode = serverCodeFromDB; //uncomment when we get data from db
-    var serverCode = placeholder;
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.symmetric(
-                horizontal: Get.width / 8, vertical: Get.height / 15),
+                horizontal: Get.width / 15, vertical: Get.height / 13),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/Lock.png',
-                    scale: 2,
-                  ),
+                Icon(
+                  Icons.lock_outline,
+                  size: 180.0,
+                  color: Colors.white,
                 ),
+                // Center(
+                //   child: Image.asset(
+                //     'assets/images/Lock.png',
+                //     scale: 2.5,
+                //   ),
+                // ),
                 SizedBox(
                   height: sizedBoxBigSpace,
                 ),
-                TextBuilder(
-                  text:
-                      'This is your special code. You will need it to login to your account in the future',
-                  fontSize: 30,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: "This is your server's special",
+                          style: TextStyle(
+                              color: Color(textColor),
+                              fontSize: 30,
+                              fontWeight: FontWeight.normal),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: ' code',
+                              style: TextStyle(
+                                  color: Color(textColorSecondary),
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: sizedBoxBigSpace,
+                    ),
+                    TextBuilder(
+                      textAlign: TextAlign.center,
+                      text: serverCode,
+                      fontFamily: 'Opensans',
+                      color: Color(buttonColorOne),
+                      fontSize: 80,
+                      decoration: TextDecoration.underline,
+                    ),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        text: '\nUsers will use this code to join your server',
+                        style: TextStyle(color: Color(textColor), fontSize: 20),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: sizedBoxBigSpace * 2,
-                ),
-                TextBuilder(
-                  text: serverCode,
-                  decoration: TextDecoration.underline,
-                ),
-                SizedBox(
-                  height: sizedBoxBigSpace * 2,
+                  height: sizedBoxBigSpace,
                 ),
                 ButtonBuilder(
                   text: 'Copy to Clipboard',

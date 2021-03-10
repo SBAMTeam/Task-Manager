@@ -26,10 +26,11 @@ class UserController extends GetxController {
   }
 
   static Future login(Usermodel usermodel) async {
-    var b = usermodel.toJson();
-    final response = await http.post(Uri.parse(loginUrl), body: jsonEncode(b));
+    final response = await http.post(Uri.parse(loginUrl),
+        body: jsonEncode(usermodel.toJson()));
     print(response.statusCode);
     if (response.statusCode == 200) {
+      print(response.body);
       return null;
     } else {
       return 0;
