@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/ServerController.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
+import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 
@@ -17,6 +18,7 @@ class JoinServer extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final Servermodel servermodel = Servermodel();
+    final Usermodel usermodel = Usermodel();
     return Scaffold(
       appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
@@ -88,7 +90,7 @@ class JoinServer extends StatelessWidget {
                         return;
                       }
                       _formKey.currentState.save();
-                      ServerController.joinServer(servermodel);
+                      ServerController.joinServer(servermodel, usermodel);
                     },
                   ),
                 ],

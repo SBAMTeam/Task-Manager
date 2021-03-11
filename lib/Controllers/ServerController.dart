@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
+import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -26,7 +27,10 @@ class ServerController extends GetxController {
     }
   }
 
-  static Future joinServer(Servermodel servermodel) async {
+  static Future joinServer(Servermodel servermodel, Usermodel usermodel) async {
+    Map map = usermodel.toJson();
+    map.addAll(servermodel.toJson());
+    print(map);
     final response = await http.post(Uri.parse(joinServerUrl),
         body: jsonEncode(servermodel.toJson()));
     print(servermodel.toJson());
