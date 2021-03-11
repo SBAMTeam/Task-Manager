@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/ServerController.dart';
+import 'package:taskmanager/Models/Servermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 
@@ -14,7 +16,7 @@ class JoinServer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+    final Servermodel servermodel = Servermodel();
     return Scaffold(
       appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
@@ -68,7 +70,9 @@ class JoinServer extends StatelessWidget {
                             TextStyle(color: Color(0xffF1F1F1), fontSize: 23),
                         pinBoxHeight: 45,
                         pinBoxWidth: 45,
-                        onDone: (text) {/*send to databse */},
+                        onDone: (text) {
+                          servermodel.loginCode = text;
+                        },
                       );
                     },
                   ),
@@ -84,6 +88,7 @@ class JoinServer extends StatelessWidget {
                         return;
                       }
                       _formKey.currentState.save();
+                      ServerController.joinServer(servermodel);
                     },
                   ),
                 ],

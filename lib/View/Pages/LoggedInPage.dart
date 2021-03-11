@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'package:taskmanager/View/Pages/CreateServer.dart';
 import 'package:taskmanager/View/Pages/JoinServer.dart';
 

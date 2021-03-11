@@ -12,8 +12,10 @@ import 'package:crypto/crypto.dart';
 import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'package:taskmanager/View/Pages/LoggedInPage.dart';
 
+import 'Register.dart';
+
 class Login extends StatelessWidget {
-  Usermodel usermodel = Usermodel();
+  final Usermodel usermodel = Usermodel();
 
   @override
   Widget build(BuildContext context) {
@@ -94,9 +96,6 @@ class Login extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: Get.height / 200,
-                  ),
                   SizedBox(height: sizedBoxSmallSpace),
                   ButtonBuilder(
                     height: 50.0,
@@ -112,6 +111,25 @@ class Login extends StatelessWidget {
                       }
                     },
                   ),
+                  SizedBox(
+                    height: sizedBoxSmallSpace / 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account?",
+                        style: TextStyle(color: Colors.white.withAlpha(127)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(Register());
+                        },
+                        child: Text("Create an account"),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
