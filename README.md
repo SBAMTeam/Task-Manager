@@ -6,7 +6,7 @@ A new Flutter project.
 
     - ~~change hintText to labelText and fix label going up more than it should~~ done
     - fix validator error messege breaking TextFormField
-    - ~~ fix value getting deleted after locking company code field ~~ done.
+    - ~~fix value getting deleted after locking company code field~~ done.
     - Create server interface: Connect to API.
     - Join server interface: Connect to API.
     - Permissions.
