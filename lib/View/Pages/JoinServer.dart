@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/TransparentAppBar.dart';

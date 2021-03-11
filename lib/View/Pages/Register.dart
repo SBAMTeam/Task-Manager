@@ -1,20 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/Usercontroller.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/View/Components/Backbutton.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:crypto/crypto.dart';
 import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'RegistrationComplete.dart';
-import 'ServerCodeCreated.dart';
 import 'dart:convert';
-import 'package:toast/toast.dart';
 
 class Register extends StatelessWidget {
   Register({Key key}) : super(key: key);
@@ -132,24 +129,35 @@ class Register extends StatelessWidget {
                               await InternetAddress.lookup('example.com');
                           if (result.isNotEmpty &&
                               result[0].rawAddress.isNotEmpty) {
-                            print('connected');
+                            print('Connected to internet');
                           }
                         } on SocketException catch (_) {
-                          Toast.show('Check your internet connection', context,
-                              duration: 2);
+                          Fluttertoast.showToast(
+                              msg: "Check your internet connection",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                         if (!_formKey.currentState.validate()) {
                           return;
                         }
                         _formKey.currentState.save();
 
-                        var data = (UserController.register(usermodel));
-                        if (data != null) {
+                        final data = await (UserController.register(usermodel));
+                        if (data == 200) {
                           Get.off(() => RegistrationComplete());
-                        }
-                        if (data == null) {
-                          Toast.show('Server Error. Sorry!', context,
-                              duration: 4, backgroundColor: Colors.grey);
+                        } else if (data == 404) {
+                          Fluttertoast.showToast(
+                              msg: "Server Error. Sorry!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 2,
+                              backgroundColor: Colors.red,
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                       },
                     ),

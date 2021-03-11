@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
-import 'package:flutter/services.dart';
 
 import 'Login.dart';
 

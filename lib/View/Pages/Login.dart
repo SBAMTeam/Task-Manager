@@ -9,17 +9,12 @@ import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:crypto/crypto.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/TransparentAppBar.dart';
 import 'package:taskmanager/View/Pages/LoggedInPage.dart';
-import 'package:taskmanager/View/Pages/Register.dart';
 
 class Login extends StatelessWidget {
   Usermodel usermodel = Usermodel();
-  // var _emailAddress = null,
-  //     _password = null,
-  //     _companyCode = null,
-  //     _enabled = true;
+
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();

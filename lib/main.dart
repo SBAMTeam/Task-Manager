@@ -21,7 +21,7 @@ main() => runApp(
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: CreateServer(),
+          body: MainPage(),
         ),
       ),
     );
