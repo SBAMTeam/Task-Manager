@@ -13,7 +13,6 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: Padding(
@@ -23,7 +22,7 @@ class MainPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: sizedBoxBigSpace,
+                  height: sizedBoxBigSpace * 2,
                 ),
                 RichText(
                   text: TextSpan(

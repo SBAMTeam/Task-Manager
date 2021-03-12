@@ -34,7 +34,7 @@ class CreateServer extends StatelessWidget {
                 children: [
                   Center(
                     child: Image.asset(
-                      'assets/images/CreateServerImage.png',
+                      'assets/images/createserver_image.png',
                       scale: 3.2,
                     ),
                   ),
