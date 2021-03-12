@@ -1,0 +1,8 @@
+CREATE TABLE Tasks 
+(
+    Task_id integer AUTO_INCREMENT PRIMARY KEY,
+    Task_Descr VARCHAR(250) NOT NULL,
+    Task_Detail VARCHAR(1000) NOT NULL,
+    Task_Start_Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Task_End_Date TIMESTAMP
+) ENGINE=InnoDB CHARSET=utf8;
