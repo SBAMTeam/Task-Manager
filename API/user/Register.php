@@ -18,11 +18,18 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
+if ((!isset($username) || !isset($userhash)) || (!isset($email) || !isset($nickname)))
+{
+    http_response_code(401);
+    echo json_encode(array("LogMessages" => "Account Creation failed, Missing variables"));
+    exit();
+}
 
 $username = $data->username;
 $userhash = $data->userhash;
 $email = $data->email;
 $nickname = $data->nickname;
+
 
 $query = "INSERT INTO users SET user_name  = :username,  user_hash = :userhash, 
                                 user_email = :useremail, user_nick = :nickname, 
@@ -33,7 +40,6 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':username', $username);
 $stmt->bindParam(':useremail', $email);
 $stmt->bindParam(':nickname', $nickname);
-
 $stmt->bindParam(':userhash', $userhash);
 
 

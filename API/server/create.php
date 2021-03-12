@@ -16,18 +16,18 @@ $conn = $databaseService->getConnection();
 $data = json_decode(file_get_contents('php://input'));
 
 $serverName = $data->serverName;    
-$loginCode  = $data->loginCode;
+$loginCode  = $data->serverCode;
 $ownerId    = $data->ownerId;
 
 $query = "INSERT INTO servers SET   Server_name = :serverName,
-                                    Login_CODE  = :loginCode,
+                                    Login_CODE  = :serverCode,
                                     Owner_ID 	= :ownerId,
                                     STATUS_CODE = 1";
 
 $stmt = $conn->prepare($query);
 
 $stmt->bindParam(':serverName', $serverName);
-$stmt->bindParam(':loginCode', $loginCode);
+$stmt->bindParam(':loginCode', $serverCode);
 $stmt->bindParam(':ownerId', $ownerId);
 
 if($stmt->execute())

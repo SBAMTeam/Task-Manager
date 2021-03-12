@@ -1,6 +1,0 @@
-CREATE TABLE Permissions 
-(
-    PERM_CODE Integer PRIMARY KEY,
-    ENG_DESCR VARCHAR(250) NOT NULL,
-    W_TAG Integer
-)

@@ -10,7 +10,6 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
 $username = '';
 $password = '';
 
@@ -18,6 +17,13 @@ $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
+
+if (!isset($data->username) || !isset($data->password))
+{
+    http_response_code(401);
+    echo json_encode(array("LogMessages" => "Login failed, Empty username or password."));
+    exit();
+}
 
 $username = $data->username;
 $password = $data->password;
@@ -74,9 +80,10 @@ if($num > 0)
                 "expireAt" => $expire_claim
             ));
     }
-    else{
+    else
+    {
 
-        http_response_code(401);
+        http_response_code(400);
         echo json_encode(array("LogMessages" => "Login failed.", "password" => $password));
     }
 }

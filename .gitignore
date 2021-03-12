@@ -3,3 +3,4 @@ build/
 android/gradle/wrapper/gradle-wrapper.properties
 android/gradle/wrapper/gradle-wrapper.properties
 android/gradle/wrapper/gradle-wrapper.properties
+API/config/*
