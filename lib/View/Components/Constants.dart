@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 var iconColor = 0xffF1F1F1;
 var textColor = 0xffF1F1F1;
 var textColorSecondary = 0xff6C63FF;
-var defaultHeight = Get.height / 14; //testing as a replacement to height = 50;
+var defaultHeight = 50; //Get.height / 14;
 var backgroundColor = 0xff2F2E41;
 var textFieldColor = 0xff3F3D56;
 var buttonColorOne = 0xff6C63FF;

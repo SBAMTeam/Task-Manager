@@ -6,15 +6,7 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 
 class UserController extends GetxController {
-  static UserController _userController;
-  static UserController getInstance() {
-    if (_userController == null)
-      return _userController = UserController();
-    else
-      return _userController;
-  }
-
-  Usermodel usermodel = Usermodel();
+  Rx<Usermodel> usermodel = Usermodel().obs;
 
   static Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),

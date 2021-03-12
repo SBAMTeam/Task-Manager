@@ -121,13 +121,17 @@ class Login extends StatelessWidget {
                       Text(
                         "Don't have an account?",
                         style: TextStyle(
-                            color: Colors.white.withAlpha(127)),
+                            color: Colors.white.withAlpha(127),
+                            fontWeight: FontWeight.w600),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Get.to(Register());
+                      ButtonBuilder(
+                        onPress: () {
+                          Get.to(() => Register());
                         },
-                        child: Text("Sign up"),
+                        child: Text(
+                          "Sign up",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   )

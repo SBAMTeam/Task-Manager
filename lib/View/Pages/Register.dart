@@ -122,6 +122,7 @@ class Register extends StatelessWidget {
                   ),
                   Center(
                     child: ButtonBuilder(
+                      height: 50.0,
                       text: 'Register',
                       onPress: () async {
                         try {
