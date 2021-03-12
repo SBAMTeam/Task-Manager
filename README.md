@@ -8,7 +8,7 @@ A new Flutter project.
    - fix validator error messege breaking TextFormField
    - ~~fix value getting deleted after locking company code field~~ done.
    - Create server interface: Connect to API.
-   - Join server interface: Connect to API.
+   - ~~Join server interface: Connect to API.~~
    - Permissions.
    - Add pictures of the app to readme.md.
    - better readme.md
