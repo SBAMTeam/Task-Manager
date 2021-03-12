@@ -73,7 +73,7 @@ class JoinServer extends StatelessWidget {
                         pinBoxHeight: 45,
                         pinBoxWidth: 45,
                         onDone: (text) {
-                          servermodel.loginCode = text;
+                          servermodel.serverCode = text;
                         },
                       );
                     },

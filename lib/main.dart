@@ -19,7 +19,7 @@ main() => runApp(
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: JoinServer(),
+          body: Login(),
         ),
       ),
     );

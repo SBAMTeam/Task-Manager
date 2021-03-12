@@ -31,10 +31,11 @@ class ServerController extends GetxController {
     Map map = usermodel.toJson();
     map.addAll(servermodel.toJson());
     print(map);
-    final response = await http.post(Uri.parse(joinServerUrl),
-        body: jsonEncode(servermodel.toJson()));
-    print(servermodel.toJson());
+    final response =
+        await http.post(Uri.parse(joinServerUrl), body: jsonEncode(map));
     print(response.statusCode);
+    print('IM BODY');
+    print(response.body);
     if (response.statusCode == 200) {
       return null;
     }

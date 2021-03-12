@@ -53,7 +53,7 @@ class Register extends StatelessWidget {
                     icon: Icons.badge,
                     hint: 'Nickname',
                     onSavedFunc: (value) {
-                      usermodel.nickname = value.trim();
+                      usermodel.userNickname = value.trim();
                     },
                     validatorFunction: (String value) {
                       if (value.length < 3) {
@@ -69,7 +69,7 @@ class Register extends StatelessWidget {
                     icon: Icons.email,
                     textInputType: TextInputType.emailAddress,
                     onSavedFunc: (value) {
-                      usermodel.email = value.trim();
+                      usermodel.userEmail = value.trim();
                     },
                     validatorFunction: (String value) {
                       if (value.isEmpty ||
@@ -122,6 +122,7 @@ class Register extends StatelessWidget {
                   ),
                   Center(
                     child: ButtonBuilder(
+                      height: 50.0,
                       text: 'Register',
                       onPress: () async {
                         try {

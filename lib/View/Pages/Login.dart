@@ -112,7 +112,7 @@ class Login extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: sizedBoxSmallSpace / 2,
+                    height: Get.height / 5.8,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -120,13 +120,18 @@ class Login extends StatelessWidget {
                     children: [
                       Text(
                         "Don't have an account?",
-                        style: TextStyle(color: Colors.white.withAlpha(127)),
+                        style: TextStyle(
+                            color: Colors.white.withAlpha(127),
+                            fontWeight: FontWeight.w600),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Get.to(Register());
+                      ButtonBuilder(
+                        onPress: () {
+                          Get.to(() => Register());
                         },
-                        child: Text("Create an account"),
+                        child: Text(
+                          "Sign up",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   )
