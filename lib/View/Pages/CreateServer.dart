@@ -106,10 +106,10 @@ class CreateServer extends StatelessWidget {
                           return;
                         }
                         serverCode = getRandomString(6);
-                        servermodel.loginCode = serverCode;
-                        servermodel.ownerId = "7";
+                        servermodel.serverCode = serverCode;
+                        servermodel.serverOwnerId = "7";
                         print(serverCode);
-                        print(servermodel.ownerId);
+                        print(servermodel.serverOwnerId);
                         _formKey.currentState.save();
                         ServerController.createServer(servermodel);
                         Get.to(() => ServerCodeCreated(

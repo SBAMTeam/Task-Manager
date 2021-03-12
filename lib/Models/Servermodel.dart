@@ -1,24 +1,25 @@
 class Servermodel {
   String serverName;
-  String loginCode;
+  String serverCode;
   String serverId;
-  String ownerId;
+  String serverOwnerId;
 
-  Servermodel({this.serverName, this.loginCode, this.serverId, this.ownerId});
+  Servermodel(
+      {this.serverName, this.serverCode, this.serverId, this.serverOwnerId});
 
   Servermodel.fromJson(Map<String, dynamic> json) {
     serverName = json['serverName'];
-    loginCode = json['loginCode'];
+    serverCode = json['serverCode'];
     serverId = json['serverId'];
-    ownerId = json['ownerId'];
+    serverOwnerId = json['serverOwnerId'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['serverName'] = this.serverName;
-    data['loginCode'] = this.loginCode;
+    data['serverCode'] = this.serverCode;
     data['serverId'] = this.serverId;
-    data['ownerId'] = this.ownerId;
+    data['serverOwnerId'] = this.serverOwnerId;
     return data;
   }
 }
