@@ -18,15 +18,15 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!isset($data->username) || !isset($data->password))
+if (!isset($data->username) || !isset($data->userhash))
 {
-    http_response_code(401);
+    http_response_code(400);
     echo json_encode(array("LogMessages" => "Login failed, Empty username or password."));
     exit();
 }
 
 $username = $data->username;
-$password = $data->password;
+$password = $data->userhash;
 
 $query = "SELECT  * FROM users WHERE user_name = ? LIMIT 0,1";
 
@@ -41,9 +41,8 @@ if($num > 0)
     $id        = $row['user_id'];
     $usernick  = $row['user_nick'];
     $email     = $row['user_email'];
-    $password2 = $row['user_hash'];
-    //password_verify($password, $password2)
-    if($password2 == $password2)
+    $userhash = $row['user_hash'];
+    if($password == $userhash)
     {
         
         $keyVars = new HDVariables(); // here set your secret key and issuer claim and audience claim data
