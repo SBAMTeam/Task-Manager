@@ -90,6 +90,8 @@ class JoinServer extends StatelessWidget {
                         return;
                       }
                       _formKey.currentState.save();
+                      // usermodel.userId = "7"; //for testing
+
                       ServerController.joinServer(servermodel, usermodel);
                     },
                   ),

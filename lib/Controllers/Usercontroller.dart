@@ -20,6 +20,8 @@ class UserController extends GetxController {
   static Future login(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
+    print(response.body);
+
     if (response.statusCode == 200) {
       print(response.body);
     } else
