@@ -4,7 +4,8 @@ import 'package:taskmanager/View/Components/Constants.dart';
 
 class ButtonBuilder extends StatelessWidget {
   final VoidCallback onPress;
-  final text, textColor, fontWeight, width, height, edge, color;
+  final text, textColor, fontWeight, width, edge, color;
+  final double height;
   final double fontSize;
 
   /// for custom child use child property. All other properties have no effect on the new child.

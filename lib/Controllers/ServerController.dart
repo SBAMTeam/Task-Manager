@@ -21,6 +21,7 @@ class ServerController extends GetxController {
     final response = await http.post(Uri.parse(createServerUrl),
         body: jsonEncode(servermodel.toJson()));
     print(servermodel.toJson());
+    print(response.body);
     print(response.statusCode);
     if (response.statusCode == 200) {
       return null;
