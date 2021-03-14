@@ -38,7 +38,7 @@ $num = $stmt->rowCount();
 if($num > 0)
 {
     $row       = $stmt->fetch(PDO::FETCH_ASSOC);
-    $id        = $row['user_id'];
+    $userId        = $row['user_id'];
     $usernick  = $row['user_nick'];
     $email     = $row['user_email'];
     $userhash = $row['user_hash'];
@@ -61,29 +61,46 @@ if($num > 0)
             "nbf" => $notbefore_claim,
             "exp" => $expire_claim,
             "data" => array(
-                "id" => $id,
+                "id" => $userId,
                 "nickname" => $usernick,
                 "email" => $email
         ));
+        
+        //get the user servers
+        $query = "SELECT servers.Server_id, servers.Server_name
+                  FROM userservers UServer JOIN servers 
+                  ON UServer.SERVER_ID = servers.server_ID 
+                  WHERE user_id = :userId";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":userId", $userId);
+
+        //put the servers in an associate array
+        $stmt->execute();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
+        {
+            $rowServerId   = $row['Server_id']; 
+            $rowServerName = $row['Server_name'];
+            $userServers[] = array('serverId'=>$rowServerId ,'serverName'=> $rowServerName);
+        }
 
         http_response_code(200);
-
         $jwt = JWT::encode($token, $secret_key);
         echo json_encode(
             array(
                 "LogMessages" => "Successful login.",
-                "id" => $id,
-                "Nickname" =>$usernick,
-                "email" => $email,
-                "jwt" => $jwt,
-                "expireAt" => $expire_claim
+                "userId" => $userId,
+                "userNickname" =>$usernick,
+                "userEmail" => $email,
+                //"jwt" => $jwt,
+                //"expireAt" => $expire_claim,
+                "userServers" => $userServers
             ));
     }
     else
     {
-
         http_response_code(400);
-        echo json_encode(array("LogMessages" => "Login failed.", "password" => $password));
+        echo json_encode(array("LogMessages" => "Login failed."));
     }
 }
 ?>
