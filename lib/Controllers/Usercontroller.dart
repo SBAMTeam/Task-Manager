@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:taskmanager/Database/UserDB.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ class UserController extends GetxController {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
     print(response.body);
-
+    DatabaseHelper.insertUser(usermodel);
     if (response.statusCode == 200) {
       print(response.body);
     } else
