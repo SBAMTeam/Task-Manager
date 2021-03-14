@@ -17,7 +17,14 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-$userId = $data->userid;
+if (!isset($data->userId) || !isset($data->serverCode))
+{
+    http_response_code(400);
+    echo json_encode(array("LogMessages" => "failed to join server, one or more variables are empty."));
+    exit();
+}
+
+$userId = $data->userId;
 $serverCode = $data->serverCode;
 
 $query = "select Server_id from servers where Login_CODE = ? LIMIT 0,1";
@@ -43,7 +50,7 @@ if ($rowNum > 0)
     if($stmt->execute())
     {
         http_response_code(200);
-        echo json_encode(array("LogMessages" => "User successfully joined server"));
+        echo json_encode(array("LogMessages" => "User successfully joined server", "serverId" => $serverID));
     }
     else
     {

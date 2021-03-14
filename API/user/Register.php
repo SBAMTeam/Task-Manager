@@ -18,18 +18,17 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if ((!isset($username) || !isset($userhash)) || (!isset($email) || !isset($nickname)))
+if ((!isset($data->username) || !isset($data->userhash)) || (!isset($data->userEmail) || !isset($data->userNickname)))
 {
-    http_response_code(401);
+    http_response_code(400);
     echo json_encode(array("LogMessages" => "Account Creation failed, Missing variables"));
     exit();
 }
 
 $username = $data->username;
 $userhash = $data->userhash;
-$email = $data->email;
-$nickname = $data->nickname;
-
+$email = $data->userEmail;
+$nickname = $data->userNickname;
 
 $query = "INSERT INTO users SET user_name  = :username,  user_hash = :userhash, 
                                 user_email = :useremail, user_nick = :nickname, 
@@ -46,11 +45,13 @@ $stmt->bindParam(':userhash', $userhash);
 if($stmt->execute())
 {
     http_response_code(200);
-    echo json_encode(array("LogMessages" => "User was successfully registered."));
+    echo json_encode(array("LogMessages" => "User was successfully registered.", "username" => $username,
+                           "userhash" => $userhash, "email" => $email, "nickname" => $nickname));
 }
 else
 {
     http_response_code(400);
-    echo json_encode(array("LogMessages" => "Unable to register the user."));
+    echo json_encode(array("LogMessages" => "Unable to register the user.", "username" => $username,
+                           "userhash" => $userhash, "email" => $email, "nickname" => $nickname));
 }
 ?>

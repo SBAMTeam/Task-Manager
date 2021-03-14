@@ -15,9 +15,16 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents('php://input'));
 
+if ((!isset($data->serverName) || !isset($data->serverCode)) || !isset($data->serverOwnerId))
+{
+    http_response_code(400);
+    echo json_encode(array("LogMessages" => "Server creation failed, one or more variables are empty."));
+    exit();
+}
+
 $serverName = $data->serverName;    
-$loginCode  = $data->serverCode;
-$ownerId    = $data->ownerId;
+$serverCode  = $data->serverCode;
+$serverOwnerId    = $data->serverOwnerId;
 
 $query = "INSERT INTO servers SET   Server_name = :serverName,
                                     Login_CODE  = :serverCode,
@@ -27,8 +34,8 @@ $query = "INSERT INTO servers SET   Server_name = :serverName,
 $stmt = $conn->prepare($query);
 
 $stmt->bindParam(':serverName', $serverName);
-$stmt->bindParam(':loginCode', $serverCode);
-$stmt->bindParam(':ownerId', $ownerId);
+$stmt->bindParam(':serverCode', $serverCode);
+$stmt->bindParam(':ownerId', $serverOwnerId);
 
 if($stmt->execute())
 {

@@ -9,16 +9,20 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-
-// $secret_key = "SOME_BIG_RANDOM_KEY";
-// $jwt = null;
 $databaseService = new DatabaseService();
 $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-$userId = $data->userid;
-$serverId = $data->serverid;
+if (!isset($data->userId) || !isset($data->serverId))
+{
+    http_response_code(400);
+    echo json_encode(array("LogMessages" => "failed to join server, one or more variables are empty."));
+    exit();   
+}
+
+$userId = $data->userId;
+$serverId = $data->serverId;
 
 $query = "SELECT tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tasks.Task_End_Date 
                 from user_tasks UTask JOIN tasks ON UTask.Task_ID = tasks.Task_id
