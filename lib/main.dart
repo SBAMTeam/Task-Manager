@@ -4,6 +4,7 @@ import 'package:taskmanager/View/Components/Constants.dart';
 
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/CreateServer.dart';
+import 'package:taskmanager/View/Pages/HomePage.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/JoinServer.dart';
 // ignore: unused_import
@@ -19,7 +20,7 @@ main() => runApp(
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: JoinServer(),
+          body: HomePage(),
         ),
       ),
     );
