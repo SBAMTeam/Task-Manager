@@ -23,7 +23,7 @@ main() async {
       ),
       home: Scaffold(
         backgroundColor: Color(backgroundColor),
-        body: JoinServer(),
+        body: HomePage(),
       ),
     ),
   );
