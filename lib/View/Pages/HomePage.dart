@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/Controllers/ServerController.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/View/Components/TextBuilder.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -21,7 +23,7 @@ class HomePage extends StatelessWidget {
                 height: sizedBoxBigSpace,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
                 child: Row(
                   children: [
                     RichText(
@@ -45,25 +47,124 @@ class HomePage extends StatelessWidget {
                       child: Container(
                         height: 60.0,
                         width: 60.0,
-                        color: Color(0xffFF0E58),
+                        color: Color(buttonColorOne),
                       ),
                     ),
                   ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    child: Text("ass"),
-                    onPressed: () {
-                      usermodel.userId = "7";
-                      servermodel.serverId = "1";
-                      ServerController.selectServer(servermodel, usermodel);
-                    },
-                  ),
-                ],
+              SizedBox(height: sizedBoxBigSpace * 1.5),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    SizedBox(width: sizedBoxSmallSpace),
+                    CardBuilder(),
+                    SizedBox(width: sizedBoxSmallSpace),
+                    CardBuilder(),
+                  ],
+                ),
+              ),
+              SizedBox(height: sizedBoxBigSpace * 2),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                child: Row(
+                  children: [
+                    TextBuilder(
+                      text: 'My Tasks',
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                // alignment: Alignment.topLeft,
+                padding: EdgeInsets.all(Get.width / 16),
+                margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                height: Get.height / 4.5,
+                width: Get.width,
+                decoration: BoxDecoration(
+                    color: Color(buttonColorTwo),
+                    borderRadius: BorderRadius.circular(9),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 4,
+                        offset: Offset(1, 3),
+                      )
+                    ]),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(9.0),
+                          child: Container(
+                            height: 60.0,
+                            width: 60.0,
+                            color: Color(buttonColorOne),
+                            child: Icon(
+                              Icons.list,
+                              color: Colors.white,
+                              size: 60,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Get.width / 30,
+                        ),
+                        TextBuilder(
+                          text: "To Do",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                        SizedBox(
+                          width: Get.width / 3.6,
+                        ),
+                        TextBuilder(
+                          text: "5 tasks",
+                          fontSize: 16,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Get.height / 60,
+                    ),
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(9.0), //or 15.0
+                          child: Container(
+                            height: 60.0,
+                            width: 60.0,
+                            color: Color(0xffFF0E58),
+                            child: Icon(
+                              Icons.list,
+                              color: Colors.white,
+                              size: 60,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Get.width / 30,
+                        ),
+                        TextBuilder(
+                          text: "Done",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                        SizedBox(
+                          width: Get.width / 3.6,
+                        ),
+                        TextBuilder(
+                          text: "4 tasks",
+                          fontSize: 16,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

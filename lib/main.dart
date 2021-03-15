@@ -26,7 +26,7 @@ main() async {
       ),
       home: Scaffold(
         backgroundColor: Color(backgroundColor),
-        body: Login(),
+        body: HomePage(),
       ),
     ),
   );
