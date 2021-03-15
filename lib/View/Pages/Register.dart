@@ -40,9 +40,13 @@ class Register extends StatelessWidget {
                     onSavedFunc: (value) {
                       usermodel.username = value.trim();
                     },
+                    // /^[a-zA-Z0-9.\-_$@*!]{3,30}$/
                     validatorFunction: (String value) {
-                      if (value.length < 5) {
-                        return 'Username must be longer than 5 characters';
+                      if (value.isEmpty) {
+                        return 'Username must be longer than 3 charachters characters';
+                      }
+                      if (!RegExp(r"^\S+\w{3,32}\S{1,}").hasMatch(value)) {
+                        return "Username can only contain characters, numbers, underscores\nand more than 3 characters.";
                       }
                     },
                   ),
@@ -146,7 +150,7 @@ class Register extends StatelessWidget {
                           return;
                         }
                         _formKey.currentState.save();
-
+                        print(usermodel.toJson());
                         final data = await (UserController.register(usermodel));
                         if (data == 200) {
                           Get.off(() => RegistrationComplete());

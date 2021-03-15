@@ -15,7 +15,7 @@ class ServerController extends GetxController {
       return _serverController;
   }
 
-  Servermodel servermodel = Servermodel();
+  var servermodel = Servermodel().obs;
 
   static Future createServer(Servermodel servermodel) async {
     final response = await http.post(Uri.parse(createServerUrl),
@@ -34,6 +34,21 @@ class ServerController extends GetxController {
     print(map);
     final response =
         await http.post(Uri.parse(joinServerUrl), body: jsonEncode(map));
+    print(response.statusCode);
+    print('IM BODY');
+    print(response.body);
+    if (response.statusCode == 200) {
+      return null;
+    }
+  }
+
+  static Future selectServer(
+      Servermodel servermodel, Usermodel usermodel) async {
+    Map map = usermodel.toJson();
+    map.addAll(servermodel.toJson());
+    print(map);
+    final response =
+        await http.post(Uri.parse(selectServerUrl), body: jsonEncode(map));
     print(response.statusCode);
     print('IM BODY');
     print(response.body);

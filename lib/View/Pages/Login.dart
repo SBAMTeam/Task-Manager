@@ -100,13 +100,16 @@ class Login extends StatelessWidget {
                   ButtonBuilder(
                     height: 50.0,
                     text: 'Login',
-                    onPress: () {
+                    onPress: () async {
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
                       _formKey.currentState.save();
-                      if ((UserController.login(usermodel)) != null) {
+                      var tmp = await (UserController.login(usermodel));
+                      if (tmp != 200) {
+                        print(tmp);
                         Get.off(LoggedInPage());
+                        tmp = null;
                         return;
                       }
                     },

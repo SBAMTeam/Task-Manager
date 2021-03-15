@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/ServerController.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
+import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/ServerCodeGenerator.dart';
@@ -13,7 +14,7 @@ import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
 class CreateServer extends StatelessWidget {
   CreateServer({Key key}) : super(key: key);
   final Servermodel servermodel = Servermodel();
-
+  final Usermodel usermodel = Usermodel();
   @override
   Widget build(BuildContext context) {
     var serverCode;
@@ -107,7 +108,8 @@ class CreateServer extends StatelessWidget {
                         }
                         serverCode = getRandomString(6);
                         servermodel.serverCode = serverCode;
-                        servermodel.serverOwnerId = "7";
+                        usermodel.userId = "7"; //comment this HARD CODED
+                        servermodel.serverOwnerId = usermodel.userId;
                         print(serverCode);
                         print(servermodel.serverOwnerId);
                         _formKey.currentState.save();
