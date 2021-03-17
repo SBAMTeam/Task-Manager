@@ -7,16 +7,21 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 
-class UserDatabaseHelper {
+class DatabaseHelper {
   static final _dbName = 'myDatabase.db';
   static final _dbVersion = 1;
   static final _tableName = 'user_details';
-  static final columnId = "id";
-  static final columnName = "name";
-  UserDatabaseHelper._privateConstructor();
+  static final columnnLogMesseges = 'logMesseges';
+  static final columnId = "userId";
+  static final columnUsername = "username";
+  static final columnUserEmail = 'userEmail';
+  static final columnJwt = 'jwt';
+  static final columnUserNickname = 'userNickname';
+  static final columnUserServersToJson = 'userServers';
+  static final columnUserpermissionsToJson = 'userPermissions';
+  DatabaseHelper._privateConstructor();
 
-  static final UserDatabaseHelper instance =
-      UserDatabaseHelper._privateConstructor();
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
   static Database _database;
   Future<Database> get database async {
@@ -35,8 +40,15 @@ class UserDatabaseHelper {
   Future _onCreate(Database db, int version) {
     db.execute('''
       CREATE TABLE $_tableName (
-      $columnId INTEGER,
-      $columnName TEXT NOT NULL )
+      $columnnLogMesseges TEXT,
+      $columnId INTEGER NOT NULL,
+      $columnUsername TEXT NOT NULL,
+      $columnUserEmail TEXT,
+      $columnJwt TEXT NOT NULL, 
+      $columnUserNickname TEXT,
+      $columnUserServersToJson TEXT,
+      $columnUserpermissionsToJson TEXT
+      )
 
       ''');
   }
@@ -54,8 +66,9 @@ class UserDatabaseHelper {
   Future update(Map<String, dynamic> row) async {
     Database db = await instance.database;
     int id = row[columnId];
+    var username = row[columnUsername];
     return await db.update(_tableName, row,
-        where: '$columnId = ? $columnName = ?', whereArgs: [id]);
+        where: '$columnId = ? $columnUsername = ?', whereArgs: [id, username]);
   }
 
   Future<int> delete(int id) async {
