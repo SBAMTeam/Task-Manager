@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/Usercontroller.dart';
+import 'package:taskmanager/Database/UserDB.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/UsermodelNoPassword.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
@@ -106,11 +108,26 @@ class Login extends StatelessWidget {
                       }
                       _formKey.currentState.save();
                       var tmp = await (UserController.login(usermodel));
-                      if (tmp != 200) {
+                      if (!tmp is int) {
                         print(tmp);
+                        UsermodelNoPassword usermodelNoPassword =
+                            UsermodelNoPassword();
+                        usermodelNoPassword =
+                            UsermodelNoPassword.fromJson(tmp.toJson());
+                        try {
+                          await DatabaseHelper.instance
+                              .insert(usermodelNoPassword.toJson());
+                          print(await DatabaseHelper.instance.queryAll());
+                          print(await DatabaseHelper.instance.fetchUserData(
+                              int.parse(usermodelNoPassword.userId)));
+                        } catch (e) {
+                          print(e);
+                        }
                         Get.off(LoggedInPage());
                         tmp = null;
                         return;
+                      } else {
+                        print("Error code: $tmp");
                       }
                     },
                   ),

@@ -76,4 +76,10 @@ class DatabaseHelper {
 
     return await db.delete(_tableName, where: '$columnId = ?', whereArgs: [id]);
   }
+
+  Future fetchUserData(int id) async {
+    Database db = await instance.database;
+
+    return await db.query(_tableName, where: '$columnId = ?', whereArgs: [id]);
+  }
 }
