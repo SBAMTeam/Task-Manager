@@ -3,5 +3,5 @@ CREATE TABLE USERGROUPS
     User_ID Integer,
   	GROUP_ID Integer,
     FOREIGN KEY(User_ID)  REFERENCES Users(User_ID),
-    FOREIGN KEY(Group_ID) REFERENCES groups(Group_ID)
+    FOREIGN KEY(Group_ID) REFERENCES Perm_Groups(Group_ID)
 ) ENGINE=InnoDB CHARSET=utf8;

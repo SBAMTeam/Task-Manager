@@ -103,4 +103,9 @@ if($num > 0)
         echo json_encode(array("LogMessages" => "Login failed."));
     }
 }
+else
+{
+    http_response_code(400);
+    echo json_encode(array("LogMessages" => "Login failed."));
+}
 ?>
