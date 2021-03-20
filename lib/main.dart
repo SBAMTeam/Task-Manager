@@ -14,6 +14,9 @@ import 'package:taskmanager/View/Pages/Login.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/MainPage.dart';
 import 'package:path/path.dart';
+import 'package:taskmanager/View/Pages/_servers.dart';
+
+import 'View/Pages/Register.dart';
 
 main() async {
   runApp(
@@ -23,7 +26,7 @@ main() async {
       ),
       home: Scaffold(
         backgroundColor: Color(backgroundColor),
-        body: JoinServer(),
+        body: ServersList(),
       ),
     ),
   );

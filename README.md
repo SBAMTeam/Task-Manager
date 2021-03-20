@@ -7,8 +7,10 @@ A new Flutter project.
    - ~~change hintText to labelText and fix label going up more than it should~~ done.
    - fix validator error messege breaking TextFormField
    - ~~fix value getting deleted after locking company code field~~ done.
-   - Create server interface: Connect to API.
+   - ~~Create server interface: Connect to API.~~ done.
    - ~~Join server interface: Connect to API.~~ done.
+   - implement automatic storage of user data on login. 
+   - Server list.
    - Permissions.
    - Add pictures of the app to readme.md.
    - better readme.md

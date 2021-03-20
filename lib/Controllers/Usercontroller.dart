@@ -8,6 +8,7 @@ import 'dart:convert';
 
 class UserController extends GetxController {
   Rx<Usermodel> usermodel = Usermodel().obs;
+  var isLoading = true.obs;
 
   static Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
@@ -21,11 +22,13 @@ class UserController extends GetxController {
   static Future login(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
-    print(response.body);
-    DatabaseHelper.insertUser(usermodel);
+    // DatabaseHelper.insertUser(usermodel);
     if (response.statusCode == 200) {
-      print(response.body);
-    } else
+      return jsonDecode(response.body);
+    } else {
       return response.statusCode;
+    }
   }
+
+  void _fetchServers(String responseBody) async {}
 }

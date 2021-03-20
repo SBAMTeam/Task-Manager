@@ -1,3 +1,7 @@
 # This is a generated file; do not edit or check into version control.
 fluttertoast=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/fluttertoast-7.1.8/
+path_provider=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.1/
+path_provider_linux=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.0.0/
+path_provider_macos=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-2.0.0/
+path_provider_windows=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.0/
 sqflite=/home/bashar/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.0+2/

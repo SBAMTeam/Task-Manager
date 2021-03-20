@@ -1,76 +1,86 @@
+// To parse this JSON data, do
+//
+//     final usermodel = usermodelFromJson(jsonString);
+
+import 'dart:convert';
+
+Usermodel usermodelFromJson(String str) => Usermodel.fromJson(json.decode(str));
+
+String usermodelToJson(Usermodel data) => json.encode(data.toJson());
+
 class Usermodel {
-  String logMessages;
+  Usermodel({
+    this.logMesseges,
+    this.userId,
+    this.username,
+    this.userEmail,
+    this.jwt,
+    this.userhash,
+    this.userNickname,
+    this.userServers,
+    this.userPermissions,
+  });
+
+  String logMesseges;
   String userId;
-  String userNickname;
-  String userEmail;
-  String userhash;
   String username;
+  String userEmail;
   String jwt;
-  List<UserServers> userServers;
+  String userhash;
+  String userNickname;
+  List<User> userServers;
+  List<User> userPermissions;
 
-  Usermodel(
-      {this.logMessages,
-      this.userId,
-      this.userNickname,
-      this.userEmail,
-      this.userhash,
-      this.username,
-      this.jwt,
-      this.userServers});
+  factory Usermodel.fromJson(Map<String, dynamic> json) => Usermodel(
+        logMesseges: json["logMesseges"],
+        userId: json["userId"],
+        username: json["username"],
+        userEmail: json["userEmail"],
+        jwt: json["jwt"],
+        userhash: json["userhash"],
+        userNickname: json["userNickname"],
+        userServers: json["userServers"] == null
+            ? null
+            : List<User>.from(json["userServers"].map((x) => User.fromJson(x))),
+        userPermissions: json["userPermissions"] == null
+            ? null
+            : List<User>.from(
+                json["userPermissions"].map((x) => User.fromJson(x))),
+      );
 
-  Usermodel.fromJson(Map<String, dynamic> json) {
-    logMessages = json['LogMessages'];
-    userId = json['userId'];
-    userNickname = json['userNickname'];
-    userEmail = json['userEmail'];
-    userhash = json['userhash'];
-    username = json['username'];
-    jwt = json['jwt'];
-    if (json['userServers'] != null) {
-      userServers = new List<UserServers>();
-      json['userServers'].forEach((v) {
-        userServers.add(new UserServers.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['LogMessages'] = this.logMessages;
-    data['userId'] = this.userId;
-    data['userNickname'] = this.userNickname;
-    data['userEmail'] = this.userEmail;
-    data['userhash'] = this.userhash;
-    data['username'] = this.username;
-    data['jwt'] = this.jwt;
-    if (this.userServers != null) {
-      data['userServers'] = this.userServers.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "logMesseges": logMesseges == null ? null : logMesseges,
+        "userId": userId == null ? null : userId,
+        "username": username == null ? null : username,
+        "userEmail": userEmail == null ? null : userEmail,
+        "jwt": jwt == null ? null : jwt,
+        "userhash": userhash == null ? null : userhash,
+        "userNickname": userNickname == null ? null : userNickname,
+        "userServers": userServers == null
+            ? null
+            : List<dynamic>.from(userServers.map((x) => x.toJson())),
+        "userPermissions": userPermissions == null
+            ? null
+            : List<dynamic>.from(userPermissions.map((x) => x.toJson())),
+      };
 }
 
-class UserServers {
-  String s0;
-  String s1;
+class User {
+  User({
+    this.serverId,
+    this.serverName,
+  });
+
   String serverId;
   String serverName;
 
-  UserServers({this.s0, this.s1, this.serverId, this.serverName});
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        serverId: json["Server_id"] == null ? null : json["Server_id"],
+        serverName: json["Server_name"] == null ? null : json["Server_name"],
+      );
 
-  UserServers.fromJson(Map<String, dynamic> json) {
-    s0 = json['0'];
-    s1 = json['1'];
-    serverId = json['Server_id'];
-    serverName = json['Server_name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['0'] = this.s0;
-    data['1'] = this.s1;
-    data['Server_id'] = this.serverId;
-    data['Server_name'] = this.serverName;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "Server_id": serverId == null ? null : serverId,
+        "Server_name": serverName == null ? null : serverName,
+      };
 }
