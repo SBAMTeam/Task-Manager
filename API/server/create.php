@@ -22,9 +22,9 @@ if ((!isset($data->serverName) || !isset($data->serverCode)) || !isset($data->se
     exit();
 }
 
-$serverName = $data->serverName;    
-$serverCode  = $data->serverCode;
-$serverOwnerId    = $data->serverOwnerId;
+$serverName    = $data->serverName;    
+$serverCode    = $data->serverCode;
+$serverOwnerId = $data->serverOwnerId;
 
 $query = "INSERT INTO servers SET   Server_name = :serverName,
                                     Login_CODE  = :serverCode,
@@ -40,7 +40,8 @@ $stmt->bindParam(':ownerId', $serverOwnerId);
 if($stmt->execute())
 {
     http_response_code(200);
-    echo json_encode(array("logMessage" => " Server created successfully"));
+    echo json_encode(array("logMessage" => " Server created successfully", "serverName" => $serverName,
+                            "serverCode" => $serverCode, "serverOwnerId" => $serverOwnerId));
 }
 else
 {

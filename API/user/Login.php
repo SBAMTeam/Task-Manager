@@ -18,15 +18,15 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!isset($data->username) || !isset($data->userhash))
+if (!isset($data->userName) || !isset($data->userHash))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Login failed, Empty username or password."));
     exit();
 }
 
-$username = $data->username;
-$password = $data->userhash;
+$username = $data->userName;
+$password = $data->userHash;
 
 $query = "SELECT  * FROM users WHERE user_name = ? LIMIT 0,1";
 
@@ -38,10 +38,10 @@ $num = $stmt->rowCount();
 if($num > 0)
 {
     $row       = $stmt->fetch(PDO::FETCH_ASSOC);
-    $userId        = $row['user_id'];
+    $userId    = $row['user_id'];
     $usernick  = $row['user_nick'];
     $email     = $row['user_email'];
-    $userhash = $row['user_hash'];
+    $userhash  = $row['user_hash'];
     if($password == $userhash)
     {
         
@@ -90,10 +90,11 @@ if($num > 0)
             array(
                 "LogMessages" => "Successful login.",
                 "userId" => $userId,
+                "userName" => $username,
                 "userNickname" =>$usernick,
                 "userEmail" => $email,
-                //"jwt" => $jwt,
-                //"expireAt" => $expire_claim,
+                "jwt" => $jwt,
+                "expireAt" => $expire_claim,
                 "userServers" => $userServers
             ));
     }

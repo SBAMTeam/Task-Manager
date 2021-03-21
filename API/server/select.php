@@ -44,8 +44,8 @@ if ($rowNum > 0)
         $TaskDetail     =   $row['Task_Detail'];
         $TaskEndDate    =   $row['Task_Start_Date'];
         $TaskStartDate  =   $row['Task_End_Date'];
-        $Tasks[] = array('Describtion'=> $TaskDescr,'Detail'=> $TaskDetail,
-                         'StartDate' => $TaskEndDate, 'EndDate' => $TaskEndDate);
+        $Tasks[] = array('taskDescribtion'=> $TaskDescr,'taskDetail'=> $TaskDetail,
+                         'taskStartDate' => $TaskEndDate, 'taskEndDate' => $TaskEndDate);
     }
     echo $jsonformat=json_encode($Tasks);
 }
