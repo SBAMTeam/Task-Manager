@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:taskmanager/Controllers/Usercontroller.dart';
-import 'package:taskmanager/Database/UserDB.dart';
+import 'package:taskmanager/Database/_db_functions.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/Models/UsermodelNoPassword.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
@@ -52,7 +53,7 @@ class Login extends StatelessWidget {
                   TextFieldBuilder(
                     hint: 'Username',
                     onSavedFunc: (String value) {
-                      usermodel.username = value;
+                      usermodel.userName = value;
                     },
                     icon: Icons.person,
                     textInputType: TextInputType.text,
@@ -70,8 +71,8 @@ class Login extends StatelessWidget {
                     onSavedFunc: (String value) {
                       var bytes = utf8.encode(value.trim());
                       var digest = sha256.convert(bytes).toString();
-                      print("$digest");
-                      usermodel.userhash = digest;
+                      // print("$digest");
+                      usermodel.userHash = digest;
                     },
                     icon: Icons.lock,
                     obscure: true,
@@ -103,27 +104,20 @@ class Login extends StatelessWidget {
                     height: 50.0,
                     text: 'Login',
                     onPress: () async {
+                      // var appDir = (await getTemporaryDirectory()).path;
+                      // new Directory(appDir).delete(recursive: true);
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
                       _formKey.currentState.save();
                       var tmp = await (UserController.login(usermodel));
-                      if (!tmp is int) {
-                        print(tmp);
-                        UsermodelNoPassword usermodelNoPassword =
-                            UsermodelNoPassword();
-                        usermodelNoPassword =
-                            UsermodelNoPassword.fromJson(tmp.toJson());
-                        try {
-                          await DatabaseHelper.instance
-                              .insert(usermodelNoPassword.toJson());
-                          print(await DatabaseHelper.instance.queryAll());
-                          print(await DatabaseHelper.instance.fetchUserData(
-                              int.parse(usermodelNoPassword.userId)));
-                        } catch (e) {
-                          print(e);
-                        }
-                        Get.off(LoggedInPage());
+                      if (!(tmp is int)) {
+                        Usermodel u = usermodelFromJson(jsonEncode(tmp));
+                        print(u.toJson());
+                        await DBFunctions.insertUserAndServer(u);
+                        print(await DBFunctions.getAllDetails());
+
+                        Get.off(() => LoggedInPage());
                         tmp = null;
                         return;
                       } else {

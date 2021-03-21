@@ -4,64 +4,38 @@
 
 import 'dart:convert';
 
-List<Servermodel> serverModelFromJson(String str) => List<Servermodel>.from(
-    json.decode(str).map((x) => Servermodel.fromJson(x)));
+import 'package:moor_flutter/moor_flutter.dart';
+
+Servermodel servermodelFromJson(String str) =>
+    Servermodel.fromJson(json.decode(str));
 
 String servermodelToJson(Servermodel data) => json.encode(data.toJson());
 
-class Servermodel {
+class Servermodel extends Table {
   Servermodel({
     this.serverId,
-    this.serverOwnerId,
-    this.serverCode,
     this.serverName,
-    this.userServers,
+    this.serverCode,
+    this.serverOwnerId,
   });
 
   String serverId;
-  String serverOwnerId;
-  String serverCode;
   String serverName;
-  List<UserServer> userServers;
+  String serverCode;
+  String serverOwnerId;
 
   factory Servermodel.fromJson(Map<String, dynamic> json) => Servermodel(
-        serverId: json["serverId"],
-        serverOwnerId: json["serverOwnerId"],
-        serverCode: json["serverCode"],
-        serverName: json["serverName"],
-        userServers: json["userServers"] == null
-            ? null
-            : List<UserServer>.from(
-                json["userServers"].map((x) => UserServer.fromJson(x))),
+        serverId: json["serverId"] == null ? null : json["serverId"],
+        serverName: json["serverName"] == null ? null : json["serverName"],
+        serverCode: json["serverCode"] == null ? null : json["serverCode"],
+        serverOwnerId:
+            json["serverOwnerId"] == null ? null : json["serverOwnerId"],
       );
 
   Map<String, dynamic> toJson() => {
-        "serverId": serverId,
-        "serverOwnerId": serverOwnerId,
-        "serverCode": serverCode,
-        "serverName": serverName,
-        "userServers": userServers == null
-            ? null
-            : List<dynamic>.from(userServers.map((x) => x.toJson())),
-      };
-}
-
-class UserServer {
-  UserServer({
-    this.serverId,
-    this.serverName,
-  });
-
-  String serverId;
-  String serverName;
-
-  factory UserServer.fromJson(Map<String, dynamic> json) => UserServer(
-        serverId: json["Server_id"] == null ? null : json["Server_id"],
-        serverName: json["Server_name"] == null ? null : json["Server_name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "Server_id": serverId == null ? null : serverId,
-        "Server_name": serverName == null ? null : serverName,
+        "serverId": serverId == null ? null : serverId,
+        "serverName": serverName == null ? null : serverName,
+        "serverCode": serverCode == null ? null : serverCode,
+        "serverOwnerId": serverOwnerId == null ? null : serverOwnerId,
       };
 }

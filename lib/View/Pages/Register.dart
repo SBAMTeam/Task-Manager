@@ -38,7 +38,7 @@ class Register extends StatelessWidget {
                     icon: Icons.person,
                     hint: 'Username',
                     onSavedFunc: (value) {
-                      usermodel.username = value.trim();
+                      usermodel.userName = value.trim();
                     },
                     // /^[a-zA-Z0-9.\-_$@*!]{3,30}$/
                     validatorFunction: (String value) {
@@ -92,7 +92,7 @@ class Register extends StatelessWidget {
                       var bytes = utf8.encode(value.trim());
                       var digest = sha256.convert(bytes).toString();
                       print('password hash is : $digest');
-                      usermodel.userhash = digest;
+                      usermodel.userHash = digest;
                     },
                     icon: Icons.lock,
                     obscure: true,

@@ -4,58 +4,61 @@
 
 import 'dart:convert';
 
+import 'Servermodel.dart';
+
 Usermodel usermodelFromJson(String str) => Usermodel.fromJson(json.decode(str));
 
 String usermodelToJson(Usermodel data) => json.encode(data.toJson());
 
 class Usermodel {
   Usermodel({
-    this.logMesseges,
+    this.logMessages,
     this.userId,
-    this.username,
-    this.userEmail,
-    this.jwt,
-    this.userhash,
+    this.userName,
     this.userNickname,
+    this.userEmail,
+    this.userHash,
+    this.jwt,
     this.userServers,
     this.userPermissions,
   });
 
-  String logMesseges;
+  String logMessages;
   String userId;
-  String username;
+  String userName;
+  String userNickname;
+  String userHash;
   String userEmail;
   String jwt;
-  String userhash;
-  String userNickname;
-  List<User> userServers;
-  List<User> userPermissions;
+  List<Servermodel> userServers;
+  List<UserPermission> userPermissions;
 
   factory Usermodel.fromJson(Map<String, dynamic> json) => Usermodel(
-        logMesseges: json["logMesseges"],
-        userId: json["userId"],
-        username: json["username"],
-        userEmail: json["userEmail"],
-        jwt: json["jwt"],
-        userhash: json["userhash"],
+        logMessages: json["LogMessages"],
+        userId: json["userId"] == null ? null : json["userId"],
+        userName: json["userName"],
         userNickname: json["userNickname"],
+        userEmail: json["userEmail"],
+        userHash: json["userHash"] == null ? null : json["userHash"],
+        jwt: json["jwt"],
         userServers: json["userServers"] == null
             ? null
-            : List<User>.from(json["userServers"].map((x) => User.fromJson(x))),
+            : List<Servermodel>.from(
+                json["userServers"].map((x) => Servermodel.fromJson(x))),
         userPermissions: json["userPermissions"] == null
             ? null
-            : List<User>.from(
-                json["userPermissions"].map((x) => User.fromJson(x))),
+            : List<UserPermission>.from(
+                json["userPermissions"].map((x) => UserPermission.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "logMesseges": logMesseges == null ? null : logMesseges,
-        "userId": userId == null ? null : userId,
-        "username": username == null ? null : username,
-        "userEmail": userEmail == null ? null : userEmail,
-        "jwt": jwt == null ? null : jwt,
-        "userhash": userhash == null ? null : userhash,
-        "userNickname": userNickname == null ? null : userNickname,
+        "LogMessages": logMessages,
+        "userId": userId,
+        "userName": userName,
+        "userNickname": userNickname,
+        "userEmail": userEmail,
+        "userHash": userHash == null ? null : userHash,
+        "jwt": jwt,
         "userServers": userServers == null
             ? null
             : List<dynamic>.from(userServers.map((x) => x.toJson())),
@@ -65,22 +68,22 @@ class Usermodel {
       };
 }
 
-class User {
-  User({
-    this.serverId,
-    this.serverName,
+class UserPermission {
+  UserPermission({
+    this.permId,
+    this.permName,
   });
 
-  String serverId;
-  String serverName;
+  String permId;
+  String permName;
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        serverId: json["Server_id"] == null ? null : json["Server_id"],
-        serverName: json["Server_name"] == null ? null : json["Server_name"],
+  factory UserPermission.fromJson(Map<String, dynamic> json) => UserPermission(
+        permId: json["permId"] == null ? null : json["permId"],
+        permName: json["permName"] == null ? null : json["permName"],
       );
 
   Map<String, dynamic> toJson() => {
-        "Server_id": serverId == null ? null : serverId,
-        "Server_name": serverName == null ? null : serverName,
+        "permId": permId == null ? null : permId,
+        "permName": permName == null ? null : permName,
       };
 }

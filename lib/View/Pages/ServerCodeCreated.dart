@@ -4,9 +4,11 @@ import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 import 'package:flutter/services.dart';
+import 'package:taskmanager/Database/_db_functions.dart';
 
 class ServerCodeCreated extends StatelessWidget {
   final serverCode;
+  // final serverName;
   const ServerCodeCreated({Key key, this.serverCode}) : super(key: key);
 
   @override
@@ -89,7 +91,8 @@ class ServerCodeCreated extends StatelessWidget {
                     Clipboard.setData(new ClipboardData(
                         text: serverCode)); //service to copy to clipboard
                   },
-                )
+                ),
+                ButtonBuilder(text: "Join $placeholder")
               ],
             ),
           ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/ServerController.dart';
+import 'package:taskmanager/Database/_db_functions.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
-
+import 'HomePage.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/TransparentAppBar.dart';
@@ -85,14 +86,20 @@ class JoinServer extends StatelessWidget {
                   ButtonBuilder(
                     text: 'Join',
                     fontSize: 23.0,
-                    onPress: () {
+                    onPress: () async {
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
                       _formKey.currentState.save();
-                      // usermodel.userId = "7"; //for testing
 
-                      ServerController.joinServer(servermodel, usermodel);
+                      usermodel.userId =
+                          (await DBFunctions.getUserIdInteger()).toString();
+
+                      if (await ServerController.joinServer(
+                              servermodel, usermodel) ==
+                          200) {
+                        Get.off(() => HomePage());
+                      }
                     },
                   ),
                 ],

@@ -79,11 +79,11 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               Container(
-                // alignment: Alignment.topLeft,
+                alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(Get.width / 16),
                 margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
-                height: Get.height / 4.5,
-                width: Get.width,
+                // height: Get.height / 4.5,
+                // width: Get.width,
                 decoration: BoxDecoration(
                     color: Color(buttonColorTwo),
                     borderRadius: BorderRadius.circular(9),
@@ -95,6 +95,8 @@ class HomePage extends StatelessWidget {
                       )
                     ]),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Row(
                       children: [

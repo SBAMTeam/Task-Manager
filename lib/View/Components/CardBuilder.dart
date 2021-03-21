@@ -26,27 +26,26 @@ class CardBuilder extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextBuilder(
-            text: "Kill Wife",
+            text: "TASK TITLE",
             fontWeight: FontWeight.bold,
             fontSize: 30,
           ),
-          SizedBox(
-            height: Get.height / 100,
-          ),
+          // SizedBox(
+          //   height: Get.height / 100,
+          // ),
           Container(
             width: Get.width / 1.7,
             child: TextBuilder(
-              text:
-                  'Can\'t ride wife anymore because wife fight back so please kill wife epsum bad',
+              text: 'epsum bad epsum bad epsum bad epsum bad epsum bad',
               //   fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
           ),
-          SizedBox(
-            height: Get.height / 35,
-          ),
+          // SizedBox(
+          //   height: Get.height / 35,
+          // ),
           TextBuilder(
-            text: "   Progress",
+            text: "Progress",
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),

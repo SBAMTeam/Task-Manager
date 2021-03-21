@@ -23,9 +23,7 @@ class ServerController extends GetxController {
     print(servermodel.toJson());
     print(response.body);
     print(response.statusCode);
-    if (response.statusCode == 200) {
-      return null;
-    }
+    return response.statusCode;
   }
 
   static Future joinServer(Servermodel servermodel, Usermodel usermodel) async {
@@ -34,12 +32,10 @@ class ServerController extends GetxController {
     print(map);
     final response =
         await http.post(Uri.parse(joinServerUrl), body: jsonEncode(map));
-    print(response.statusCode);
+    print("Join request sent. Status code : ${response.statusCode}");
     print('IM BODY');
     print(response.body);
-    if (response.statusCode == 200) {
-      return null;
-    }
+    return response.statusCode;
   }
 
   static Future selectServer(
