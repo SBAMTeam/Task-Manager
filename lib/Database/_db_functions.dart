@@ -24,7 +24,6 @@ class DBFunctions {
     if (servermodel != null) {
       var ownerId = await getUserIdInteger();
       final newServer = ServersCompanion(
-          serverCode: moor.Value(servermodel.serverCode),
           serverId: moor.Value(int.parse("5")),
           serverName: moor.Value(servermodel.serverName),
           serverOwnerId: moor.Value(ownerId));
@@ -41,8 +40,10 @@ class DBFunctions {
           final newServer = ServersCompanion(
             serverId: moor.Value(int.parse(server.serverId)),
             serverName: moor.Value(server.serverName),
-            serverCode: moor.Value(server.serverCode),
-            serverOwnerId: moor.Value(int.parse(server.serverOwnerId)),
+            serverOwnerId: moor.Value(
+              int.parse(server.serverOwnerId),
+            ),
+            userId: moor.Value(int.parse(usermodel.userId)),
           );
           serverDao.insertServer(newServer);
         }
@@ -54,7 +55,8 @@ class DBFunctions {
 
   static insertUserAndServer(Usermodel usermodel) {
     DBFunctions.insertUser(usermodel);
-    DBFunctions.insertServersOnLogin(usermodel);
+    if (usermodel.userServers != null)
+      DBFunctions.insertServersOnLogin(usermodel);
   }
 
   static Future getUserDetails() async {
@@ -103,21 +105,21 @@ class DBFunctions {
     return tmp[0].userLogMessage;
   }
 
-  static Future getServerOwnerIdInteger(String inputServerCode) async {
-    for (Servers server in await serverDao.getServers()) {
-      if (server.serverCode.toString() == inputServerCode) {
-        print(server.serverCode.toString());
-        return server.serverOwnerId;
-      }
-    }
-  }
+  // static Future getServerOwnerIdInteger(String inputServerCode) async {
+  //   for (Servers server in await serverDao.getServers()) {
+  //     if (server.serverCode.toString() == inputServerCode) {
+  //       print(server.serverCode.toString());
+  //       return server.serverOwnerId;
+  //     }
+  //   }
+  // }
 
-  static Future getServerNameFromServerCode(String inputServerCode) async {
-    for (Servers server in await serverDao.getServers()) {
-      if (server.serverCode.toString() == inputServerCode) {
-        print(server.serverCode.toString());
-        return server.serverName;
-      }
-    }
-  }
+  // static Future getServerNameFromServerCode(String inputServerCode) async {
+  //   for (Servers server in await serverDao.getServers()) {
+  //     if (server.serverCode.toString() == inputServerCode) {
+  //       print(server.serverCode.toString());
+  //       return server.serverName;
+  //     }
+  //   }
+  // }
 }

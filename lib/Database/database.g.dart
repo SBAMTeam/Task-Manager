@@ -10,13 +10,9 @@ part of 'database.dart';
 class Server extends DataClass implements Insertable<Server> {
   final int serverId;
   final String serverName;
-  final String serverCode;
   final int serverOwnerId;
-  Server(
-      {@required this.serverId,
-      @required this.serverName,
-      @required this.serverCode,
-      @required this.serverOwnerId});
+  final int userId;
+  Server({this.serverId, this.serverName, this.serverOwnerId, this.userId});
   factory Server.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -27,10 +23,10 @@ class Server extends DataClass implements Insertable<Server> {
           intType.mapFromDatabaseResponse(data['${effectivePrefix}server_id']),
       serverName: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}server_name']),
-      serverCode: stringType
-          .mapFromDatabaseResponse(data['${effectivePrefix}server_code']),
       serverOwnerId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}server_owner_id']),
+      userId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}user_id']),
     );
   }
   @override
@@ -42,11 +38,11 @@ class Server extends DataClass implements Insertable<Server> {
     if (!nullToAbsent || serverName != null) {
       map['server_name'] = Variable<String>(serverName);
     }
-    if (!nullToAbsent || serverCode != null) {
-      map['server_code'] = Variable<String>(serverCode);
-    }
     if (!nullToAbsent || serverOwnerId != null) {
       map['server_owner_id'] = Variable<int>(serverOwnerId);
+    }
+    if (!nullToAbsent || userId != null) {
+      map['user_id'] = Variable<int>(userId);
     }
     return map;
   }
@@ -59,12 +55,11 @@ class Server extends DataClass implements Insertable<Server> {
       serverName: serverName == null && nullToAbsent
           ? const Value.absent()
           : Value(serverName),
-      serverCode: serverCode == null && nullToAbsent
-          ? const Value.absent()
-          : Value(serverCode),
       serverOwnerId: serverOwnerId == null && nullToAbsent
           ? const Value.absent()
           : Value(serverOwnerId),
+      userId:
+          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
     );
   }
 
@@ -74,8 +69,8 @@ class Server extends DataClass implements Insertable<Server> {
     return Server(
       serverId: serializer.fromJson<int>(json['serverId']),
       serverName: serializer.fromJson<String>(json['serverName']),
-      serverCode: serializer.fromJson<String>(json['serverCode']),
       serverOwnerId: serializer.fromJson<int>(json['serverOwnerId']),
+      userId: serializer.fromJson<int>(json['userId']),
     );
   }
   @override
@@ -84,29 +79,26 @@ class Server extends DataClass implements Insertable<Server> {
     return <String, dynamic>{
       'serverId': serializer.toJson<int>(serverId),
       'serverName': serializer.toJson<String>(serverName),
-      'serverCode': serializer.toJson<String>(serverCode),
       'serverOwnerId': serializer.toJson<int>(serverOwnerId),
+      'userId': serializer.toJson<int>(userId),
     };
   }
 
   Server copyWith(
-          {int serverId,
-          String serverName,
-          String serverCode,
-          int serverOwnerId}) =>
+          {int serverId, String serverName, int serverOwnerId, int userId}) =>
       Server(
         serverId: serverId ?? this.serverId,
         serverName: serverName ?? this.serverName,
-        serverCode: serverCode ?? this.serverCode,
         serverOwnerId: serverOwnerId ?? this.serverOwnerId,
+        userId: userId ?? this.userId,
       );
   @override
   String toString() {
     return (StringBuffer('Server(')
           ..write('serverId: $serverId, ')
           ..write('serverName: $serverName, ')
-          ..write('serverCode: $serverCode, ')
-          ..write('serverOwnerId: $serverOwnerId')
+          ..write('serverOwnerId: $serverOwnerId, ')
+          ..write('userId: $userId')
           ..write(')'))
         .toString();
   }
@@ -115,61 +107,58 @@ class Server extends DataClass implements Insertable<Server> {
   int get hashCode => $mrjf($mrjc(
       serverId.hashCode,
       $mrjc(serverName.hashCode,
-          $mrjc(serverCode.hashCode, serverOwnerId.hashCode))));
+          $mrjc(serverOwnerId.hashCode, userId.hashCode))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
       (other is Server &&
           other.serverId == this.serverId &&
           other.serverName == this.serverName &&
-          other.serverCode == this.serverCode &&
-          other.serverOwnerId == this.serverOwnerId);
+          other.serverOwnerId == this.serverOwnerId &&
+          other.userId == this.userId);
 }
 
 class ServersCompanion extends UpdateCompanion<Server> {
   final Value<int> serverId;
   final Value<String> serverName;
-  final Value<String> serverCode;
   final Value<int> serverOwnerId;
+  final Value<int> userId;
   const ServersCompanion({
     this.serverId = const Value.absent(),
     this.serverName = const Value.absent(),
-    this.serverCode = const Value.absent(),
     this.serverOwnerId = const Value.absent(),
+    this.userId = const Value.absent(),
   });
   ServersCompanion.insert({
-    @required int serverId,
-    @required String serverName,
-    @required String serverCode,
-    @required int serverOwnerId,
-  })  : serverId = Value(serverId),
-        serverName = Value(serverName),
-        serverCode = Value(serverCode),
-        serverOwnerId = Value(serverOwnerId);
+    this.serverId = const Value.absent(),
+    this.serverName = const Value.absent(),
+    this.serverOwnerId = const Value.absent(),
+    this.userId = const Value.absent(),
+  });
   static Insertable<Server> custom({
     Expression<int> serverId,
     Expression<String> serverName,
-    Expression<String> serverCode,
     Expression<int> serverOwnerId,
+    Expression<int> userId,
   }) {
     return RawValuesInsertable({
       if (serverId != null) 'server_id': serverId,
       if (serverName != null) 'server_name': serverName,
-      if (serverCode != null) 'server_code': serverCode,
       if (serverOwnerId != null) 'server_owner_id': serverOwnerId,
+      if (userId != null) 'user_id': userId,
     });
   }
 
   ServersCompanion copyWith(
       {Value<int> serverId,
       Value<String> serverName,
-      Value<String> serverCode,
-      Value<int> serverOwnerId}) {
+      Value<int> serverOwnerId,
+      Value<int> userId}) {
     return ServersCompanion(
       serverId: serverId ?? this.serverId,
       serverName: serverName ?? this.serverName,
-      serverCode: serverCode ?? this.serverCode,
       serverOwnerId: serverOwnerId ?? this.serverOwnerId,
+      userId: userId ?? this.userId,
     );
   }
 
@@ -182,11 +171,11 @@ class ServersCompanion extends UpdateCompanion<Server> {
     if (serverName.present) {
       map['server_name'] = Variable<String>(serverName.value);
     }
-    if (serverCode.present) {
-      map['server_code'] = Variable<String>(serverCode.value);
-    }
     if (serverOwnerId.present) {
       map['server_owner_id'] = Variable<int>(serverOwnerId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<int>(userId.value);
     }
     return map;
   }
@@ -196,8 +185,8 @@ class ServersCompanion extends UpdateCompanion<Server> {
     return (StringBuffer('ServersCompanion(')
           ..write('serverId: $serverId, ')
           ..write('serverName: $serverName, ')
-          ..write('serverCode: $serverCode, ')
-          ..write('serverOwnerId: $serverOwnerId')
+          ..write('serverOwnerId: $serverOwnerId, ')
+          ..write('userId: $userId')
           ..write(')'))
         .toString();
   }
@@ -215,7 +204,7 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
     return GeneratedIntColumn(
       'server_id',
       $tableName,
-      false,
+      true,
     );
   }
 
@@ -224,16 +213,7 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
   @override
   GeneratedTextColumn get serverName => _serverName ??= _constructServerName();
   GeneratedTextColumn _constructServerName() {
-    return GeneratedTextColumn('server_name', $tableName, false,
-        minTextLength: 1, maxTextLength: 50);
-  }
-
-  final VerificationMeta _serverCodeMeta = const VerificationMeta('serverCode');
-  GeneratedTextColumn _serverCode;
-  @override
-  GeneratedTextColumn get serverCode => _serverCode ??= _constructServerCode();
-  GeneratedTextColumn _constructServerCode() {
-    return GeneratedTextColumn('server_code', $tableName, false,
+    return GeneratedTextColumn('server_name', $tableName, true,
         minTextLength: 1, maxTextLength: 50);
   }
 
@@ -247,13 +227,22 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
     return GeneratedIntColumn(
       'server_owner_id',
       $tableName,
-      false,
+      true,
     );
+  }
+
+  final VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  GeneratedIntColumn _userId;
+  @override
+  GeneratedIntColumn get userId => _userId ??= _constructUserId();
+  GeneratedIntColumn _constructUserId() {
+    return GeneratedIntColumn('user_id', $tableName, true,
+        $customConstraints: 'NULL REFERENCES users(userId)');
   }
 
   @override
   List<GeneratedColumn> get $columns =>
-      [serverId, serverName, serverCode, serverOwnerId];
+      [serverId, serverName, serverOwnerId, userId];
   @override
   $ServersTable get asDslTable => this;
   @override
@@ -268,32 +257,22 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
     if (data.containsKey('server_id')) {
       context.handle(_serverIdMeta,
           serverId.isAcceptableOrUnknown(data['server_id'], _serverIdMeta));
-    } else if (isInserting) {
-      context.missing(_serverIdMeta);
     }
     if (data.containsKey('server_name')) {
       context.handle(
           _serverNameMeta,
           serverName.isAcceptableOrUnknown(
               data['server_name'], _serverNameMeta));
-    } else if (isInserting) {
-      context.missing(_serverNameMeta);
-    }
-    if (data.containsKey('server_code')) {
-      context.handle(
-          _serverCodeMeta,
-          serverCode.isAcceptableOrUnknown(
-              data['server_code'], _serverCodeMeta));
-    } else if (isInserting) {
-      context.missing(_serverCodeMeta);
     }
     if (data.containsKey('server_owner_id')) {
       context.handle(
           _serverOwnerIdMeta,
           serverOwnerId.isAcceptableOrUnknown(
               data['server_owner_id'], _serverOwnerIdMeta));
-    } else if (isInserting) {
-      context.missing(_serverOwnerIdMeta);
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id'], _userIdMeta));
     }
     return context;
   }

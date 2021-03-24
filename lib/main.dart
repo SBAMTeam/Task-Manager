@@ -42,7 +42,7 @@ class TaskManager extends StatelessWidget {
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: HomePage(),
+          body: ServersList(),
         ),
       ),
     );

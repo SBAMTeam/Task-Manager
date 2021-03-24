@@ -40,7 +40,7 @@ class Login extends StatelessWidget {
                 children: [
                   Image.asset('assets/images/signin_image_dark.png'),
                   SizedBox(
-                    height: Get.height / 30,
+                    height: sizedBoxBigSpace,
                   ),
                   Row(
                     children: [
@@ -64,7 +64,7 @@ class Login extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: Get.height / 60,
+                    height: sizedBoxSmallSpace,
                   ),
                   TextFieldBuilder(
                     hint: password,
@@ -104,8 +104,6 @@ class Login extends StatelessWidget {
                     height: 50.0,
                     text: 'Login',
                     onPress: () async {
-                      // var appDir = (await getTemporaryDirectory()).path;
-                      // new Directory(appDir).delete(recursive: true);
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
@@ -113,7 +111,8 @@ class Login extends StatelessWidget {
                       var tmp = await (UserController.login(usermodel));
                       if (!(tmp is int)) {
                         Usermodel u = usermodelFromJson(jsonEncode(tmp));
-                        print(u.toJson());
+                        // print(u.toJson());
+                        // print(u.userServers.toList().toString());
                         await DBFunctions.insertUserAndServer(u);
                         print(await DBFunctions.getAllDetails());
 
@@ -126,7 +125,7 @@ class Login extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: Get.height / 5.8,
+                    height: sizedBoxBigSpace,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -19,6 +19,7 @@ class UserController extends GetxController {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
     if (response.statusCode == 200) {
+      print(response.body);
       return jsonDecode(response.body);
     } else {
       print("im error response body : \n");
