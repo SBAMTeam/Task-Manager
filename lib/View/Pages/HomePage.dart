@@ -5,6 +5,7 @@ import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/View/Components/ExtraIcons.dart';
 import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 
@@ -15,7 +16,6 @@ class HomePage extends StatelessWidget {
     Usermodel usermodel = Usermodel();
     Servermodel servermodel = Servermodel();
     return Scaffold(
-      bottomNavigationBar: NavBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -45,7 +45,7 @@ class HomePage extends StatelessWidget {
                           ]),
                     ),
                     SizedBox(
-                      width: Get.width / 5,
+                      width: sizedBoxBigSpace * 3.04,
                     ),
                     ClipRRect(
                       borderRadius:
@@ -181,6 +181,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: NavBar(),
     );
   }
 }
