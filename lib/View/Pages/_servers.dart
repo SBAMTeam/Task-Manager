@@ -4,6 +4,8 @@ import 'dart:ui';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:taskmanager/Controllers/TaskController.dart';
+import 'package:taskmanager/Database/_db_functions.dart';
 import 'package:taskmanager/Models/_taskmodel.dart';
 
 class ServersList extends StatelessWidget {
@@ -22,11 +24,14 @@ class ServersList extends StatelessWidget {
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    var test = (await DBFunctions.getUserServers()).toList();
+                    print(test[0]);
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
                     _formKey.currentState.save();
+                    TaskController.createTask(taskmodel);
                   },
                   child: Text("Submit"),
                 ),

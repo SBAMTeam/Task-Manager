@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:taskmanager/Models/Servermodel.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +21,7 @@ class UserController extends GetxController {
         body: jsonEncode(usermodel.toJson()));
     if (response.statusCode == 200) {
       print(response.body);
-      return jsonDecode(response.body);
+      return response.body;
     } else {
       print("im error response body : \n");
       print(response.body);

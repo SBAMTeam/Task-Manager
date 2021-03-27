@@ -110,7 +110,7 @@ class Login extends StatelessWidget {
                       _formKey.currentState.save();
                       var tmp = await (UserController.login(usermodel));
                       if (!(tmp is int)) {
-                        Usermodel u = usermodelFromJson(jsonEncode(tmp));
+                        Usermodel u = usermodelFromJson(tmp);
                         // print(u.toJson());
                         // print(u.userServers.toList().toString());
                         await DBFunctions.insertUserAndServer(u);

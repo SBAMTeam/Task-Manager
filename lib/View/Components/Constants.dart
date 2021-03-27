@@ -21,3 +21,4 @@ final registerUrl = baseAPIURL + '/user/Register.php';
 final createServerUrl = baseAPIURL + '/server/create.php';
 final joinServerUrl = baseAPIURL + '/server/join.php';
 final selectServerUrl = baseAPIURL + "/server/select.php";
+final createTaskUrl = baseAPIURL + "/task/create.php";

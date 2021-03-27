@@ -13,12 +13,14 @@ import 'package:taskmanager/View/Pages/Login.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/MainPage.dart';
 import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
+// import 'package:taskmanager/View/Pages/_servers.dart';
 // ignore: unused_import
-import 'package:taskmanager/View/Pages/_servers.dart';
 // ignore: unused_import
 import 'View/Pages/HomePage.dart';
 import 'View/Pages/Register.dart';
 import 'package:provider/provider.dart';
+
+import 'View/Pages/server_list.dart';
 
 main() async {
   runApp(TaskManager());
@@ -42,7 +44,7 @@ class TaskManager extends StatelessWidget {
         ),
         home: Scaffold(
           backgroundColor: Color(backgroundColor),
-          body: ServersList(),
+          body: Login(),
         ),
       ),
     );
