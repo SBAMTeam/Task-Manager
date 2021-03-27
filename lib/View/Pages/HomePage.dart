@@ -5,6 +5,7 @@ import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/TextBuilder.dart';
 
 class HomePage extends StatelessWidget {
@@ -14,6 +15,7 @@ class HomePage extends StatelessWidget {
     Usermodel usermodel = Usermodel();
     Servermodel servermodel = Servermodel();
     return Scaffold(
+      bottomNavigationBar: NavBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -23,19 +25,22 @@ class HomePage extends StatelessWidget {
                 height: sizedBoxBigSpace,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                padding:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 child: Row(
                   children: [
                     RichText(
                       text: TextSpan(
                           text: 'Fname Lname',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
                           children: [
                             TextSpan(
                               text: '\nrole/job title',
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 20),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20),
                             ),
                           ]),
                     ),
@@ -43,7 +48,8 @@ class HomePage extends StatelessWidget {
                       width: Get.width / 5,
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(9.0), //or 15.0
+                      borderRadius:
+                          BorderRadius.circular(9.0), //or 15.0
                       child: Container(
                         height: 60.0,
                         width: 60.0,
@@ -67,7 +73,8 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: sizedBoxBigSpace * 2),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                padding:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 child: Row(
                   children: [
                     TextBuilder(
@@ -81,7 +88,8 @@ class HomePage extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(Get.width / 16),
-                margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                margin:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 // height: Get.height / 4.5,
                 // width: Get.width,
                 decoration: BoxDecoration(
@@ -122,7 +130,7 @@ class HomePage extends StatelessWidget {
                           fontSize: 25,
                         ),
                         SizedBox(
-                          width: Get.width / 3.6,
+                          width: sizedBoxBigSpace * 3.3,
                         ),
                         TextBuilder(
                           text: "5 tasks",
@@ -136,7 +144,8 @@ class HomePage extends StatelessWidget {
                     Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(9.0), //or 15.0
+                          borderRadius:
+                              BorderRadius.circular(9.0), //or 15.0
                           child: Container(
                             height: 60.0,
                             width: 60.0,
