@@ -22,7 +22,7 @@ if ((!isset($data->taskName) || !isset($data->taskStartDate)) || (!isset($data->
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Task Creation failed, Missing variables"));
-    exit();
+    die("Task Creation failed, Missing variables");
 }
 
 $taskName = $data->taskName;

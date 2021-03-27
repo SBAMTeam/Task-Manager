@@ -22,7 +22,7 @@ if (!isset($data->userName) || !isset($data->userHash))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Login failed, Empty username or password."));
-    exit();
+    die("Login failed, Empty username or password.");
 }
 
 $username = $data->userName;

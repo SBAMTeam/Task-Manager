@@ -18,7 +18,7 @@ if (!isset($data->userId) || !isset($data->serverId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "failed to join server, one or more variables are empty."));
-    exit();   
+    die("failed to join server, one or more variables are empty.");
 }
 
 $userId = $data->userId;

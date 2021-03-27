@@ -19,7 +19,7 @@ if ((!isset($data->serverName) || !isset($data->serverCode)) || !isset($data->se
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Server creation failed, one or more variables are empty."));
-    exit();
+    die("Server creation failed, one or more variables are empty.");
 }
 
 $serverName    = $data->serverName;    
