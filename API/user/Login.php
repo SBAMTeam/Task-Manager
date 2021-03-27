@@ -67,7 +67,7 @@ if($num > 0)
         ));
         
         //get the user servers
-        $query = "SELECT servers.Server_id, servers.Server_name
+        $query = "SELECT servers.Server_id, servers.Owner_ID, servers.Server_name
                   FROM userservers UServer JOIN servers 
                   ON UServer.SERVER_ID = servers.server_ID 
                   WHERE user_id = :userId";
@@ -79,9 +79,10 @@ if($num > 0)
         $stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
         {
-            $rowServerId   = $row['Server_id']; 
-            $rowServerName = $row['Server_name'];
-            $userServers[] = array('serverId'=>$rowServerId ,'serverName'=> $rowServerName);
+            $rowServerId    = $row['Server_id']; 
+            $rowServerName  = $row['Server_name'];
+	    $rowServerOwner = $row['Owner_ID'];
+            $userServers[] = array('serverId'=>$rowServerId ,'serverName'=> $rowServerName, 'serverOwnerId'=> $rowServerOwner);
         }
 
         http_response_code(200);
