@@ -4,6 +4,7 @@ import 'package:taskmanager/View/Components/ButtonBuiler.dart';
 import 'package:taskmanager/View/Components/Constants.dart';
 import 'package:taskmanager/View/Pages/CreateServer.dart';
 import 'package:taskmanager/View/Pages/JoinServer.dart';
+import 'server_list.dart';
 
 class LoggedInPage extends StatefulWidget {
   LoggedInPage({Key key}) : super(key: key);
@@ -77,6 +78,21 @@ class _MainPageState extends State<LoggedInPage> {
                       textColor: Color(textColor),
                       color: Color(buttonColorTwo),
                       onPress: () => Get.to(() => JoinServer()),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ButtonBuilder(
+                      height: 55.0,
+                      edge: 9.0,
+                      text: 'JHOMEEE',
+                      textColor: Color(textColor),
+                      color: Color(buttonColorTwo),
+                      onPress: () {
+                        Get.off(() => ServersList());
+                      },
                     ),
                   ],
                 ),

@@ -64,8 +64,10 @@ class DBFunctions {
     return tmp;
   }
 
-  static Future getUserServers() async {
-    return await serverDao.getServers();
+  static Future<List<Server>> getUserServers() async {
+    var tmp = await serverDao.getServers();
+    print(tmp);
+    return tmp;
   }
 
   static Future<List<dynamic>> getAllDetails() async {
