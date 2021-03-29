@@ -2,17 +2,27 @@ import 'dart:convert';
 import 'dart:convert' as convert;
 
 import 'package:get/get.dart';
+import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Database/database.dart';
 import 'package:taskmanager/Models/_taskmodel.dart';
 import 'package:http/http.dart' as http;
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 
 class TaskController extends GetxController {
-  static TaskController _serverController;
+  var isLoading = true.obs;
+  List<Task> taskList = List<Task>().obs;
+  @override
+  void onInit() {
+    getUserTasksFromDB();
+    super.onInit();
+  }
+
+  static TaskController _taskController;
   static TaskController getInstance() {
-    if (_serverController == null)
-      return _serverController = TaskController();
+    if (_taskController == null)
+      return _taskController = TaskController();
     else
-      return _serverController;
+      return _taskController;
   }
 
   var taskmodel = Taskmodel().obs;
@@ -24,5 +34,19 @@ class TaskController extends GetxController {
     print(response.body);
     print(response.statusCode);
     return response.statusCode;
+  }
+
+  Future getUserTasksFromDB() async {
+    try {
+      isLoading(true);
+      var tasks = (await DBFunctions.getUserTasks()).toList();
+
+      if (tasks != null) {
+        taskList.assignAll(tasks);
+      }
+    } finally {
+      isLoading(false);
+    }
+    print(taskList[0].taskName);
   }
 }

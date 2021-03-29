@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
 
 class CardBuilder extends StatelessWidget {
   const CardBuilder({Key key}) : super(key: key);

@@ -16,6 +16,7 @@ class Taskmodel {
     this.taskStartDate,
     this.taskDeadline,
     this.taskUserId,
+    this.taskCreatorId,
     this.taskServerId,
   });
 
@@ -25,6 +26,7 @@ class Taskmodel {
   String taskStartDate;
   String taskDeadline;
   String taskUserId;
+  String taskCreatorId;
   String taskServerId;
 
   factory Taskmodel.fromJson(Map<String, dynamic> json) => Taskmodel(
@@ -34,6 +36,7 @@ class Taskmodel {
         taskStartDate: json["taskStartDate"],
         taskDeadline: json["taskDeadline"],
         taskUserId: json["taskUserId"],
+        taskCreatorId: json["taskCreatorId"],
         taskServerId: json["taskServerId"],
       );
 
@@ -44,6 +47,7 @@ class Taskmodel {
         "taskStartDate": taskStartDate,
         "taskDeadline": taskDeadline,
         "taskUserId": taskUserId,
+        "taskCreatorId": taskCreatorId,
         "taskServerId": taskServerId,
       };
 }

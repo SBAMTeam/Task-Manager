@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
-import 'package:taskmanager/View/Components/server_select.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
+import 'package:taskmanager/View/Components/server_ui.dart';
 
 class ServersList extends StatefulWidget {
   ServersList({Key key}) : super(key: key);
@@ -20,7 +20,7 @@ class _ServersListState extends State<ServersList> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ServerSelect()],
+            children: [ServerUI()],
           ),
         ),
       ),
