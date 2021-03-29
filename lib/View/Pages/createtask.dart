@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:taskmanager/Controllers/TaskController.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/_taskmodel.dart';
 
 class CreateTask extends StatelessWidget {

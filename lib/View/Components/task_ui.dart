@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/Controllers/ServerController.dart';
-import 'package:taskmanager/Controllers/TaskController.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Controllers/server_controller.dart';
+import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Database/database.dart';
 import 'package:taskmanager/Models/Servermodel.dart';
 import 'package:taskmanager/Models/Usermodel.dart';

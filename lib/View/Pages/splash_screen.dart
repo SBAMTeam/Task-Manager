@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
 

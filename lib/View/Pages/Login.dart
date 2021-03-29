@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/Controllers/Usercontroller.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/Usermodel.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
