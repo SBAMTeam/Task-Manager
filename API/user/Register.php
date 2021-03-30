@@ -22,7 +22,7 @@ if ((!isset($data->userName) || !isset($data->userHash)) || (!isset($data->userE
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Account Creation failed, Missing variables"));
-    exit();
+    die("Account Creation failed, Missing variables");
 }
 
 $username = $data->userName;
