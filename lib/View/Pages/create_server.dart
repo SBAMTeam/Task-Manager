@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
+
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/server_code_generator.dart';

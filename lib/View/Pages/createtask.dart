@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/_taskmodel.dart';
+import 'package:taskmanager/Models/task_model.dart';
 
 class CreateTask extends StatelessWidget {
   const CreateTask({Key key, @required this.serverId}) : super(key: key);
