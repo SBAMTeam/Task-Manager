@@ -14,15 +14,15 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!isset($data->userId) || !isset($data->serverId))
+if (!isset($data->taskUserId) || !isset($data->taskServerId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "failed to join server, one or more variables are empty."));
     die("failed to join server, one or more variables are empty.");
 }
 
-$userId = $data->userId;
-$serverId = $data->serverId;
+$taskUserId = $data->taskUserId;
+$taskServerId = $data->taskServerId;
 
 $query = "SELECT tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tasks.Task_End_Date 
                 from user_tasks UTask JOIN tasks ON UTask.Task_ID = tasks.Task_id
@@ -30,8 +30,8 @@ $query = "SELECT tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tas
 
 $stmt = $conn->prepare($query);
 
-$stmt->bindParam(':USER_ID'  , $userId);
-$stmt->bindParam(':SERVER_ID', $serverId);
+$stmt->bindParam(':USER_ID'  , $taskUserId);
+$stmt->bindParam(':SERVER_ID', $taskServerId);
 
 $stmt->execute();
 $rowNum = $stmt->rowCount();
@@ -40,12 +40,12 @@ if ($rowNum > 0)
 {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-        $TaskDescr      =   $row['Task_Descr']; 
-        $TaskDetail     =   $row['Task_Detail'];
-        $TaskEndDate    =   $row['Task_Start_Date'];
-        $TaskStartDate  =   $row['Task_End_Date'];
-        $Tasks[] = array('taskDescribtion'=> $TaskDescr,'taskDetail'=> $TaskDetail,
-                         'taskStartDate' => $TaskEndDate, 'taskEndDate' => $TaskEndDate);
+        $taskName      =   $row['Task_Descr']; 
+        $taskDetails     =   $row['Task_Detail'];
+        $taskDeadline    =   $row['Task_Start_Date'];
+        $taskStartDate  =   $row['Task_End_Date'];
+        $Tasks[] = array('taskName'=> $taskName,'taskDetails'=> $taskDetails,
+                         'taskStartDate' => $taskStartDate, 'taskDeadline' => $taskDeadline);
     }
     echo $jsonformat=json_encode($Tasks);
 }
