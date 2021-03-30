@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Database/database.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
@@ -46,7 +47,7 @@ class TaskManager extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Nunito',
         ),
-        home: SplashScreen(),
+        home: NavBar(),
       ),
     );
   }

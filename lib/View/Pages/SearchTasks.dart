@@ -6,11 +6,11 @@ class SearchTasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: NavBar(),
-      body: SafeArea(
-        child: Container(),
-      ),
-    );
+    return Container(
+        // bottomNavigationBar: NavBar(),
+        // body: SafeArea(
+        //   child: Container(),
+        // ),
+        );
   }
 }
