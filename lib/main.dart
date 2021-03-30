@@ -51,7 +51,7 @@ class TaskManager extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Nunito',
         ),
-        home: SplashScreen(),
+        home: NavBar(),
       ),
     );
   }

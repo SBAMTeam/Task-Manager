@@ -66,6 +66,10 @@ flutter:
         - asset: assets/fonts/Nunito/NunitoSans-Light.ttf
         - asset: assets/fonts/Nunito/NunitoSans-Regular.ttf
         - asset: assets/fonts/Nunito/NunitoSans-Bold.ttf
+    - family: ExtraIcons
+      fonts:
+        - asset: assets/fonts/Icons/ExtraIcons.ttf
+        
 
   uses-material-design: true
 
