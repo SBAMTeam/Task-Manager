@@ -1,26 +1,8 @@
 import 'package:moor_flutter/moor_flutter.dart';
-
+import 'Tables/tasks_table_init.dart';
+import 'Tables/users_table_init.dart';
+import 'Tables/servers_table_init.dart';
 part 'database.g.dart';
-
-class Users extends Table {
-  IntColumn get userId => integer()();
-  TextColumn get userName => text().nullable().withLength(min: 1, max: 50)();
-  TextColumn get userEmail => text().withLength(min: 1, max: 50)();
-  TextColumn get userLogMessage => text().withLength(min: 1, max: 200)();
-  TextColumn get userNickname => text().withLength(min: 1, max: 50)();
-  TextColumn get userJwt => text().withLength(min: 1, max: 300)();
-
-  Set<Column> get primrayKey => {userId};
-}
-
-class Servers extends Table {
-  IntColumn get serverId => integer().nullable()();
-  TextColumn get serverName => text().nullable().withLength(min: 1, max: 50)();
-  IntColumn get serverOwnerId => integer().nullable()();
-  IntColumn get userId =>
-      integer().nullable().customConstraint('NULL REFERENCES users(userId)')();
-  Set<Column> get primrayKey => {serverId};
-}
 
 class UserWithServers {
   final Users user;
@@ -29,7 +11,7 @@ class UserWithServers {
   UserWithServers({@required this.user, @required this.servers});
 }
 
-@UseMoor(tables: [Servers, Users], daos: [UserDao, ServerDao])
+@UseMoor(tables: [Servers, Users, Tasks], daos: [UserDao, ServerDao, TaskDao])
 class Database extends _$Database {
   Database()
       : super(FlutterQueryExecutor.inDatabaseFolder(
@@ -90,6 +72,17 @@ class ServerDao extends DatabaseAccessor<Database> with _$ServerDaoMixin {
 
   Future getServers() => select(servers).get();
 }
-// Future insertUser(Insertable<User> user) => into(users).insert(user);
-//   Future insertServer(Insertable<Server> server) =>
-//       into(servers).insert(server);
+
+@UseDao(tables: [Tasks])
+class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
+  final Database db;
+
+  TaskDao(this.db) : super(db);
+
+  Stream<List<Task>> watchTasks() => select(tasks).watch();
+  Future insertTask(Insertable<Task> task) => into(tasks).insert(task);
+
+  Future getTasks() => select(tasks).get();
+  Future getTasksWithServerId(int id) =>
+      (select(tasks)..where((a) => a.serverId.equals(5))).get();
+}

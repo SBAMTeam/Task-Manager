@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
+import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 
 import 'Login.dart';
 

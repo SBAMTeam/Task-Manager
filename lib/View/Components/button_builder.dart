@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 
 class ButtonBuilder extends StatelessWidget {
   final VoidCallback onPress;
@@ -34,15 +34,16 @@ class ButtonBuilder extends StatelessWidget {
       onPressed: onPress ?? () {},
       child: child ??
           Container(
-            child: Center(
-              child: Text(
-                text ?? 'PLACEHOLDER',
-                style: TextStyle(
-                    color: textColor ?? Colors.white,
-                    fontSize: fontSize ?? 18,
-                    fontWeight: FontWeight.w600),
-              ),
+            alignment: Alignment.center,
+            // child: Center(
+            child: Text(
+              text ?? 'PLACEHOLDER',
+              style: TextStyle(
+                  color: textColor ?? Colors.white,
+                  fontSize: fontSize ?? 18,
+                  fontWeight: FontWeight.w600),
             ),
+            // ),
             width: width ?? Get.width / 2.5,
             height: height ?? defaultHeight,
             decoration: boxDecoration ??

@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanager/Database/database.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
 import 'package:moor_flutter/moor_flutter.dart' as moor;
+import 'package:taskmanager/Models/task_model.dart';
 
 class DBFunctions {
   static final userDao = Provider.of<UserDao>(Get.context, listen: false);
   static final serverDao = Provider.of<ServerDao>(Get.context, listen: false);
+  static final taskDao = Provider.of<TaskDao>(Get.context, listen: false);
   static insertUser(Usermodel usermodel) {
     final newUser = UsersCompanion(
       userId: moor.Value(int.parse(usermodel.userId)),
@@ -16,6 +18,7 @@ class DBFunctions {
       userName: moor.Value(usermodel.userName),
       userNickname: moor.Value(usermodel.userNickname),
       userLogMessage: moor.Value(usermodel.logMessages),
+      userLoggedIn: moor.Value(true),
     );
     userDao.insertUser(newUser);
   }
@@ -59,13 +62,17 @@ class DBFunctions {
       DBFunctions.insertServersOnLogin(usermodel);
   }
 
-  static Future getUserDetails() async {
-    var tmp = await userDao.getUserData();
-    return tmp;
-  }
-
-  static Future getUserServers() async {
-    return await serverDao.getServers();
+  static insertTask(Taskmodel taskmodel, int serverId) {
+    var task = TasksCompanion(
+      serverId: moor.Value(serverId),
+      taskCreatorId: moor.Value(int.parse(taskmodel.taskCreatorId)),
+      taskDeadline: moor.Value(DateTime.parse(taskmodel.taskDeadline)),
+      taskStartDate: moor.Value(DateTime.parse(taskmodel.taskStartDate)),
+      taskDetails: moor.Value(taskmodel.taskDetails),
+      taskId: moor.Value(int.parse(taskmodel.taskId)),
+      taskName: moor.Value(taskmodel.taskName),
+      // taskProgress: //add later maybe
+    );
   }
 
   static Future<List<dynamic>> getAllDetails() async {
@@ -103,6 +110,34 @@ class DBFunctions {
   static Future getUserLogMessage() async {
     var tmp = await userDao.getUserData();
     return tmp[0].userLogMessage;
+  }
+
+  static Future<bool> isUserLoggedIn() async {
+    List<User> tmp = await userDao.getUserData();
+    if (tmp.length < 1) {
+      return false;
+    } else {
+      bool tmp1 = tmp[0].userLoggedIn;
+      print(tmp1);
+      return tmp1;
+    }
+  }
+
+  static Future getUserDetails() async {
+    var tmp = await userDao.getUserData();
+    return tmp;
+  }
+
+  static Future<List<Server>> getUserServers() async {
+    var tmp = await serverDao.getServers();
+    print(tmp);
+    return tmp;
+  }
+
+  static Future getUserTasks() async {
+    List<Task> tmp = await taskDao.getTasks();
+    print(tmp);
+    return tmp;
   }
 
   // static Future getServerOwnerIdInteger(String inputServerCode) async {

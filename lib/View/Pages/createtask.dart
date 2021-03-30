@@ -4,11 +4,13 @@ import 'dart:ui';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:taskmanager/Models/_taskmodel.dart';
+import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/Models/task_model.dart';
 
-class ServersList extends StatelessWidget {
-  const ServersList({Key key}) : super(key: key);
-
+class CreateTask extends StatelessWidget {
+  const CreateTask({Key key, @required this.serverId}) : super(key: key);
+  final serverId;
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -22,11 +24,18 @@ class ServersList extends StatelessWidget {
             child: Column(
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
                     _formKey.currentState.save();
+                    taskmodel.taskCreatorId =
+                        (await DBFunctions.getUserIdInteger()).toString();
+
+                    TaskController.createTask(taskmodel);
+                    await DBFunctions.insertTask(taskmodel, serverId);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Yay! A SnackBar!')));
                   },
                   child: Text("Submit"),
                 ),

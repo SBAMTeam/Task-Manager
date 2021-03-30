@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Pages/CreateServer.dart';
-import 'package:taskmanager/View/Pages/JoinServer.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/transparent_app_bar.dart';
+import 'package:taskmanager/View/Pages/register.dart';
 
-class LoggedInPage extends StatefulWidget {
-  LoggedInPage({Key key}) : super(key: key);
+import 'Login.dart';
 
-  @override
-  _MainPageState createState() => _MainPageState();
-}
+class MainPage extends StatelessWidget {
+  const MainPage({Key key}) : super(key: key);
 
-class _MainPageState extends State<LoggedInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
-          // , vertical: Get.height / 13),
+          padding: EdgeInsets.symmetric(horizontal: Get.width / 8),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: sizedBoxBigSpace,
+                  height: sizedBoxBigSpace * 2,
                 ),
                 RichText(
                   text: TextSpan(
@@ -61,8 +57,8 @@ class _MainPageState extends State<LoggedInPage> {
                       height: 55.0,
                       edge: 9.0,
                       color: Color(buttonColorOne),
-                      text: 'Create Server',
-                      onPress: () => Get.to(() => CreateServer()),
+                      text: 'Register',
+                      onPress: () => Get.to(() => Register()),
                     ),
                   ],
                 ),
@@ -73,10 +69,10 @@ class _MainPageState extends State<LoggedInPage> {
                     ButtonBuilder(
                       height: 55.0,
                       edge: 9.0,
-                      text: 'Join Server',
+                      text: 'Login',
                       textColor: Color(textColor),
                       color: Color(buttonColorTwo),
-                      onPress: () => Get.to(() => JoinServer()),
+                      onPress: () => Get.to(() => Login()),
                     ),
                   ],
                 ),

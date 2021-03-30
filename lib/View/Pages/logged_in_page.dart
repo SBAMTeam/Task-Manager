@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
-import 'package:taskmanager/View/Pages/Register.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Pages/create_server.dart';
+import 'package:taskmanager/View/Pages/join_server.dart';
+import 'server_list.dart';
 
-import 'Login.dart';
+class LoggedInPage extends StatefulWidget {
+  LoggedInPage({Key key}) : super(key: key);
 
-class MainPage extends StatelessWidget {
-  const MainPage({Key key}) : super(key: key);
+  @override
+  _MainPageState createState() => _MainPageState();
+}
 
+class _MainPageState extends State<LoggedInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Get.width / 8),
+          padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+          // , vertical: Get.height / 13),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: sizedBoxBigSpace * 2,
+                  height: sizedBoxBigSpace,
                 ),
                 RichText(
                   text: TextSpan(
@@ -57,8 +62,8 @@ class MainPage extends StatelessWidget {
                       height: 55.0,
                       edge: 9.0,
                       color: Color(buttonColorOne),
-                      text: 'Register',
-                      onPress: () => Get.to(() => Register()),
+                      text: 'Create Server',
+                      onPress: () => Get.to(() => CreateServer()),
                     ),
                   ],
                 ),
@@ -69,10 +74,25 @@ class MainPage extends StatelessWidget {
                     ButtonBuilder(
                       height: 55.0,
                       edge: 9.0,
-                      text: 'Login',
+                      text: 'Join Server',
                       textColor: Color(textColor),
                       color: Color(buttonColorTwo),
-                      onPress: () => Get.to(() => Login()),
+                      onPress: () => Get.to(() => JoinServer()),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ButtonBuilder(
+                      height: 55.0,
+                      edge: 9.0,
+                      text: 'Home',
+                      textColor: Color(textColor),
+                      color: Color(buttonColorTwo),
+                      onPress: () {
+                        Get.to(() => ServersList());
+                      },
                     ),
                   ],
                 ),

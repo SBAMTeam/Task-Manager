@@ -1,21 +1,18 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:taskmanager/Controllers/Usercontroller.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 import 'package:crypto/crypto.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
-import 'package:taskmanager/View/Pages/LoggedInPage.dart';
-
-import 'Register.dart';
+import 'package:taskmanager/View/Components/transparent_app_bar.dart';
+import 'package:taskmanager/View/Pages/logged_in_page.dart';
+import 'register.dart';
 
 class Login extends StatelessWidget {
   final Usermodel usermodel = Usermodel();
@@ -25,18 +22,22 @@ class Login extends StatelessWidget {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+          child: Container(
+            height: Get.height - (Get.statusBarHeight + 15),
+
+            padding: EdgeInsets.only(
+                left: horizontalPadding,
+                right: horizontalPadding,
+                top: Get.height / 15),
             // , vertical: Get.height / 13),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image.asset('assets/images/signin_image_dark.png'),
                   SizedBox(
@@ -48,7 +49,7 @@ class Login extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: Get.height / 30,
+                    height: sizedBoxBigSpace,
                   ),
                   TextFieldBuilder(
                     hint: 'Username',
@@ -110,7 +111,7 @@ class Login extends StatelessWidget {
                       _formKey.currentState.save();
                       var tmp = await (UserController.login(usermodel));
                       if (!(tmp is int)) {
-                        Usermodel u = usermodelFromJson(jsonEncode(tmp));
+                        Usermodel u = usermodelFromJson(tmp);
                         // print(u.toJson());
                         // print(u.userServers.toList().toString());
                         await DBFunctions.insertUserAndServer(u);
@@ -124,29 +125,36 @@ class Login extends StatelessWidget {
                       }
                     },
                   ),
-                  SizedBox(
-                    height: sizedBoxBigSpace,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(
-                            color: Colors.white.withAlpha(127),
-                            fontWeight: FontWeight.w600),
-                      ),
-                      ButtonBuilder(
-                        onPress: () {
-                          Get.to(() => Register());
-                        },
-                        child: Text(
-                          "Sign up",
-                          style: TextStyle(fontWeight: FontWeight.w600),
+                  // SizedBox(
+                  //   height: sizedBoxBigSpace,
+                  // ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Don't have an account?",
+                              style: TextStyle(
+                                  color: Colors.white.withAlpha(127),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            ButtonBuilder(
+                              onPress: () {
+                                Get.to(() => Register());
+                              },
+                              child: Text(
+                                "Sign up",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

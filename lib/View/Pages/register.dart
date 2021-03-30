@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/Controllers/Usercontroller.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
+import 'package:taskmanager/Models/user_model.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:crypto/crypto.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
-import 'RegistrationComplete.dart';
+import 'package:taskmanager/View/Components/transparent_app_bar.dart';
+import 'registration_complete.dart';
 import 'dart:convert';
 
 class Register extends StatelessWidget {

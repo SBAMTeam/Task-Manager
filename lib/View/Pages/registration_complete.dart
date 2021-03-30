@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 
 import 'Login.dart';
 
@@ -10,7 +10,7 @@ class RegistrationComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Get.off(Login());
+      Get.off(() => Login());
     });
     return Scaffold(
       backgroundColor: Color(backgroundColor),

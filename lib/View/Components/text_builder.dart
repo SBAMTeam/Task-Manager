@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Constants.dart';
+import 'constants.dart';
 
 class TextBuilder extends StatelessWidget {
   final text, color, fontWeight;

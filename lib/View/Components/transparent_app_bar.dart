@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'Backbutton.dart';
+import 'back_button.dart';
 
-class TransparentAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class TransparentAppBar extends StatelessWidget implements PreferredSizeWidget {
   TransparentAppBar({Key key, this.onPress}) : super(key: key);
   final onPress;
   @override

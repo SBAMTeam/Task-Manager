@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:flutter/services.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 
 class ServerCodeCreated extends StatelessWidget {
   final serverCode;

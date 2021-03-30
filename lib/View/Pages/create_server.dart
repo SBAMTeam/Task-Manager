@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:taskmanager/Controllers/ServerController.dart';
-import 'package:taskmanager/Database/_db_functions.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/View/Components/ButtonBuiler.dart';
-import 'package:taskmanager/View/Components/Constants.dart';
-import 'package:taskmanager/View/Components/ServerCodeGenerator.dart';
-import 'package:taskmanager/View/Components/TextBuilder.dart';
+import 'package:taskmanager/Controllers/server_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
+
+import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/server_code_generator.dart';
+import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
-import 'package:taskmanager/View/Components/TransparentAppBar.dart';
-import 'package:taskmanager/View/Pages/ServerCodeCreated.dart';
+import 'package:taskmanager/View/Components/transparent_app_bar.dart';
+import 'package:taskmanager/View/Pages/server_code_created.dart';
 import 'package:taskmanager/Database/database.dart';
 
 class CreateServer extends StatelessWidget {
