@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/CardBuilder.dart';
@@ -9,10 +10,19 @@ import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/ExtraIcons.dart';
 import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 
 class HomePage extends StatelessWidget {
+  var username;
+
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      getUsername();
+      super.initState();
+    }
+
     Usermodel usermodel = Usermodel();
     Servermodel servermodel = Servermodel();
     return Scaffold(
@@ -185,5 +195,9 @@ class HomePage extends StatelessWidget {
       //   () => NavBar(),
       // ),
     );
+  }
+
+  getUsername() async {
+    username = await DBFunctions.getUsername();
   }
 }
