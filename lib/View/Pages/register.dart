@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';

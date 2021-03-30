@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:taskmanager/Database/database.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
 import 'package:moor_flutter/moor_flutter.dart' as moor;
-import 'package:taskmanager/Models/_taskmodel.dart';
+import 'package:taskmanager/Models/task_model.dart';
 
 class DBFunctions {
   static final userDao = Provider.of<UserDao>(Get.context, listen: false);

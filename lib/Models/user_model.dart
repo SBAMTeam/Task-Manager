@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'Servermodel.dart';
+import 'server_model.dart';
 
 Usermodel usermodelFromJson(String str) => Usermodel.fromJson(json.decode(str));
 

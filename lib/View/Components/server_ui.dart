@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
-import 'package:taskmanager/Models/_taskmodel.dart';
-import 'package:taskmanager/View/Pages/createtask.dart';
-import 'package:taskmanager/View/Pages/server_page.dart.old';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
+import 'package:taskmanager/Models/task_model.dart';
+
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
 class ServerUI extends StatefulWidget {

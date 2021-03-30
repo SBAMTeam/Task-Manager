@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:taskmanager/Models/Servermodel.dart';
-import 'package:taskmanager/Models/Usermodel.dart';
+import 'package:taskmanager/Models/server_model.dart';
+import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:get/get.dart';
