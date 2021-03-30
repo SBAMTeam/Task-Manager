@@ -29,7 +29,7 @@ dependencies:
   http: ^0.13.0
   fluttertoast: ^7.1.6
   path_provider: ^2.0.1
-  moor: ^4.1.0
+  moor: ^4.2.1
   moor_flutter: 
   provider: ^5.0.0
   date_time_picker: ^2.0.0

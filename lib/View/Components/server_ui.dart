@@ -22,6 +22,7 @@ class _ServerUIState extends State<ServerUI> {
   var servermodel = Servermodel();
   var usermodel = Usermodel();
   var taskmodel = Taskmodel();
+  // var taskList = List<Taskmodel>();
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -38,23 +39,37 @@ class _ServerUIState extends State<ServerUI> {
                   padding: EdgeInsets.only(top: 4),
                   child: TextButton(
                     onPressed: () async {
-                      servermodel.serverId =
-                          (sc.serverList[index].serverId).toString();
-                      usermodel.userId =
-                          (await DBFunctions.getUserIdInteger()).toString();
-                      print("server id is : ${servermodel.serverId}");
-                      print("user id is : ${usermodel.userId}");
+                      // servermodel.serverId =
+                      // (sc.serverList[index].serverId).toString();
+                      // usermodel.userId =
+                      // (await DBFunctions.getUserIdInteger()).toString();
+                      // print("server id is : ${servermodel.serverId}");
+                      // print("user id is : ${usermodel.userId}");
+                      // taskmodel.taskServerId = servermodel.serverId;
+                      // taskmodel.taskUserId = usermodel.userId;
+                      int serverId, userId;
+                      serverId = (sc.serverList[index].serverId);
+                      userId = (await DBFunctions.getUserIdInteger());
+                      var serverUserTasks =
+                          await ServerController.selectServer(serverId, userId);
+                      if (serverUserTasks is int) {
+                        Get.to(() => TasksList(serverId: serverId));
+                        return;
+                      }
+                      servermodel = servermodelFromJson(serverUserTasks);
+                      servermodel.serverId = serverId.toString();
 
-                      String serverUserTasks =
-                          await ServerController.selectServer(
-                              servermodel, usermodel);
+                      try {
+                        DBFunctions.insertTasks(servermodel.userTasks,
+                            int.parse(servermodel.serverId));
+                        Get.to(() => TasksList(
+                              serverId: int.parse(servermodel.serverId),
+                            ));
+                      } catch (e) {
+                        print("error is : $e");
+                      }
 
-                      taskmodel = taskmodelFromJson(serverUserTasks);
-                      DBFunctions.insertTask(
-                          taskmodel, int.parse(servermodel.serverId));
-                      Get.to(() => TasksList(
-                            serverId: int.parse(servermodel.serverId),
-                          ));
+                      Get.to(() => TasksList(serverId: serverId));
                     },
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,12 +82,12 @@ class _ServerUIState extends State<ServerUI> {
                               CircleAvatar(
                                 radius: 40,
                                 backgroundImage: NetworkImage(
-                                  "https://via.placeholder.com/360"
-                                      //uniController.uniList[index].image, //uncomment when backend has a working link
-                                      ??
-                                      AssetImage(
-                                          'assets/images/damascus_logo.jpg'),
-                                ),
+                                    "http://via.placeholder.com/360"
+                                    //uniController.uniList[index].image, //uncomment when backend has a working link
+                                    // ??
+                                    // AssetImage(
+                                    //     'assets/images/damascus_logo.jpg'),
+                                    ),
                               ),
                               SizedBox(
                                 width: 8,

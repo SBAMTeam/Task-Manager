@@ -40,13 +40,15 @@ class TaskController extends GetxController {
     try {
       isLoading(true);
       var tasks = (await DBFunctions.getUserTasks()).toList();
+      print("all tasks list length is : ${tasks.length}");
 
-      if (tasks != null) {
+      if (tasks != null || tasks != []) {
         taskList.assignAll(tasks);
       }
     } finally {
       isLoading(false);
     }
     print(taskList[0].taskName);
+    print("tasklist in controller length is : ${taskList.length}");
   }
 }

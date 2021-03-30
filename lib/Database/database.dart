@@ -80,7 +80,13 @@ class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
   TaskDao(this.db) : super(db);
 
   Stream<List<Task>> watchTasks() => select(tasks).watch();
-  Future insertTask(Insertable<Task> task) => into(tasks).insert(task);
+  Future insertTask(Insertable<Task> task) {
+    try {
+      into(tasks).insert(task);
+    } catch (e) {
+      print("error in insertTask in database.dart : $e");
+    }
+  }
 
   Future getTasks() => select(tasks).get();
   Future getTasksWithServerId(int id) =>

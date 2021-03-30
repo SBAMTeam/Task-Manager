@@ -4,13 +4,18 @@ import 'dart:ui';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/task_model.dart';
+import 'package:taskmanager/View/Pages/tasks_list.dart';
 
 class CreateTask extends StatelessWidget {
-  const CreateTask({Key key, @required this.serverId}) : super(key: key);
+  CreateTask({Key key, @required this.serverId}) : super(key: key);
   final serverId;
+  final ServerController sc = Get.find();
+
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,11 +36,15 @@ class CreateTask extends StatelessWidget {
                     _formKey.currentState.save();
                     taskmodel.taskCreatorId =
                         (await DBFunctions.getUserIdInteger()).toString();
-
+                    taskmodel.taskServerId = serverId.toString();
+                    taskmodel.taskUserId = taskmodel.taskCreatorId;
                     TaskController.createTask(taskmodel);
-                    await DBFunctions.insertTask(taskmodel, serverId);
+                    ServerController.selectServer(
+                        serverId, int.parse(taskmodel.taskCreatorId));
+                    await DBFunctions.insertTaskOnCreation(taskmodel, serverId);
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Yay! A SnackBar!')));
+                    Get.off(() => TasksList(serverId: serverId));
                   },
                   child: Text("Submit"),
                 ),
