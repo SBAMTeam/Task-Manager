@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
@@ -26,5 +27,9 @@ class UserController extends GetxController {
       print(response.body);
       return response.statusCode;
     }
+  }
+
+  Future<String> getUsername() async {
+    return await DBFunctions.getUsername();
   }
 }
