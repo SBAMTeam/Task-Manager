@@ -24,13 +24,12 @@ if (!isset($data->taskUserId) || !isset($data->taskServerId))
 $taskUserId = $data->taskUserId;
 $taskServerId = $data->taskServerId;
 
-$query = "SELECT tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tasks.Task_End_Date 
-                from user_tasks UTask JOIN tasks ON UTask.Task_ID = tasks.Task_id
-          where UTask.User_ID = :USER_ID AND UTask.Server_ID = :SERVER_ID";
+$query = "SELECT tasks.Task_id, tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tasks.Task_End_Date , tasks.creator_Id
+          from tasks 
+          where tasks.server_id = :SERVER_ID";
 
 $stmt = $conn->prepare($query);
 
-$stmt->bindParam(':USER_ID'  , $taskUserId);
 $stmt->bindParam(':SERVER_ID', $taskServerId);
 
 $stmt->execute();
@@ -40,14 +39,17 @@ if ($rowNum > 0)
 {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-        $taskName      =   $row['Task_Descr']; 
-        $taskDetails     =   $row['Task_Detail'];
-        $taskDeadline    =   $row['Task_Start_Date'];
+	$taskId         =   $row['Task_id']; 
+        $taskName       =   $row['Task_Descr']; 
+        $taskDetails    =   $row['Task_Detail'];
+        $taskDeadline   =   $row['Task_Start_Date'];
         $taskStartDate  =   $row['Task_End_Date'];
-        $Tasks[] = array('taskName'=> $taskName,'taskDetails'=> $taskDetails,
-                         'taskStartDate' => $taskStartDate, 'taskDeadline' => $taskDeadline);
+        $taskCreatorId  =   $row['creator_Id'];
+        $Tasks[] = array('taskId' => $taskId, 'taskName'=> $taskName,'taskDetails'=> $taskDetails,
+                         'taskStartDate' => $taskStartDate, 'taskDeadline' => $taskDeadline,
+                         'taskCreatorId' => $taskCreatorId);
     }
-    echo $jsonformat=json_encode($Tasks);
+    echo $jsonformat=json_encode(array("userTasks" => $Tasks));
 }
 else
 {
