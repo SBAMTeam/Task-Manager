@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
@@ -12,17 +13,31 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
   var username;
+
+  final UserController uc = Get.put(UserController());
+  @override
+  void initState() {
+    uc.getUsername().then((String result) {
+      setState(() {
+        username = result;
+        return;
+      });
+      return;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // @override
-    // void initState() {
-    //   getUsername();
-    //   super.initState();
-    // }
-
     Usermodel usermodel = Usermodel();
     Servermodel servermodel = Servermodel();
     return Scaffold(
@@ -35,19 +50,22 @@ class HomePage extends StatelessWidget {
                 height: sizedBoxBigSpace,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                padding:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 child: Row(
                   children: [
                     RichText(
                       text: TextSpan(
-                          text: 'Fname Lname',
+                          text: username,
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
                           children: [
                             TextSpan(
                               text: '\nrole/job title',
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 20),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20),
                             ),
                           ]),
                     ),
@@ -55,7 +73,8 @@ class HomePage extends StatelessWidget {
                       width: sizedBoxBigSpace * 3.04,
                     ),
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(9.0), //or 15.0
+                      borderRadius:
+                          BorderRadius.circular(9.0), //or 15.0
                       child: Container(
                         height: 60.0,
                         width: 60.0,
@@ -79,7 +98,8 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: sizedBoxBigSpace * 2),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                padding:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 child: Row(
                   children: [
                     TextBuilder(
@@ -93,7 +113,8 @@ class HomePage extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 padding: EdgeInsets.all(Get.width / 16),
-                margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                margin:
+                    EdgeInsets.symmetric(horizontal: Get.width / 16),
                 // height: Get.height / 4.5,
                 // width: Get.width,
                 decoration: BoxDecoration(
@@ -148,7 +169,8 @@ class HomePage extends StatelessWidget {
                     Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(9.0), //or 15.0
+                          borderRadius:
+                              BorderRadius.circular(9.0), //or 15.0
                           child: Container(
                             height: 60.0,
                             width: 60.0,
@@ -188,9 +210,5 @@ class HomePage extends StatelessWidget {
       //   () => NavBar(),
       // ),
     );
-  }
-
-  getUsername() async {
-    username = await DBFunctions.getUsername();
   }
 }
