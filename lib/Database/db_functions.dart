@@ -11,49 +11,61 @@ class DBFunctions {
   static final serverDao = Provider.of<ServerDao>(Get.context, listen: false);
   static final taskDao = Provider.of<TaskDao>(Get.context, listen: false);
   static insertUser(Usermodel usermodel) {
-    final newUser = UsersCompanion(
-      userId: moor.Value(int.parse(usermodel.userId)),
-      userEmail: moor.Value(usermodel.userEmail),
-      userJwt: moor.Value(usermodel.jwt),
-      userName: moor.Value(usermodel.userName),
-      userNickname: moor.Value(usermodel.userNickname),
-      userLogMessage: moor.Value(usermodel.logMessages),
-      userLoggedIn: moor.Value(true),
-    );
-    userDao.insertUser(newUser);
+    try {
+      final newUser = UsersCompanion(
+        userId: moor.Value(int.parse(usermodel.userId)),
+        userEmail: moor.Value(usermodel.userEmail),
+        userJwt: moor.Value(usermodel.jwt),
+        userName: moor.Value(usermodel.userName),
+        userNickname: moor.Value(usermodel.userNickname),
+        userLogMessage: moor.Value(usermodel.logMessages),
+        userLoggedIn: moor.Value(true),
+      );
+      userDao.insertUser(newUser);
+    } catch (e) {
+      print("insertUser error: $e");
+    }
   }
 
   static insertServerOnCreation(Servermodel servermodel) async {
-    if (servermodel != null) {
-      var ownerId = await getUserIdInteger();
-      final newServer = ServersCompanion(
-          serverId: moor.Value(int.parse("5")),
-          serverName: moor.Value(servermodel.serverName),
-          serverOwnerId: moor.Value(ownerId));
-      serverDao.insertServer(newServer);
-    } else {
-      return;
+    try {
+      if (servermodel != null) {
+        var ownerId = await getUserIdInteger();
+        final newServer = ServersCompanion(
+            serverId: moor.Value(int.parse("5")),
+            serverName: moor.Value(servermodel.serverName),
+            serverOwnerId: moor.Value(ownerId));
+        serverDao.insertServer(newServer);
+      } else {
+        return;
+      }
+    } catch (e) {
+      print("insertServerOnCreation error: $e");
     }
   }
 
   static insertServersOnLogin(Usermodel usermodel) {
-    if (usermodel.userServers != null) {
-      if (usermodel.userServers.length > 0) {
-        for (Servermodel server in usermodel.userServers) {
-          final newServer = ServersCompanion(
-            serverId: moor.Value(int.parse(server.serverId)),
-            serverName: moor.Value(server.serverName),
-            serverOwnerId: moor.Value(
-              int.parse(server.serverOwnerId),
-            ),
-            userId: moor.Value(int.parse(usermodel.userId)),
-          );
-          serverDao.insertServer(newServer);
-        }
+    try {
+      if (usermodel.userServers != null) {
+        if (usermodel.userServers.length > 0) {
+          for (Servermodel server in usermodel.userServers) {
+            final newServer = ServersCompanion(
+              serverId: moor.Value(int.parse(server.serverId)),
+              serverName: moor.Value(server.serverName),
+              serverOwnerId: moor.Value(
+                int.parse(server.serverOwnerId),
+              ),
+              userId: moor.Value(int.parse(usermodel.userId)),
+            );
+            serverDao.insertServer(newServer);
+          }
+        } else
+          return;
       } else
         return;
-    } else
-      return;
+    } catch (e) {
+      print("insertServersOnLogin error: $e");
+    }
   }
 
   static insertUserAndServer(Usermodel usermodel) {
@@ -62,17 +74,47 @@ class DBFunctions {
       DBFunctions.insertServersOnLogin(usermodel);
   }
 
-  static insertTask(Taskmodel taskmodel, int serverId) {
-    var task = TasksCompanion(
-      serverId: moor.Value(serverId),
-      taskCreatorId: moor.Value(int.parse(taskmodel.taskCreatorId)),
-      taskDeadline: moor.Value(DateTime.parse(taskmodel.taskDeadline)),
-      taskStartDate: moor.Value(DateTime.parse(taskmodel.taskStartDate)),
-      taskDetails: moor.Value(taskmodel.taskDetails),
-      taskId: moor.Value(int.parse(taskmodel.taskId)),
-      taskName: moor.Value(taskmodel.taskName),
-      // taskProgress: //add later maybe
-    );
+  static insertTaskOnCreation(Taskmodel task, int serverId) {
+    try {
+      final newTask = TasksCompanion(
+        serverId: moor.Value(serverId),
+        taskId: moor.Value(int.parse(task.taskId)),
+        taskCreatorId: moor.Value(int.parse(task.taskCreatorId)),
+        taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
+        taskDetails: moor.Value(task.taskDetails),
+        taskName: moor.Value(task.taskName),
+        taskStartDate: moor.Value(DateTime.parse(task.taskStartDate)),
+        // taskProgress: //add later maybe
+      );
+    } catch (e) {
+      print("insertTaskOnCreation error is : $e ");
+    }
+  }
+
+  static insertTasks(List<Taskmodel> taskList, int serverId) {
+    try {
+      if (taskList != null) {
+        if (taskList.length > 0) {
+          for (Taskmodel task in taskList) {
+            final newTask = TasksCompanion(
+              serverId: moor.Value(serverId),
+              taskId: moor.Value(int.parse(task.taskId)),
+              taskCreatorId: moor.Value(int.parse(task.taskCreatorId)),
+              taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
+              taskDetails: moor.Value(task.taskDetails),
+              taskName: moor.Value(task.taskName),
+              taskStartDate: moor.Value(DateTime.parse(task.taskStartDate)),
+              // taskProgress: //add later maybe
+            );
+            taskDao.insertTask(newTask);
+          }
+        } else
+          return;
+      } else
+        return;
+    } catch (e) {
+      print("insertTasks error: $e");
+    }
   }
 
   static Future<List<dynamic>> getAllDetails() async {

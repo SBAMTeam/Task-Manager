@@ -10,4 +10,8 @@ class Users extends Table {
   BoolColumn get userLoggedIn => boolean().withDefault(const Constant(false))();
 
   Set<Column> get primrayKey => {userId};
+
+  List<String> get customConstraints => [
+        'PRIMARY KEY (user_Id)',
+      ];
 }

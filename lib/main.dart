@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Database/database.dart';
-
+// ignore: unused_import
 import 'package:taskmanager/View/Components/constants.dart';
+// ignore: unused_import
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/create_server.dart';
@@ -10,18 +11,22 @@ import 'package:taskmanager/View/Pages/create_server.dart';
 import 'package:taskmanager/View/Pages/join_server.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
+// ignore: unused_import
 import 'package:taskmanager/View/Pages/Login.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Pages/main_page.dart';
+// ignore: unused_import
 import 'package:taskmanager/View/Pages/server_code_created.dart';
-import 'package:taskmanager/View/Pages/createtask.dart';
+// ignore: unused_import
+import 'package:taskmanager/View/Pages/create_task.dart';
 // import 'package:taskmanager/View/Pages/_servers.dart';
 // ignore: unused_import
 // ignore: unused_import
 import 'View/Pages/server_page.dart';
+// ignore: unused_import
 import 'View/Pages/register.dart';
 import 'package:provider/provider.dart';
-
+// ignore: unused_import
 import 'View/Pages/server_list.dart';
 import 'View/Pages/splash_screen.dart';
 
@@ -46,7 +51,7 @@ class TaskManager extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Nunito',
         ),
-        home: Login(),
+        home: SplashScreen(),
       ),
     );
   }

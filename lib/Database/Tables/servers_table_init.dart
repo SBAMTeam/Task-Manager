@@ -5,6 +5,10 @@ class Servers extends Table {
   TextColumn get serverName => text().nullable().withLength(min: 1, max: 50)();
   IntColumn get serverOwnerId => integer().nullable()();
   IntColumn get userId =>
-      integer().nullable().customConstraint('NULL REFERENCES users(userId)')();
+      integer().nullable().customConstraint('NULL REFERENCES users(user_Id)')();
   Set<Column> get primrayKey => {serverId};
+
+  List<String> get customConstraints => [
+        'PRIMARY KEY (server_Id)',
+      ];
 }

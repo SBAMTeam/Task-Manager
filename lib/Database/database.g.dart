@@ -237,7 +237,7 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
   GeneratedIntColumn get userId => _userId ??= _constructUserId();
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn('user_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES users(userId)');
+        $customConstraints: 'NULL REFERENCES users(user_Id)');
   }
 
   @override
@@ -743,7 +743,7 @@ class Task extends DataClass implements Insertable<Task> {
   final int taskCreatorId;
   final int serverId;
   Task(
-      {this.taskId,
+      {@required this.taskId,
       this.taskName,
       this.taskDetails,
       this.taskStartDate,
@@ -946,7 +946,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.serverId = const Value.absent(),
   });
   TasksCompanion.insert({
-    this.taskId = const Value.absent(),
+    @required int taskId,
     this.taskName = const Value.absent(),
     this.taskDetails = const Value.absent(),
     this.taskStartDate = const Value.absent(),
@@ -954,7 +954,7 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.taskProgress = const Value.absent(),
     this.taskCreatorId = const Value.absent(),
     this.serverId = const Value.absent(),
-  });
+  }) : taskId = Value(taskId);
   static Insertable<Task> custom({
     Expression<int> taskId,
     Expression<String> taskName,
@@ -1056,7 +1056,7 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     return GeneratedIntColumn(
       'task_id',
       $tableName,
-      true,
+      false,
     );
   }
 
@@ -1142,7 +1142,7 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   GeneratedIntColumn get serverId => _serverId ??= _constructServerId();
   GeneratedIntColumn _constructServerId() {
     return GeneratedIntColumn('server_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES servers(serverId)');
+        $customConstraints: 'NULL REFERENCES servers(server_Id)');
   }
 
   @override
@@ -1170,6 +1170,8 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     if (data.containsKey('task_id')) {
       context.handle(_taskIdMeta,
           taskId.isAcceptableOrUnknown(data['task_id'], _taskIdMeta));
+    } else if (isInserting) {
+      context.missing(_taskIdMeta);
     }
     if (data.containsKey('task_name')) {
       context.handle(_taskNameMeta,
