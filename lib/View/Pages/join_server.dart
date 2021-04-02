@@ -100,6 +100,9 @@ class JoinServer extends StatelessWidget {
                           pinBoxHeight: 45,
                           pinBoxWidth: 45,
                           onDone: (text) {
+                            if (text.isEmpty) {
+                              showSnackBar("You forgot to enter a server code");
+                            }
                             servermodel.serverCode = text;
                           },
                         ),

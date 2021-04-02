@@ -49,6 +49,7 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             )
           ]),
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
             onSaved: widget.onSavedFunc ??

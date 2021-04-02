@@ -8,12 +8,12 @@ class TaskListBuilder extends GetView<TaskController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.serverId(serverId);
-    controller.isLoadingReal(true);
-    controller.isLoadingAll(true);
+    // controller.serverId(serverId);
+    // controller.isLoadingReal(true);
+    // controller.isLoadingAll(true);
     return Obx(
       () {
-        if (controller.isLoadingAll.value == true) {
+        if (controller.isLoading.value == true) {
           return Center(
             child: CircularProgressIndicator(),
           );

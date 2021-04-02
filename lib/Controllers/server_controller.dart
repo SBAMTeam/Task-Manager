@@ -12,9 +12,9 @@ import 'dart:convert';
 import 'task_controller.dart';
 
 class ServerController extends GetxController {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   var serverList = List<Server>.empty(growable: true).obs;
-  var servermodel = Servermodel();
+  var servermodel = Servermodel().obs;
 
   @override
   void onInit() {
@@ -56,7 +56,7 @@ class ServerController extends GetxController {
     taskmodel.taskUserId = userId.toString();
     taskmodel.taskServerId = serverId.toString();
 
-    print("taskmodel json is : \n${taskmodel.toJson()}");
+    print("this is sent on selection: \n${taskmodel.toJson()}");
     if (await checkInternetConnection()) {
       final response = await http.post(Uri.parse(selectServerUrl),
           body: jsonEncode(taskmodel));
@@ -81,11 +81,17 @@ class ServerController extends GetxController {
       if (servers != null) {
         serverList.assignAll(servers);
       }
+    } catch (e) {
+      print("exception $e in server controller");
     } finally {
-      isLoading(false);
+      Future.delayed(
+        Duration(seconds: 1),
+        () {
+          isLoading(false);
+        },
+      );
     }
     print(serverList[0].serverName);
-    update();
   }
 
   // insertTaskToDB(String serverUserTasks, int serverId) async {

@@ -3,36 +3,26 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
-import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
-import 'package:taskmanager/Models/user_model.dart';
-import 'package:taskmanager/Models/task_model.dart';
+
 import 'package:taskmanager/View/Components/functions.dart';
 
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
-class ServerUI extends StatefulWidget {
-  ServerUI({Key key}) : super(key: key);
+class ServerUI extends GetView<ServerController> {
+  const ServerUI({Key key}) : super(key: key);
 
-  @override
-  _ServerUIState createState() => _ServerUIState();
-}
-
-class _ServerUIState extends State<ServerUI> {
-  final ServerController sc = Get.put(ServerController());
-  var servermodel = Servermodel();
-  var usermodel = Usermodel();
-  var taskmodel = Taskmodel();
   @override
   Widget build(BuildContext context) {
+    var servermodel = Servermodel();
     return Obx(
       () {
-        if (sc.isLoading.value) {
+        if (controller.isLoading.value == true) {
           return Center(child: CircularProgressIndicator());
         } else {
           return ListView.builder(
-              itemCount: sc.serverList.length,
+              itemCount: controller.serverList.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -41,12 +31,12 @@ class _ServerUIState extends State<ServerUI> {
                   child: TextButton(
                     onPressed: () async {
                       int serverId, userId;
-                      serverId = (sc.serverList[index].serverId);
+                      serverId = (controller.serverList[index].serverId);
                       userId = (await DBFunctions.getUserIdInteger());
 
                       ////////////////////////////////////////////////////
                       var serverUserTasks =
-                          await sc.selectServer(serverId, userId);
+                          await controller.selectServer(serverId, userId);
                       if (!(serverUserTasks is int)) {
                         try {
                           servermodel = servermodelFromJson(serverUserTasks);
@@ -56,17 +46,17 @@ class _ServerUIState extends State<ServerUI> {
                         } catch (e) {
                           print("error is : $e");
                         }
-                        Get.to(() => TasksList(serverId: serverId));
+                        Get.to(() => TasksList(serverId: serverId))
+                            .then((value) => controller.update());
                         return;
                       } else {
-                        showSnackBar(
-                            "Error Creating Task \nResponse code is : $serverUserTasks");
+                        showSnackBar("No tasks");
                         // Get.snackbar("Error Creating Task",
                         //     "Response code is : $serverUserTasks");
                       }
                       ////////////////////////////////////////////////////
                       // var serverUserTasks =
-                      //     await sc.selectServer(serverId, userId);
+                      //     await controller.selectServer(serverId, userId);
                       // servermodel = servermodelFromJson(serverUserTasks);
                       // servermodel.serverId = serverId.toString();
                       // if (serverUserTasks is int) {
@@ -104,7 +94,7 @@ class _ServerUIState extends State<ServerUI> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      sc.serverList[index].serverName,
+                                      controller.serverList[index].serverName,
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ],
@@ -128,3 +118,20 @@ class _ServerUIState extends State<ServerUI> {
     );
   }
 }
+// class ServerUI extends StatefulWidget {
+//   ServerUI({Key key}) : super(key: key);
+
+//   @override
+//   _ServerUIState createState() => _ServerUIState();
+// }
+
+// class _ServerUIState extends State<ServerUI> {
+//   final ServerController controller = Get.put(ServerController());
+// var servermodel = Servermodel();
+// var usermodel = Usermodel();
+// var taskmodel = Taskmodel();
+//   @override
+//   Widget build(BuildContext context) {
+
+//   }
+// }

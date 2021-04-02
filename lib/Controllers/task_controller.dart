@@ -9,9 +9,8 @@ import 'package:http/http.dart' as http;
 import 'package:taskmanager/View/Components/constants.dart';
 
 class TaskController extends GetxController {
-  var isLoadingAll = false.obs;
-  var isLoadingReal = false.obs;
-  var serverId = 0.obs;
+  var isLoading = false.obs;
+  // var serverId = 0.obs;
   var taskList = List<Task>.empty(growable: true).obs;
   // var realTaskList = List<Task>.empty(growable: true).obs;
 
@@ -32,13 +31,10 @@ class TaskController extends GetxController {
 
   var taskmodel = Taskmodel().obs;
 
-  static Future createTask(int userId, int serverId) async {
-    Taskmodel taskmodel = Taskmodel();
-    taskmodel.taskCreatorId = userId.toString();
-    taskmodel.taskServerId = serverId.toString();
+  static Future createTask(Taskmodel taskmodel) async {
     final response = await http.post(Uri.parse(createTaskUrl),
         body: jsonEncode(taskmodel.toJson()));
-    print(taskmodel.toJson());
+    print("this is sent on creation : \n${taskmodel.toJson()}");
     print(response.body);
     print(response.statusCode);
     return response.statusCode;
@@ -46,7 +42,7 @@ class TaskController extends GetxController {
 
   Future getUserTasksFromDB() async {
     try {
-      isLoadingAll(true);
+      isLoading(true);
       var tasks = (await DBFunctions.getUserTasks()).toList();
       print("all tasks list length is : ${tasks.length} //task controller");
 
@@ -59,7 +55,7 @@ class TaskController extends GetxController {
       Future.delayed(
         Duration(seconds: 1),
         () {
-          isLoadingAll(false);
+          isLoading(false);
         },
       );
     }
