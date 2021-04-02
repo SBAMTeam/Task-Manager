@@ -6,6 +6,7 @@ import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:taskmanager/View/Components/functions.dart';
 import 'dart:convert' as convert;
 import 'dart:convert';
 import 'task_controller.dart';
@@ -56,17 +57,20 @@ class ServerController extends GetxController {
     taskmodel.taskServerId = serverId.toString();
 
     print("taskmodel json is : \n${taskmodel.toJson()}");
-    final response = await http.post(Uri.parse(selectServerUrl),
-        body: jsonEncode(taskmodel));
-    print(response.statusCode);
-    print('IM BODY');
-    print(response.body);
-    if (response.statusCode == 200) {
-      insertTaskToDB(response.body, serverId);
-
-      return response.body;
-    } else
-      return response.statusCode;
+    if (await checkInternetConnection()) {
+      final response = await http.post(Uri.parse(selectServerUrl),
+          body: jsonEncode(taskmodel));
+      print(response.statusCode);
+      print('IM BODY');
+      print(response.body);
+      if (response.statusCode == 200) {
+        // insertTaskToDB(response.body, serverId);
+        return response.body;
+      } else
+        return response.statusCode;
+    } else {
+      return;
+    }
   }
 
   Future getUserServersFromDB() async {
@@ -84,15 +88,14 @@ class ServerController extends GetxController {
     update();
   }
 
-  insertTaskToDB(String serverUserTasks, int serverId) async {
-    servermodel = servermodelFromJson(serverUserTasks);
-    servermodel.serverId = serverId.toString();
-    try {
-      await DBFunctions.insertTasks(
-          servermodel.userTasks, int.parse(servermodel.serverId));
-    } catch (e) {
-      print("error is : $e");
-    }
-    update();
-  }
+  // insertTaskToDB(String serverUserTasks, int serverId) async {
+  //   servermodel = servermodelFromJson(serverUserTasks);
+  //   servermodel.serverId = serverId.toString();
+  //   try {
+  //     await DBFunctions.insertTasks(
+  //         servermodel.userTasks, int.parse(servermodel.serverId));
+  //   } catch (e) {
+  //     print("error is : $e");
+  //   }
+  // }
 }

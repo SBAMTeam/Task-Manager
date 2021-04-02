@@ -19,62 +19,66 @@ class TaskListBuilder extends GetView<TaskController> {
           );
         } else {
           return ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: controller.taskList.length ?? 0,
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              if (controller.taskList[index].serverId == serverId)
-                return Container(
-                  padding: EdgeInsets.only(top: 4),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Flexible(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      controller.taskList[index].taskName,
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text(
-                                      controller.taskList[index].taskDetails,
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text(
-                                      controller.taskList[index].taskDeadline
-                                          .toString(),
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                  ],
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: controller.taskList.length ?? 0,
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (controller.taskList[index].serverId != serverId) {
+                  return SizedBox(
+                    height: 0,
+                  );
+                } else
+                  return Container(
+                    padding: EdgeInsets.only(top: 4),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 8,
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Container(
-                            height: 1,
-                            color: Colors.grey.withAlpha(128),
-                          ),
-                        ]),
-                  ),
-                );
-            },
-          );
+                                Flexible(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        controller.taskList[index].taskName,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        controller.taskList[index].taskDetails,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        controller.taskList[index].taskDeadline
+                                            .toString(),
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Container(
+                              height: 1,
+                              color: Colors.grey.withAlpha(128),
+                            ),
+                          ]),
+                    ),
+                  );
+              });
         }
       },
       // ),

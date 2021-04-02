@@ -8,6 +8,7 @@ import 'package:taskmanager/Models/user_model.dart';
 
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Components/server_code_generator.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
@@ -80,6 +81,9 @@ class CreateServer extends StatelessWidget {
                     child: ButtonBuilder(
                       text: 'Create Server',
                       onPress: () async {
+                        if (await checkInternetConnection() == false) {
+                          return;
+                        }
                         if (!_formKey.currentState.validate()) {
                           return;
                         }

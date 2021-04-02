@@ -6,6 +6,7 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
@@ -105,6 +106,10 @@ class Login extends StatelessWidget {
                     height: 50.0,
                     text: 'Login',
                     onPress: () async {
+                      if (await checkInternetConnection() == false) {
+                        return;
+                      }
+
                       if (!_formKey.currentState.validate()) {
                         return;
                       }

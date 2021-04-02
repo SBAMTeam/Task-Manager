@@ -8,6 +8,7 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
@@ -43,10 +44,13 @@ class _ServerUIState extends State<ServerUI> {
                       serverId = (sc.serverList[index].serverId);
                       userId = (await DBFunctions.getUserIdInteger());
 
+                      ////////////////////////////////////////////////////
                       var serverUserTasks =
                           await sc.selectServer(serverId, userId);
-                      if (serverUserTasks is int) {
+                      if (!(serverUserTasks is int)) {
                         try {
+                          servermodel = servermodelFromJson(serverUserTasks);
+                          servermodel.serverId = serverId.toString();
                           await DBFunctions.insertTasks(servermodel.userTasks,
                               int.parse(servermodel.serverId));
                         } catch (e) {
@@ -54,9 +58,27 @@ class _ServerUIState extends State<ServerUI> {
                         }
                         Get.to(() => TasksList(serverId: serverId));
                         return;
+                      } else {
+                        showSnackBar(
+                            "Error Creating Task \nResponse code is : $serverUserTasks");
+                        // Get.snackbar("Error Creating Task",
+                        //     "Response code is : $serverUserTasks");
                       }
-                      servermodel = servermodelFromJson(serverUserTasks);
-                      servermodel.serverId = serverId.toString();
+                      ////////////////////////////////////////////////////
+                      // var serverUserTasks =
+                      //     await sc.selectServer(serverId, userId);
+                      // servermodel = servermodelFromJson(serverUserTasks);
+                      // servermodel.serverId = serverId.toString();
+                      // if (serverUserTasks is int) {
+                      //   try {
+                      //     await DBFunctions.insertTasks(servermodel.userTasks,
+                      //         int.parse(servermodel.serverId));
+                      //   } catch (e) {
+                      //     print("error is : $e");
+                      //   }
+                      //   Get.to(() => TasksList(serverId: serverId));
+                      //   return;
+                      // }
 
                       Get.to(() => TasksList(serverId: serverId));
                     },
@@ -71,12 +93,7 @@ class _ServerUIState extends State<ServerUI> {
                               CircleAvatar(
                                 radius: 40,
                                 backgroundImage: NetworkImage(
-                                    "http://via.placeholder.com/360"
-                                    //uniController.uniList[index].image, //uncomment when backend has a working link
-                                    // ??
-                                    // AssetImage(
-                                    //     'assets/images/damascus_logo.jpg'),
-                                    ),
+                                    "http://via.placeholder.com/360"),
                               ),
                               SizedBox(
                                 width: 8,

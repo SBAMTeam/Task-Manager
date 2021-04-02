@@ -32,7 +32,10 @@ class TaskController extends GetxController {
 
   var taskmodel = Taskmodel().obs;
 
-  static Future createTask(Taskmodel taskmodel) async {
+  static Future createTask(int userId, int serverId) async {
+    Taskmodel taskmodel = Taskmodel();
+    taskmodel.taskCreatorId = userId.toString();
+    taskmodel.taskServerId = serverId.toString();
     final response = await http.post(Uri.parse(createTaskUrl),
         body: jsonEncode(taskmodel.toJson()));
     print(taskmodel.toJson());
@@ -53,28 +56,12 @@ class TaskController extends GetxController {
     } catch (e) {
       print("exception $e in task controller");
     } finally {
-      Future.delayed(Duration(seconds: 1), () {
-        isLoadingAll(false);
-      });
+      Future.delayed(
+        Duration(seconds: 1),
+        () {
+          isLoadingAll(false);
+        },
+      );
     }
   }
-
-  // Future getUserRealTasksFromDB(id) async {
-  //   serverId.value = id;
-  //   try {
-  //     isLoadingReal(true);
-  //     for (var i = 0; i < taskList.length; i++) {
-  //       if (taskList[i].serverId == serverId.value) {
-  //         realTaskList.add(taskList[i]);
-  //       }
-  //     }
-  //   } catch (e) {
-  //     print("error taskcontroller real tasks is : $e");
-  //   } finally {
-  //     print("real tasks list length is : ${realTaskList.length}");
-  //     Future.delayed(Duration(seconds: 5), () {
-  //       isLoadingReal(false);
-  //     });
-  //   }
-  // }
 }
