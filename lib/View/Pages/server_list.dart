@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
-import 'package:taskmanager/View/Components/server_ui.dart';
+import 'package:taskmanager/View/Components/server_list_builder.dart';
 
 class ServersList extends StatefulWidget {
   ServersList({Key key}) : super(key: key);

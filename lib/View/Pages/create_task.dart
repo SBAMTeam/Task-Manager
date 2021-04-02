@@ -39,12 +39,12 @@ class CreateTask extends StatelessWidget {
                     taskmodel.taskServerId = serverId.toString();
                     taskmodel.taskUserId = taskmodel.taskCreatorId;
                     TaskController.createTask(taskmodel);
-                    ServerController.selectServer(
-                        serverId, int.parse(taskmodel.taskCreatorId));
                     await DBFunctions.insertTaskOnCreation(taskmodel, serverId);
+                    await sc.selectServer(
+                        serverId, int.parse(taskmodel.taskCreatorId));
                     ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Yay! A SnackBar!')));
-                    Get.off(() => TasksList(serverId: serverId));
+                    Get.back();
                   },
                   child: Text("Submit"),
                 ),

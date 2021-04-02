@@ -1,7 +1,7 @@
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:moor/moor.dart';
 
 class Users extends Table {
-  IntColumn get userId => integer()();
+  IntColumn get userId => integer().customConstraint("PRIMARY KEY")();
   TextColumn get userName => text().nullable().withLength(min: 1, max: 50)();
   TextColumn get userEmail => text().withLength(min: 1, max: 50)();
   TextColumn get userLogMessage => text().withLength(min: 1, max: 200)();
@@ -9,9 +9,9 @@ class Users extends Table {
   TextColumn get userJwt => text().withLength(min: 1, max: 300)();
   BoolColumn get userLoggedIn => boolean().withDefault(const Constant(false))();
 
-  Set<Column> get primrayKey => {userId};
+  // Set<Column> get primrayKey => {userId};
 
-  List<String> get customConstraints => [
-        'PRIMARY KEY (user_Id)',
-      ];
+  // List<String> get customConstraints => [
+  //       'PRIMARY KEY (user_id)',
+  //     ];
 }

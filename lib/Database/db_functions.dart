@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:taskmanager/Database/database.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
-import 'package:moor_flutter/moor_flutter.dart' as moor;
+import 'package:moor/moor.dart' as moor;
 import 'package:taskmanager/Models/task_model.dart';
 
 class DBFunctions {

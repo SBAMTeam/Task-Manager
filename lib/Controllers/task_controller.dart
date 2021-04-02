@@ -9,10 +9,15 @@ import 'package:http/http.dart' as http;
 import 'package:taskmanager/View/Components/constants.dart';
 
 class TaskController extends GetxController {
-  var isLoading = true.obs;
-  List<Task> taskList = List<Task>().obs;
+  var isLoadingAll = false.obs;
+  var isLoadingReal = false.obs;
+  var serverId = 0.obs;
+  var taskList = List<Task>.empty(growable: true).obs;
+  // var realTaskList = List<Task>.empty(growable: true).obs;
+
   @override
   void onInit() {
+    print("IM TASK CONTROLLER BEING INITIALISED RN");
     getUserTasksFromDB();
     super.onInit();
   }
@@ -38,17 +43,38 @@ class TaskController extends GetxController {
 
   Future getUserTasksFromDB() async {
     try {
-      isLoading(true);
+      isLoadingAll(true);
       var tasks = (await DBFunctions.getUserTasks()).toList();
-      print("all tasks list length is : ${tasks.length}");
+      print("all tasks list length is : ${tasks.length} //task controller");
 
       if (tasks != null || tasks != []) {
         taskList.assignAll(tasks);
       }
+    } catch (e) {
+      print("exception $e in task controller");
     } finally {
-      isLoading(false);
+      Future.delayed(Duration(seconds: 1), () {
+        isLoadingAll(false);
+      });
     }
-    print(taskList[0].taskName);
-    print("tasklist in controller length is : ${taskList.length}");
   }
+
+  // Future getUserRealTasksFromDB(id) async {
+  //   serverId.value = id;
+  //   try {
+  //     isLoadingReal(true);
+  //     for (var i = 0; i < taskList.length; i++) {
+  //       if (taskList[i].serverId == serverId.value) {
+  //         realTaskList.add(taskList[i]);
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print("error taskcontroller real tasks is : $e");
+  //   } finally {
+  //     print("real tasks list length is : ${realTaskList.length}");
+  //     Future.delayed(Duration(seconds: 5), () {
+  //       isLoadingReal(false);
+  //     });
+  //   }
+  // }
 }

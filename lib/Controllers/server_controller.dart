@@ -8,12 +8,11 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'dart:convert';
-
-import 'package:taskmanager/View/Pages/tasks_list.dart';
+import 'task_controller.dart';
 
 class ServerController extends GetxController {
   var isLoading = true.obs;
-  List<Server> serverList = List<Server>().obs;
+  var serverList = List<Server>.empty(growable: true).obs;
   var servermodel = Servermodel();
 
   @override
@@ -51,10 +50,11 @@ class ServerController extends GetxController {
     return response.statusCode;
   }
 
-  static Future selectServer(int serverId, int userId) async {
+  Future selectServer(int serverId, int userId) async {
     Taskmodel taskmodel = Taskmodel();
     taskmodel.taskUserId = userId.toString();
     taskmodel.taskServerId = serverId.toString();
+
     print("taskmodel json is : \n${taskmodel.toJson()}");
     final response = await http.post(Uri.parse(selectServerUrl),
         body: jsonEncode(taskmodel));
@@ -62,8 +62,9 @@ class ServerController extends GetxController {
     print('IM BODY');
     print(response.body);
     if (response.statusCode == 200) {
+      insertTaskToDB(response.body, serverId);
+
       return response.body;
-      // insertTaskToDB(response.body, serverId);
     } else
       return response.statusCode;
   }
@@ -80,16 +81,18 @@ class ServerController extends GetxController {
       isLoading(false);
     }
     print(serverList[0].serverName);
+    update();
   }
 
-  insertTaskToDB(String serverUserTasks, int serverId) {
+  insertTaskToDB(String serverUserTasks, int serverId) async {
     servermodel = servermodelFromJson(serverUserTasks);
     servermodel.serverId = serverId.toString();
     try {
-      DBFunctions.insertTasks(
+      await DBFunctions.insertTasks(
           servermodel.userTasks, int.parse(servermodel.serverId));
     } catch (e) {
       print("error is : $e");
     }
+    update();
   }
 }
