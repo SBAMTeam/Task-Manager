@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/server_controller.dart';
+import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/database.dart';
 // ignore: unused_import
 import 'package:taskmanager/View/Components/constants.dart';
@@ -32,6 +35,9 @@ import 'View/Pages/splash_screen.dart';
 
 main() async {
   runApp(TaskManager());
+  Get.lazyPut(() => TaskController(), fenix: true);
+  Get.lazyPut(() => UserController(), fenix: true);
+  Get.lazyPut(() => ServerController(), fenix: true);
 }
 
 class TaskManager extends StatelessWidget {
