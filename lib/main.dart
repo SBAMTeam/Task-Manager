@@ -1,44 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:taskmanager/Controllers/server_controller.dart';
-import 'package:taskmanager/Controllers/task_controller.dart';
-import 'package:taskmanager/Controllers/user_controller.dart';
-import 'package:taskmanager/Database/database.dart' as myDB;
-// ignore: unused_import
-import 'package:taskmanager/View/Components/constants.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Components/transparent_app_bar.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/create_server.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/join_server.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/logged_in_page.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/Login.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/main_page.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/server_code_created.dart';
-// ignore: unused_import
-import 'package:taskmanager/View/Pages/create_task.dart';
-// import 'package:taskmanager/View/Pages/_servers.dart';
-// ignore: unused_import
-// ignore: unused_import
-import 'View/Pages/server_page.dart';
-// ignore: unused_import
-import 'View/Pages/register.dart';
-import 'package:provider/provider.dart';
-// ignore: unused_import
-import 'View/Pages/server_list.dart';
-import 'View/Pages/splash_screen.dart';
 import 'dart:ffi';
 import 'dart:io';
 import 'package:sqlite3/open.dart';
 
+import 'Database/database.dart' as myDB;
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import 'Controllers/server_controller.dart';
+import 'Controllers/task_controller.dart';
+import 'Controllers/user_controller.dart';
+import 'View/Pages/splash_screen.dart';
+
 main() {
-  open.overrideFor(OperatingSystem.linux, _openOnLinux);
-  open.overrideFor(OperatingSystem.windows, _openOnWindows);
   Get.lazyPut(() => TaskController(), fenix: true);
   Get.lazyPut(() => UserController(), fenix: true);
   Get.lazyPut(() => ServerController(), fenix: true);
@@ -63,6 +37,8 @@ class TaskManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    open.overrideFor(OperatingSystem.linux, _openOnLinux);
+    open.overrideFor(OperatingSystem.windows, _openOnWindows);
     final db = myDB.Database();
 
     return MultiProvider(
