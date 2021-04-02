@@ -61,9 +61,9 @@ class CreateServer extends StatelessWidget {
                       servermodel.serverName = value.trim();
                     },
                     validatorFunction: (String value) {
-                      if (value.isEmpty) {
+                      if (value.trim().isEmpty) {
                         return 'Server Name is required.';
-                      } else if (value.length > 50) {
+                      } else if (value.trim().length > 50) {
                         return 'Value is too long!';
                       }
                     },

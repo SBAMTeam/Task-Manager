@@ -17,12 +17,7 @@ class _ServersListState extends State<ServersList> {
     return Scaffold(
       // backgroundColor: Color(backgroundColor),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ServerUI()],
-          ),
-        ),
+        child: ServerUI(),
       ),
     );
   }

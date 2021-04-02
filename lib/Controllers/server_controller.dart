@@ -91,7 +91,6 @@ class ServerController extends GetxController {
         },
       );
     }
-    print(serverList[0].serverName);
   }
 
   // insertTaskToDB(String serverUserTasks, int serverId) async {
