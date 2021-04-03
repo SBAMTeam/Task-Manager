@@ -18,7 +18,7 @@ if (!isset($data->taskUserId) || !isset($data->taskServerId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "failed to join server, one or more variables are empty."));
-    die("failed to join server, one or more variables are empty.");
+    die("failed to select server, one or more variables are empty.");
 }
 
 $taskUserId = $data->taskUserId;
