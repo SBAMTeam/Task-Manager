@@ -55,12 +55,12 @@ class Login extends StatelessWidget {
                   TextFieldBuilder(
                     hint: 'Username',
                     onSavedFunc: (String value) {
-                      usermodel.userName = value;
+                      usermodel.userName = value.trim();
                     },
                     icon: Icons.person,
                     textInputType: TextInputType.text,
                     validatorFunction: (String value) {
-                      if (value.isEmpty) {
+                      if (value.trim().isEmpty) {
                         return 'Please enter your username.';
                       }
                     },
@@ -80,7 +80,7 @@ class Login extends StatelessWidget {
                     obscure: true,
                     textInputType: TextInputType.visiblePassword,
                     validatorFunction: (String value) {
-                      if (value.isEmpty) {
+                      if (value.trim().isEmpty) {
                         return 'Please enter a $password';
                       }
                     },

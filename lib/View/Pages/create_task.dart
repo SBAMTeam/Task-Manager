@@ -53,7 +53,7 @@ class CreateTask extends GetView<ServerController> {
                   ],
                   decoration: InputDecoration(labelText: "Task Name"),
                   onSaved: (value) {
-                    taskmodel.taskName = value;
+                    taskmodel.taskName = value.trim();
                     print("Task name : ${taskmodel.taskName}");
                   },
                   validator: (String value) {
@@ -73,43 +73,41 @@ class CreateTask extends GetView<ServerController> {
                   minLines: 1,
                   maxLines: 10,
                   onSaved: (value) {
-                    taskmodel.taskDetails = value;
+                    taskmodel.taskDetails = value.trim();
                     print("Task details : ${taskmodel.taskDetails}");
                   },
                   validator: (String value) {
-                    if (value.isEmpty) {
+                    if (value.trim().isEmpty) {
                       return "Task details field is empty";
                     }
                   },
                 ),
                 DateTimePicker(
-                  autovalidate: true,
                   decoration: InputDecoration(labelText: "Task Start Date"),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskStartDate = value;
+                    taskmodel.taskStartDate = value.trim();
                     print("Task will start on : ${taskmodel.taskStartDate}");
                   },
                   validator: (String value) {
-                    if (value.isEmpty) {
+                    if (value.trim().isEmpty) {
                       return "Task Start Date field is empty";
                     }
                   },
                 ),
                 DateTimePicker(
-                  autovalidate: true,
                   decoration: InputDecoration(labelText: "Task Deadline"),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskDeadline = value;
+                    taskmodel.taskDeadline = value.trim();
                     print("Task will end on : ${taskmodel.taskDeadline}");
                   },
                   validator: (String value) {
-                    if (value.isEmpty) {
+                    if (value.trim().isEmpty) {
                       return "Task Deadline field is empty";
                     }
                   },

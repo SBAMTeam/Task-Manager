@@ -43,10 +43,10 @@ class Register extends StatelessWidget {
                     },
                     // /^[a-zA-Z0-9.\-_$@*!]{3,30}$/
                     validatorFunction: (String value) {
-                      if (value.isEmpty) {
-                        return 'Username must be longer than 3 charachters characters';
-                      }
-                      if (!RegExp(r"^\S+\w{3,32}\S{1,}").hasMatch(value)) {
+                      if (value.trim().isEmpty) {
+                        return 'Username must be longer than 3 characters';
+                      } else if (!RegExp(r"^\S+\w{1,32}\S{1,}")
+                          .hasMatch(value.trim())) {
                         return "Username can only contain characters, numbers, underscores\nand more than 3 characters.";
                       }
                     },
@@ -61,7 +61,7 @@ class Register extends StatelessWidget {
                       usermodel.userNickname = value.trim();
                     },
                     validatorFunction: (String value) {
-                      if (value.length < 3) {
+                      if (value.trim().length < 3) {
                         return 'Nickname must be longer than 3 characters';
                       }
                     },
@@ -77,7 +77,7 @@ class Register extends StatelessWidget {
                       usermodel.userEmail = value.trim();
                     },
                     validatorFunction: (String value) {
-                      if (value.isEmpty ||
+                      if (value.trim().isEmpty ||
                           !RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                               .hasMatch(value)) {
                         return 'Please enter a valid $email.';
@@ -99,8 +99,8 @@ class Register extends StatelessWidget {
                     obscure: true,
                     textInputType: TextInputType.visiblePassword,
                     validatorFunction: (String value) {
-                      passwordOne = value;
-                      if (value.isEmpty ||
+                      passwordOne = value.trim();
+                      if (value.trim().isEmpty ||
                           !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})')
                               .hasMatch(value.trim())) {
                         return 'Password must contain uppercase and smallcase letters,\n special characters, and numbers.';
@@ -116,7 +116,7 @@ class Register extends StatelessWidget {
                     obscure: true,
                     textInputType: TextInputType.visiblePassword,
                     validatorFunction: (String value) {
-                      passwordTwo = value;
+                      passwordTwo = value.trim();
                       if (passwordOne != passwordTwo) {
                         return 'Passwords do not match';
                       }

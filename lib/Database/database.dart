@@ -27,7 +27,7 @@ class Database extends _$Database {
             () async {
               final dbFolder = await getDatabasesPath();
               final file = File(p.join(dbFolder, 'db.sqlite'));
-              return VmDatabase(file /*, logStatements: true*/);
+              return VmDatabase(file, logStatements: true);
             },
           ),
         );
