@@ -18,9 +18,6 @@ main() {
   Get.lazyPut(() => ServerController(), fenix: true);
 
   runApp(TaskManager());
-  Get.lazyPut(() => TaskController(), fenix: true);
-  Get.lazyPut(() => UserController(), fenix: true);
-  Get.lazyPut(() => ServerController(), fenix: true);
 }
 
 DynamicLibrary _openOnLinux() {
