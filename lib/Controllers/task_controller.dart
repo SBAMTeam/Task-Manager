@@ -9,10 +9,14 @@ import 'package:http/http.dart' as http;
 import 'package:taskmanager/View/Components/constants.dart';
 
 class TaskController extends GetxController {
-  var isLoading = true.obs;
-  List<Task> taskList = List<Task>().obs;
+  var isLoading = false.obs;
+  // var serverId = 0.obs;
+  var taskList = List<Task>.empty(growable: true).obs;
+  // var realTaskList = List<Task>.empty(growable: true).obs;
+
   @override
   void onInit() {
+    print("IM TASK CONTROLLER BEING INITIALISED RN");
     getUserTasksFromDB();
     super.onInit();
   }
@@ -30,7 +34,7 @@ class TaskController extends GetxController {
   static Future createTask(Taskmodel taskmodel) async {
     final response = await http.post(Uri.parse(createTaskUrl),
         body: jsonEncode(taskmodel.toJson()));
-    print(taskmodel.toJson());
+    print("this is sent on creation : \n${taskmodel.toJson()}");
     print(response.body);
     print(response.statusCode);
     return response.statusCode;
@@ -40,15 +44,20 @@ class TaskController extends GetxController {
     try {
       isLoading(true);
       var tasks = (await DBFunctions.getUserTasks()).toList();
-      print("all tasks list length is : ${tasks.length}");
+      print("all tasks list length is : ${tasks.length} //task controller");
 
       if (tasks != null || tasks != []) {
         taskList.assignAll(tasks);
       }
+    } catch (e) {
+      print("exception $e in task controller");
     } finally {
-      isLoading(false);
+      Future.delayed(
+        Duration(seconds: 1),
+        () {
+          isLoading(false);
+        },
+      );
     }
-    print(taskList[0].taskName);
-    print("tasklist in controller length is : ${taskList.length}");
   }
 }

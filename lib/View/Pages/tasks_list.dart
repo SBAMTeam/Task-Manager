@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/task_ui.dart';
+import 'package:taskmanager/View/Components/task_list_builder_stateless.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
-import 'package:taskmanager/View/Components/server_ui.dart';
 import 'package:taskmanager/View/Pages/create_task.dart';
 
-class TasksList extends StatefulWidget {
-  TasksList({Key key, @required this.serverId}) : super(key: key);
-  final int serverId;
-  @override
-  _TasksListState createState() => _TasksListState();
-}
+class TasksList extends StatelessWidget {
+  final serverId;
+  const TasksList({Key key, this.serverId}) : super(key: key);
 
-class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +18,7 @@ class _TasksListState extends State<TasksList> {
             icon: Icon(Icons.add),
             onPressed: () {
               Get.to(() => CreateTask(
-                    serverId: widget.serverId,
+                    serverId: serverId,
                   ));
             },
           )
@@ -34,11 +29,7 @@ class _TasksListState extends State<TasksList> {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TaskUI(
-                serverId: widget.serverId,
-              )
-            ],
+            children: [TaskListBuilder(serverId)],
           ),
         ),
       ),

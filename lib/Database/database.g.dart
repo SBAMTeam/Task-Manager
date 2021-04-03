@@ -12,7 +12,11 @@ class Server extends DataClass implements Insertable<Server> {
   final String serverName;
   final int serverOwnerId;
   final int userId;
-  Server({this.serverId, this.serverName, this.serverOwnerId, this.userId});
+  Server(
+      {@required this.serverId,
+      this.serverName,
+      this.serverOwnerId,
+      this.userId});
   factory Server.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -130,11 +134,11 @@ class ServersCompanion extends UpdateCompanion<Server> {
     this.userId = const Value.absent(),
   });
   ServersCompanion.insert({
-    this.serverId = const Value.absent(),
+    @required int serverId,
     this.serverName = const Value.absent(),
     this.serverOwnerId = const Value.absent(),
     this.userId = const Value.absent(),
-  });
+  }) : serverId = Value(serverId);
   static Insertable<Server> custom({
     Expression<int> serverId,
     Expression<String> serverName,
@@ -201,11 +205,8 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
   @override
   GeneratedIntColumn get serverId => _serverId ??= _constructServerId();
   GeneratedIntColumn _constructServerId() {
-    return GeneratedIntColumn(
-      'server_id',
-      $tableName,
-      true,
-    );
+    return GeneratedIntColumn('server_id', $tableName, false,
+        $customConstraints: 'PRIMARY KEY');
   }
 
   final VerificationMeta _serverNameMeta = const VerificationMeta('serverName');
@@ -237,7 +238,7 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
   GeneratedIntColumn get userId => _userId ??= _constructUserId();
   GeneratedIntColumn _constructUserId() {
     return GeneratedIntColumn('user_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES users(user_Id)');
+        $customConstraints: 'NULL REFERENCES users(user_id)');
   }
 
   @override
@@ -257,6 +258,8 @@ class $ServersTable extends Servers with TableInfo<$ServersTable, Server> {
     if (data.containsKey('server_id')) {
       context.handle(_serverIdMeta,
           serverId.isAcceptableOrUnknown(data['server_id'], _serverIdMeta));
+    } else if (isInserting) {
+      context.missing(_serverIdMeta);
     }
     if (data.containsKey('server_name')) {
       context.handle(
@@ -584,11 +587,8 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
   @override
   GeneratedIntColumn get userId => _userId ??= _constructUserId();
   GeneratedIntColumn _constructUserId() {
-    return GeneratedIntColumn(
-      'user_id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('user_id', $tableName, false,
+        $customConstraints: 'PRIMARY KEY');
   }
 
   final VerificationMeta _userNameMeta = const VerificationMeta('userName');
@@ -750,7 +750,7 @@ class Task extends DataClass implements Insertable<Task> {
       this.taskDeadline,
       this.taskProgress,
       this.taskCreatorId,
-      this.serverId});
+      @required this.serverId});
   factory Task.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -953,8 +953,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.taskDeadline = const Value.absent(),
     this.taskProgress = const Value.absent(),
     this.taskCreatorId = const Value.absent(),
-    this.serverId = const Value.absent(),
-  }) : taskId = Value(taskId);
+    @required int serverId,
+  })  : taskId = Value(taskId),
+        serverId = Value(serverId);
   static Insertable<Task> custom({
     Expression<int> taskId,
     Expression<String> taskName,
@@ -1053,11 +1054,8 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   @override
   GeneratedIntColumn get taskId => _taskId ??= _constructTaskId();
   GeneratedIntColumn _constructTaskId() {
-    return GeneratedIntColumn(
-      'task_id',
-      $tableName,
-      false,
-    );
+    return GeneratedIntColumn('task_id', $tableName, false,
+        $customConstraints: ' PRIMARY KEY ');
   }
 
   final VerificationMeta _taskNameMeta = const VerificationMeta('taskName');
@@ -1141,8 +1139,8 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
   @override
   GeneratedIntColumn get serverId => _serverId ??= _constructServerId();
   GeneratedIntColumn _constructServerId() {
-    return GeneratedIntColumn('server_id', $tableName, true,
-        $customConstraints: 'NULL REFERENCES servers(server_Id)');
+    return GeneratedIntColumn('server_id', $tableName, false,
+        $customConstraints: ' REFERENCES servers(server_id) ');
   }
 
   @override
@@ -1210,6 +1208,8 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
     if (data.containsKey('server_id')) {
       context.handle(_serverIdMeta,
           serverId.isAcceptableOrUnknown(data['server_id'], _serverIdMeta));
+    } else if (isInserting) {
+      context.missing(_serverIdMeta);
     }
     return context;
   }

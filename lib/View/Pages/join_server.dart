@@ -7,6 +7,7 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'server_page.dart';
 import 'package:taskmanager/View/Components/constants.dart';
@@ -55,7 +56,6 @@ class JoinServer extends StatelessWidget {
                   GetBuilder(
                     builder: (GetxController controller) {
                       var controller = TextEditingController();
-
                       return GestureDetector(
                         onLongPress: () async {
                           showDialog(
@@ -100,6 +100,9 @@ class JoinServer extends StatelessWidget {
                           pinBoxHeight: 45,
                           pinBoxWidth: 45,
                           onDone: (text) {
+                            if (text.isEmpty) {
+                              showSnackBar("You forgot to enter a server code");
+                            }
                             servermodel.serverCode = text;
                           },
                         ),
@@ -114,6 +117,9 @@ class JoinServer extends StatelessWidget {
                     text: 'Join',
                     fontSize: 23.0,
                     onPress: () async {
+                      if (await checkInternetConnection() == false) {
+                        return;
+                      }
                       if (!_formKey.currentState.validate()) {
                         return;
                       }

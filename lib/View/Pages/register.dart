@@ -9,6 +9,7 @@ import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:crypto/crypto.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 import 'registration_complete.dart';
 import 'dart:convert';
@@ -129,22 +130,8 @@ class Register extends StatelessWidget {
                       height: 50.0,
                       text: 'Register',
                       onPress: () async {
-                        try {
-                          final result =
-                              await InternetAddress.lookup('example.com');
-                          if (result.isNotEmpty &&
-                              result[0].rawAddress.isNotEmpty) {
-                            print('Connected to internet');
-                          }
-                        } on SocketException catch (_) {
-                          Fluttertoast.showToast(
-                              msg: "Check your internet connection",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
+                        if (await checkInternetConnection() == false) {
+                          return;
                         }
                         if (!_formKey.currentState.validate()) {
                           return;
@@ -155,14 +142,7 @@ class Register extends StatelessWidget {
                         if (data == 200) {
                           Get.off(() => RegistrationComplete());
                         } else if (data == 404) {
-                          Fluttertoast.showToast(
-                              msg: "Server Error. Sorry!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 2,
-                              backgroundColor: Colors.red,
-                              textColor: Colors.white,
-                              fontSize: 16.0);
+                          showSnackBar("Server Error. Sorry!");
                         }
                       },
                     ),

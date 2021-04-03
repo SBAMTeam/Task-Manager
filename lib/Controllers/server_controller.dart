@@ -6,15 +6,15 @@ import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:taskmanager/View/Components/functions.dart';
 import 'dart:convert' as convert;
 import 'dart:convert';
-
-import 'package:taskmanager/View/Pages/tasks_list.dart';
+import 'task_controller.dart';
 
 class ServerController extends GetxController {
-  var isLoading = true.obs;
-  List<Server> serverList = List<Server>().obs;
-  var servermodel = Servermodel();
+  var isLoading = false.obs;
+  var serverList = List<Server>.empty(growable: true).obs;
+  var servermodel = Servermodel().obs;
 
   @override
   void onInit() {
@@ -51,21 +51,26 @@ class ServerController extends GetxController {
     return response.statusCode;
   }
 
-  static Future selectServer(int serverId, int userId) async {
+  Future selectServer(int serverId, int userId) async {
     Taskmodel taskmodel = Taskmodel();
     taskmodel.taskUserId = userId.toString();
     taskmodel.taskServerId = serverId.toString();
-    print("taskmodel json is : \n${taskmodel.toJson()}");
-    final response = await http.post(Uri.parse(selectServerUrl),
-        body: jsonEncode(taskmodel));
-    print(response.statusCode);
-    print('IM BODY');
-    print(response.body);
-    if (response.statusCode == 200) {
-      return response.body;
-      // insertTaskToDB(response.body, serverId);
-    } else
-      return response.statusCode;
+
+    print("this is sent on selection: \n${taskmodel.toJson()}");
+    if (await checkInternetConnection()) {
+      final response = await http.post(Uri.parse(selectServerUrl),
+          body: jsonEncode(taskmodel));
+      print(response.statusCode);
+      print('IM BODY');
+      print(response.body);
+      if (response.statusCode == 200) {
+        // insertTaskToDB(response.body, serverId);
+        return response.body;
+      } else
+        return response.statusCode;
+    } else {
+      return;
+    }
   }
 
   Future getUserServersFromDB() async {
@@ -76,20 +81,27 @@ class ServerController extends GetxController {
       if (servers != null) {
         serverList.assignAll(servers);
       }
+    } catch (e) {
+      print("exception $e in server controller");
     } finally {
-      isLoading(false);
+      Future.delayed(
+        Duration(seconds: 1),
+        () {
+          isLoading(false);
+        },
+      );
     }
     print(serverList[0].serverName);
   }
 
-  insertTaskToDB(String serverUserTasks, int serverId) {
-    servermodel = servermodelFromJson(serverUserTasks);
-    servermodel.serverId = serverId.toString();
-    try {
-      DBFunctions.insertTasks(
-          servermodel.userTasks, int.parse(servermodel.serverId));
-    } catch (e) {
-      print("error is : $e");
-    }
-  }
+  // insertTaskToDB(String serverUserTasks, int serverId) async {
+  //   servermodel = servermodelFromJson(serverUserTasks);
+  //   servermodel.serverId = serverId.toString();
+  //   try {
+  //     await DBFunctions.insertTasks(
+  //         servermodel.userTasks, int.parse(servermodel.serverId));
+  //   } catch (e) {
+  //     print("error is : $e");
+  //   }
+  // }
 }

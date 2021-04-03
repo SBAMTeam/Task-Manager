@@ -8,17 +8,18 @@ import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
-class CreateTask extends StatelessWidget {
+class CreateTask extends GetView<ServerController> {
   CreateTask({Key key, @required this.serverId}) : super(key: key);
   final serverId;
-  final ServerController sc = Get.find();
-
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    Servermodel servermodel = Servermodel();
     Taskmodel taskmodel = Taskmodel();
     // return Obx(() {
     return Scaffold(
@@ -30,26 +31,23 @@ class CreateTask extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () async {
+                    if (await checkInternetConnection() == false) {
+                      return;
+                    }
                     if (!_formKey.currentState.validate()) {
                       return;
                     }
                     _formKey.currentState.save();
-                    taskmodel.taskCreatorId =
-                        (await DBFunctions.getUserIdInteger()).toString();
-                    taskmodel.taskServerId = serverId.toString();
-                    taskmodel.taskUserId = taskmodel.taskCreatorId;
-                    TaskController.createTask(taskmodel);
-                    ServerController.selectServer(
-                        serverId, int.parse(taskmodel.taskCreatorId));
-                    await DBFunctions.insertTaskOnCreation(taskmodel, serverId);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Yay! A SnackBar!')));
-                    Get.off(() => TasksList(serverId: serverId));
+                    int userId = await DBFunctions.getUserIdInteger();
+                    _createTask(taskmodel, serverId, userId);
+                    _selectServer(controller, servermodel, serverId, userId);
+                    Get.off(() => TasksList());
                   },
                   child: Text("Submit"),
                 ),
                 TextFormField(
                   maxLength: 20,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(20),
                   ],
@@ -67,6 +65,7 @@ class CreateTask extends StatelessWidget {
                 TextFormField(
                   decoration: InputDecoration(labelText: "Task Details"),
                   maxLength: 600,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(600),
                   ],
@@ -84,6 +83,7 @@ class CreateTask extends StatelessWidget {
                   },
                 ),
                 DateTimePicker(
+                  autovalidate: true,
                   decoration: InputDecoration(labelText: "Task Start Date"),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
@@ -99,6 +99,7 @@ class CreateTask extends StatelessWidget {
                   },
                 ),
                 DateTimePicker(
+                  autovalidate: true,
                   decoration: InputDecoration(labelText: "Task Deadline"),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
@@ -118,6 +119,33 @@ class CreateTask extends StatelessWidget {
           ),
         ),
       ),
+      // );
     );
   }
+}
+
+_selectServer(ServerController controller, Servermodel servermodel,
+    int serverId, int userId) async {
+  var serverUserTasks = await controller.selectServer(serverId, userId);
+  if (!(serverUserTasks is int)) {
+    try {
+      servermodel = servermodelFromJson(serverUserTasks);
+      servermodel.serverId = serverId.toString();
+      await DBFunctions.insertTasks(
+          servermodel.userTasks, int.parse(servermodel.serverId));
+      controller.isLoading(true);
+      controller.update();
+    } catch (e) {
+      print("error is : $e");
+    }
+    return;
+  } else {
+    showSnackBar("Error fetching Tasks \nResponse code is : $serverUserTasks");
+  }
+}
+
+_createTask(Taskmodel taskmodel, serverId, userId) {
+  taskmodel.taskServerId = serverId.toString();
+  taskmodel.taskCreatorId = userId.toString();
+  TaskController.createTask(taskmodel);
 }

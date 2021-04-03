@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:taskmanager/Database/database.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
-import 'package:moor_flutter/moor_flutter.dart' as moor;
+import 'package:moor/moor.dart' as moor;
 import 'package:taskmanager/Models/task_model.dart';
 
 class DBFunctions {
@@ -74,28 +74,15 @@ class DBFunctions {
       DBFunctions.insertServersOnLogin(usermodel);
   }
 
-  static insertTaskOnCreation(Taskmodel task, int serverId) {
-    try {
-      final newTask = TasksCompanion(
-        serverId: moor.Value(serverId),
-        taskId: moor.Value(int.parse(task.taskId)),
-        taskCreatorId: moor.Value(int.parse(task.taskCreatorId)),
-        taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
-        taskDetails: moor.Value(task.taskDetails),
-        taskName: moor.Value(task.taskName),
-        taskStartDate: moor.Value(DateTime.parse(task.taskStartDate)),
-        // taskProgress: //add later maybe
-      );
-    } catch (e) {
-      print("insertTaskOnCreation error is : $e ");
-    }
-  }
-
   static insertTasks(List<Taskmodel> taskList, int serverId) {
     try {
+      int count = 0;
       if (taskList != null) {
         if (taskList.length > 0) {
           for (Taskmodel task in taskList) {
+            if (serverId == 15) {
+              count++;
+            }
             final newTask = TasksCompanion(
               serverId: moor.Value(serverId),
               taskId: moor.Value(int.parse(task.taskId)),
@@ -107,6 +94,7 @@ class DBFunctions {
               // taskProgress: //add later maybe
             );
             taskDao.insertTask(newTask);
+            print("IM HEEEEEEREEEEEEE $count");
           }
         } else
           return;

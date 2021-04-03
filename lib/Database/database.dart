@@ -1,7 +1,15 @@
-import 'package:moor_flutter/moor_flutter.dart';
+import 'package:moor/ffi.dart';
+
 import 'Tables/tasks_table_init.dart';
 import 'Tables/users_table_init.dart';
 import 'Tables/servers_table_init.dart';
+import 'package:sqflite/sqflite.dart' show getDatabasesPath;
+import 'package:path/path.dart' as p;
+import 'dart:ffi';
+import 'dart:io';
+import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3/open.dart';
+import 'package:moor/moor.dart';
 part 'database.g.dart';
 
 class UserWithServers {
@@ -14,8 +22,17 @@ class UserWithServers {
 @UseMoor(tables: [Servers, Users, Tasks], daos: [UserDao, ServerDao, TaskDao])
 class Database extends _$Database {
   Database()
-      : super(FlutterQueryExecutor.inDatabaseFolder(
-            path: 'db.sqlite', logStatements: true));
+      : super(
+          LazyDatabase(
+            () async {
+              final dbFolder = await getDatabasesPath();
+              final file = File(p.join(dbFolder, 'db.sqlite'));
+              return VmDatabase(file /*, logStatements: true*/);
+            },
+          ),
+        );
+  // super(FlutterQueryExecutor.inDatabaseFolder(
+  //       path: 'db.sqlite', logStatements: true));
 
   @override
   int get schemaVersion => 1;
@@ -82,13 +99,15 @@ class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
   Stream<List<Task>> watchTasks() => select(tasks).watch();
   Future insertTask(Insertable<Task> task) {
     try {
-      into(tasks).insert(task);
+      return into(tasks).insert(task,
+          onConflict: DoUpdate((_) => task, target: [db.tasks.taskId]));
     } catch (e) {
       print("error in insertTask in database.dart : $e");
+      return null;
     }
   }
 
   Future getTasks() => select(tasks).get();
   Future getTasksWithServerId(int id) =>
-      (select(tasks)..where((a) => a.serverId.equals(5))).get();
+      (select(tasks)..where((a) => a.serverId.equals(id))).get();
 }

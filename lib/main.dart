@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
-import 'package:taskmanager/Database/database.dart';
+import 'package:taskmanager/Database/database.dart' as myDB;
 // ignore: unused_import
 import 'package:taskmanager/View/Components/constants.dart';
 // ignore: unused_import
@@ -32,12 +32,33 @@ import 'package:provider/provider.dart';
 // ignore: unused_import
 import 'View/Pages/server_list.dart';
 import 'View/Pages/splash_screen.dart';
+import 'dart:ffi';
+import 'dart:io';
+import 'package:sqlite3/open.dart';
 
-main() async {
+main() {
+  open.overrideFor(OperatingSystem.linux, _openOnLinux);
+  open.overrideFor(OperatingSystem.windows, _openOnWindows);
+  Get.lazyPut(() => TaskController(), fenix: true);
+  Get.lazyPut(() => UserController(), fenix: true);
+  Get.lazyPut(() => ServerController(), fenix: true);
+
   runApp(TaskManager());
   Get.lazyPut(() => TaskController(), fenix: true);
   Get.lazyPut(() => UserController(), fenix: true);
   Get.lazyPut(() => ServerController(), fenix: true);
+}
+
+DynamicLibrary _openOnLinux() {
+  final script = File(Platform.script.toFilePath());
+  final libraryNextToScript = File('${script.path}/sqlite3.so');
+  return DynamicLibrary.open(libraryNextToScript.path);
+}
+
+DynamicLibrary _openOnWindows() {
+  final script = File(Platform.script.toFilePath());
+  final libraryNextToScript = File('${script.path}/sqlite3.dll');
+  return DynamicLibrary.open(libraryNextToScript.path);
 }
 
 class TaskManager extends StatelessWidget {
@@ -45,7 +66,7 @@ class TaskManager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final db = Database();
+    final db = myDB.Database();
 
     return MultiProvider(
       providers: [
@@ -54,7 +75,9 @@ class TaskManager extends StatelessWidget {
         Provider(create: (_) => db.taskDao),
       ],
       child: GetMaterialApp(
+        title: 'SBAM Tasks',
         theme: ThemeData(
+          visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Nunito',
         ),
         home: SplashScreen(),
