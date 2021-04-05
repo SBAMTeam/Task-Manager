@@ -140,7 +140,7 @@ class Register extends StatelessWidget {
                         print(usermodel.toJson());
                         final data = await (UserController.register(usermodel));
                         if (data == 200) {
-                          Get.off(() => RegistrationComplete());
+                          Get.offAll(() => RegistrationComplete());
                         } else if (data == 404) {
                           showSnackBar("Server Error. Sorry!");
                         }

@@ -10,7 +10,7 @@ class RegistrationComplete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 2), () {
-      Get.off(() => Login());
+      Get.offAll(() => Login());
     });
     return Scaffold(
       backgroundColor: Color(backgroundColor),

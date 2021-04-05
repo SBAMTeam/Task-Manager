@@ -79,7 +79,7 @@ class JoinServer extends StatelessWidget {
                               });
                         },
                         child: PinCodeTextField(
-                          controller: controller,
+                          // controller: controller,
                           defaultBorderColor: Color(buttonColorTwo),
                           keyboardType: TextInputType.text,
                           autofocus: true,

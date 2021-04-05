@@ -122,7 +122,7 @@ class Login extends StatelessWidget {
                         await DBFunctions.insertUserAndServer(u);
                         print(await DBFunctions.getAllDetails());
 
-                        Get.off(() => LoggedInPage());
+                        Get.offAll(() => LoggedInPage());
                         tmp = null;
                         return;
                       } else {

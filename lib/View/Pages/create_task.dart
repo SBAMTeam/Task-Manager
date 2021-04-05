@@ -41,7 +41,7 @@ class CreateTask extends GetView<ServerController> {
                     int userId = await DBFunctions.getUserIdInteger();
                     _createTask(taskmodel, serverId, userId);
                     _selectServer(controller, servermodel, serverId, userId);
-                    Get.off(() => TasksList());
+                    Get.offAll(() => TasksList());
                   },
                   child: Text("Submit"),
                 ),
