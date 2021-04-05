@@ -4,7 +4,7 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
 
-import 'Login.dart';
+import 'login.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key key}) : super(key: key);
