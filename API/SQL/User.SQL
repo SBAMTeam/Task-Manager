@@ -7,5 +7,5 @@ CREATE TABLE Users
     user_nick VARCHAR(250),
     STATUS_CODE integer,
     FOREIGN KEY(STATUS_CODE) REFERENCES datastatus(STATUS_CODE),
-    INDEX (user_email) 
+    INDEX (email) 
 ) ENGINE=InnoDB CHARSET=utf8;
