@@ -2,5 +2,4 @@ build/
 .dart_tool
 API/config/*
 android/gradle/*
-android/gradle/wrapper/gradle-wrapper.properties
 android/.gradle/*
