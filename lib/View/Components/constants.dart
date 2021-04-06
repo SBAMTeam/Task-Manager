@@ -33,4 +33,6 @@ final joinServerUrl = baseAPIURL + '/server/join.php';
 // final selectServerUrl = baseAPIURL + "/server/select.php";
 final createTaskUrl = baseAPIURL + "/task/create.php";
 final fetchUserServersUrl = baseAPIURL + '/user/fetchServers.php';
-final fetchTasksUrl = baseAPIURL + '/user/fetchTasks.php';
+final fetchTasksUrl = baseAPIURL + '/server/fetchTasks.php';
+final fetchServerMembersUrl = baseAPIURL + '/server/fetchMembers.php';
+final fetchUserServerTasksUrl = baseAPIURL + '/user/fetchTasks';

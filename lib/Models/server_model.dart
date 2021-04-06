@@ -17,14 +17,14 @@ class Servermodel {
     this.serverName,
     this.serverCode,
     this.serverOwnerId,
-    this.userTasks,
+    this.serverTasks,
   });
 
   String serverId;
   String serverName;
   String serverCode;
   String serverOwnerId;
-  List<Taskmodel> userTasks;
+  List<Taskmodel> serverTasks;
 
   factory Servermodel.fromJson(Map<String, dynamic> json) => Servermodel(
         serverId: json["serverId"] == null ? null : json["serverId"],
@@ -32,10 +32,10 @@ class Servermodel {
         serverCode: json["serverCode"] == null ? null : json["serverCode"],
         serverOwnerId:
             json["serverOwnerId"] == null ? null : json["serverOwnerId"],
-        userTasks: json["userTasks"] == null
+        serverTasks: json["serverTasks"] == null
             ? null
             : List<Taskmodel>.from(
-                json["userTasks"].map((x) => Taskmodel.fromJson(x))),
+                json["serverTasks"].map((x) => Taskmodel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,8 +43,8 @@ class Servermodel {
         "serverName": serverName == null ? null : serverName,
         "serverCode": serverCode == null ? null : serverCode,
         "serverOwnerId": serverOwnerId == null ? null : serverOwnerId,
-        "userTasks": userTasks == null
+        "serverTasks": serverTasks == null
             ? null
-            : List<dynamic>.from(userTasks.map((x) => x.toJson())),
+            : List<dynamic>.from(serverTasks.map((x) => x.toJson())),
       };
 }

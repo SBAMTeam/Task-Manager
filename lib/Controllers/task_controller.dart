@@ -13,16 +13,8 @@ import 'package:taskmanager/View/Components/constants.dart';
 
 class TaskController extends GetxController {
   var isLoading = true.obs;
-  // var serverId = 0.obs;
-  var taskList = List<Task>.empty(growable: true).obs;
-  // var realTaskList = List<Task>.empty(growable: true).obs;
-
-  @override
-  void onInit() {
-    print("IM TASK CONTROLLER BEING INITIALISED RN");
-    getUserTasksFromDB();
-    super.onInit();
-  }
+  // var taskList = List<Task>.empty(growable: true).obs;
+  var serverTasksList = List<Task>.empty(growable: true).obs;
 
   static TaskController _taskController;
   static TaskController getInstance() {
@@ -40,11 +32,11 @@ class TaskController extends GetxController {
     print("this is sent on creation : \n${taskmodel.toJson()}");
     print(response.body);
     print(response.statusCode);
-    fetchUserTasks(int.parse(taskmodel.taskServerId));
+    fetchUserServerTasks(int.parse(taskmodel.taskServerId));
     return response.statusCode;
   }
 
-  Future fetchUserTasks(int serverId) async {
+  Future fetchUserServerTasks(int serverId) async {
     FetchTasksModelTemporary a = FetchTasksModelTemporary();
     a.serverId = serverId.toString();
     a.userId = (await DBFunctions.getUserIdInteger()).toString();
@@ -58,29 +50,51 @@ class TaskController extends GetxController {
       servermodel = servermodelFromJson(response.body);
       servermodel.serverId = serverId.toString();
       try {
-        await DBFunctions.insertTasks(servermodel.userTasks, serverId);
-        getUserTasksFromDB();
+        await DBFunctions.insertTasks(servermodel.serverTasks, serverId);
+        getServerTasksFromDB(serverId);
       } catch (e) {
-        print("exception in fetchUserTasks insertTasks $e");
+        print("exception in fetchUserServerTasks insertTasks $e");
       }
+    } else {
+      isLoading(false);
     }
     return response.statusCode;
   }
 
-  Future getUserTasksFromDB() async {
+  // Future getUserTasksFromDB() async {
+  //   try {
+  //     isLoading(true);
+  //     var tasks = (await DBFunctions.getUserTasks()).toList();
+  //     print("all tasks list length is : ${tasks.length} //task controller");
+
+  //     if (tasks != null || tasks != []) {
+  //       taskList.assignAll(tasks);
+  //     }
+  //   } catch (e) {
+  //     print("exception $e in task controller");
+  //   } finally {
+  //     Future.delayed(
+  //       Duration(seconds: 1),
+  //       () {
+  //         isLoading(false);
+  //       },
+  //     );
+  //   }
+  // }
+  Future getServerTasksFromDB(int serverId) async {
     try {
       isLoading(true);
-      var tasks = (await DBFunctions.getUserTasks()).toList();
-      print("all tasks list length is : ${tasks.length} //task controller");
+      var tasks = (await DBFunctions.getServerTasks(serverId)).toList();
+      print("server tasks list length is : ${tasks.length} //task controller");
 
       if (tasks != null || tasks != []) {
-        taskList.assignAll(tasks);
+        serverTasksList.assignAll(tasks);
       }
     } catch (e) {
       print("exception $e in task controller");
     } finally {
       Future.delayed(
-        Duration(seconds: 1),
+        Duration(milliseconds: 500),
         () {
           isLoading(false);
         },

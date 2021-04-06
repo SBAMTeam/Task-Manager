@@ -15,7 +15,7 @@ class TaskListBuilder extends GetView<TaskController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchUserTasks(serverId);
+    controller.fetchUserServerTasks(serverId);
     return Obx(
       () {
         if (controller.isLoading.value == true) {
@@ -77,7 +77,7 @@ class TaskListBuilder extends GetView<TaskController> {
               },
             ),
           );
-        } else if (controller.taskList.length < 1) {
+        } else if (controller.serverTasksList.length < 1) {
           return Center(
             child: TextBuilder(
               textAlign: TextAlign.center,
@@ -90,7 +90,7 @@ class TaskListBuilder extends GetView<TaskController> {
         } else {
           return ListView.builder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: controller.taskList.length ?? 0,
+              itemCount: controller.serverTasksList.length ?? 0,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -120,15 +120,18 @@ class TaskListBuilder extends GetView<TaskController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller.taskList[index].taskName,
+                                      controller
+                                          .serverTasksList[index].taskName,
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
-                                      controller.taskList[index].taskDetails,
+                                      controller
+                                          .serverTasksList[index].taskDetails,
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
-                                      controller.taskList[index].taskDeadline
+                                      controller
+                                          .serverTasksList[index].taskDeadline
                                           .toString(),
                                       style: TextStyle(fontSize: 18),
                                     ),

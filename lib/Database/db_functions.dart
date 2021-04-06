@@ -169,6 +169,12 @@ class DBFunctions {
     return tmp;
   }
 
+  static Future getServerTasks(int serverId) async {
+    List<Task> tmp = await taskDao.getServerTasks(serverId);
+    print("serverTasks are : \n $tmp");
+    return tmp;
+  }
+
   // static Future getServerOwnerIdInteger(String inputServerCode) async {
   //   for (Servers server in await serverDao.getServers()) {
   //     if (server.serverCode.toString() == inputServerCode) {

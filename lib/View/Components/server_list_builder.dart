@@ -20,7 +20,6 @@ class ServerListBuilder extends GetView<ServerController> {
 
   @override
   Widget build(BuildContext context) {
-    // var servermodel = Servermodel();
     controller.getUserServersFromDB();
     return Obx(
       () {

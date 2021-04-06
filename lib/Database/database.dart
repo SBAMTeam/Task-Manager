@@ -109,6 +109,6 @@ class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
   }
 
   Future getTasks() => select(tasks).get();
-  Future getTasksWithServerId(int id) =>
-      (select(tasks)..where((a) => a.serverId.equals(id))).get();
+  Future getServerTasks(int serverId) =>
+      (select(tasks)..where((task) => task.serverId.equals(serverId))).get();
 }
