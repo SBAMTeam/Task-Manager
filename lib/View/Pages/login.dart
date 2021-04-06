@@ -121,15 +121,10 @@ class Login extends GetView<UserController> {
                               return;
                             }
                             _formKey.currentState.save();
-                            var statusCode =
-                                await (controller.login(usermodel));
-                            if (statusCode == 200) {
-                              Get.offAll(() => LoggedInPage());
-                              statusCode = null;
-                              return;
-                            } else {
-                              print("Error code: $statusCode");
-                            }
+                            controller.login(usermodel);
+                            Get.offAll(() => LoggedInPage());
+
+                            return;
                           },
                         ),
                       ],

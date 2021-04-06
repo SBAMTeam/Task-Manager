@@ -1,10 +1,17 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
+import 'package:moor/ffi.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'dart:convert';
+
+import 'package:taskmanager/View/Components/functions.dart';
+import 'package:taskmanager/View/Pages/logged_in_page.dart';
+import 'package:taskmanager/View/Pages/login.dart';
 
 class UserController extends GetxController {
   var loggedIn = false.obs;
@@ -27,17 +34,24 @@ class UserController extends GetxController {
   }
 
   Future<int> login(Usermodel usermodel) async {
-    final response = await http.post(Uri.parse(loginUrl),
-        body: jsonEncode(usermodel.toJson()));
+    final response = await http
+        .post(Uri.parse(loginUrl), body: jsonEncode(usermodel.toJson()))
+        .timeout(Duration(seconds: 5), onTimeout: () {
+      throw TimeoutException('The connection has timed out, Please try again!');
+    });
+    print(usermodel.toJson());
     if (response.statusCode == 200) {
+      loggedIn(false);
+
       try {
-        loggedIn(false);
-      } catch (e) {
-        print("exception $e in user controller");
-      } finally {
         Usermodel u = usermodelFromJson(response.body);
         await DBFunctions.insertUserAndServer(u);
+      } on SqliteException catch (e) {
+        print("error sqlite exception is $e");
       }
+    } else {
+      showSnackBar("User doesn't exist");
+      Get.offAll(() => Login());
     }
     return response.statusCode;
   }
