@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -41,13 +42,13 @@ class LoggedInPage extends GetView<ServerController> {
                     ),
                     Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
+                        AutoSizeText.rich(
+                          TextSpan(
                             text: 'Welcome to ',
                             style: TextStyle(
                                 color: Color(textColor),
-                                fontSize: 37,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 42,
+                                fontWeight: FontWeight.w900),
                             children: <TextSpan>[
                               TextSpan(
                                 text: '\nSBAM ',
@@ -67,13 +68,13 @@ class LoggedInPage extends GetView<ServerController> {
                       ],
                     ),
                     SizedBox(
-                      height: Get.height / 5,
+                      height: Get.height / 5 + 9,
                     ),
                     Shimmer.fromColors(
                       child: Column(
                         children: [
                           EmptyContainerButton(),
-                          SizedBox(height: 10),
+                          SizedBox(height: 15),
                         ],
                       ),
                       baseColor: Color(buttonColorOne),
@@ -83,7 +84,7 @@ class LoggedInPage extends GetView<ServerController> {
                         child: Column(
                           children: [
                             EmptyContainerButton(),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
                             EmptyContainerButton(),
                           ],
                         ),
@@ -106,13 +107,13 @@ class LoggedInPage extends GetView<ServerController> {
                     SizedBox(
                       height: sizedBoxBigSpace,
                     ),
-                    RichText(
-                      text: TextSpan(
+                    AutoSizeText.rich(
+                      TextSpan(
                         text: 'Welcome to ',
                         style: TextStyle(
                             color: Color(textColor),
-                            fontSize: 37,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 42,
+                            fontWeight: FontWeight.w900),
                         children: <TextSpan>[
                           TextSpan(
                             text: '\nSBAM ',
@@ -132,47 +133,38 @@ class LoggedInPage extends GetView<ServerController> {
                     SizedBox(
                       height: Get.height / 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ButtonBuilder(
-                          height: 55.0,
-                          edge: 9.0,
-                          color: Color(buttonColorOne),
-                          text: 'Create Server',
-                          onPress: () => Get.to(() => CreateServer()),
-                        ),
-                      ],
+                    Center(
+                      child: ButtonBuilder(
+                        height: 55.0,
+                        edge: 9.0,
+                        color: Color(buttonColorOne),
+                        text: 'Create Server',
+                        onPress: () => Get.to(() => CreateServer()),
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ButtonBuilder(
-                          height: 55.0,
-                          edge: 9.0,
-                          text: 'Join Server',
-                          textColor: Color(textColor),
-                          color: Color(buttonColorTwo),
-                          onPress: () => Get.to(() => JoinServer()),
-                        ),
-                      ],
+                    Center(
+                      child: ButtonBuilder(
+                        height: 55.0,
+                        edge: 9.0,
+                        text: 'Join Server',
+                        textColor: Color(textColor),
+                        color: Color(buttonColorTwo),
+                        onPress: () => Get.to(() => JoinServer()),
+                      ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ButtonBuilder(
-                          height: 55.0,
-                          edge: 9.0,
-                          text: 'Home',
-                          textColor: Color(textColor),
-                          color: Color(buttonColorTwo),
-                          onPress: () async {
-                            await controller.fetchServers(
-                                await DBFunctions.getUserIdInteger());
-                            Get.to(() => ServersList());
-                          },
-                        ),
-                      ],
+                    Center(
+                      child: ButtonBuilder(
+                        height: 55.0,
+                        edge: 9.0,
+                        text: 'Home',
+                        textColor: Color(textColor),
+                        color: Color(buttonColorTwo),
+                        onPress: () async {
+                          await controller.fetchServers(
+                              await DBFunctions.getUserIdInteger());
+                          Get.to(() => ServersList());
+                        },
+                      ),
                     ),
                   ],
                 ),

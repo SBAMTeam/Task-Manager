@@ -54,61 +54,63 @@ class JoinServer extends GetView<ServerController> {
                   SizedBox(
                     height: Get.height / 30,
                   ),
-                  GetBuilder(
-                    builder: (GetxController controller) {
-                      var controller = TextEditingController();
-                      return GestureDetector(
-                        onLongPress: () async {
-                          showDialog(
-                              context: Get.context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Paste code?"),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () async {
-                                          controller?.text =
-                                              await FlutterClipboard.paste();
-                                          servermodel.serverCode =
-                                              controller.text.toUpperCase();
-                                          Get.back();
-                                          FocusScope.of(context).unfocus();
-                                        },
-                                        child: Text("OK"))
-                                  ],
-                                );
-                              });
-                        },
-                        child: PinCodeTextField(
-                          // controller: controller,
-                          defaultBorderColor: Color(buttonColorTwo),
-                          keyboardType: TextInputType.text,
-                          autofocus: true,
-                          maxLength: 6,
-                          highlight: true,
-                          pinBoxColor: Color(buttonColorTwo),
-                          highlightPinBoxColor: Color(buttonColorOne),
-                          highlightAnimation: true,
-                          pinBoxRadius: 9.0,
-                          highlightAnimationEndColor: Colors.transparent,
-                          hasTextBorderColor: Colors.transparent,
-                          pinBoxDecoration:
-                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                          onTextChanged: (text) =>
-                              {text = text.toUpperCase(), print(text)},
-                          pinTextStyle:
-                              TextStyle(color: Color(0xffF1F1F1), fontSize: 23),
-                          pinBoxHeight: 45,
-                          pinBoxWidth: 45,
-                          onDone: (text) {
-                            if (text.isEmpty) {
-                              showSnackBar("You forgot to enter a server code");
-                            }
-                            servermodel.serverCode = text;
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onLongPress: () async {
+                            var controller = TextEditingController();
+                            showDialog(
+                                context: Get.context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Paste code?"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () async {
+                                            controller?.text =
+                                                await FlutterClipboard.paste();
+                                            servermodel.serverCode =
+                                                controller.text.toUpperCase();
+                                            Get.back();
+                                            FocusScope.of(context).unfocus();
+                                          },
+                                          child: Text("OK"))
+                                    ],
+                                  );
+                                });
                           },
-                        ),
-                      );
-                    },
+                          child: Center(
+                            child: PinCodeTextField(
+                              // controller: controller,
+                              defaultBorderColor: Color(buttonColorTwo),
+                              keyboardType: TextInputType.text,
+                              autofocus: true,
+                              maxLength: 6,
+                              highlight: true,
+                              pinBoxColor: Color(buttonColorTwo),
+                              highlightPinBoxColor: Color(buttonColorOne),
+                              highlightAnimation: true,
+                              pinBoxRadius: 9.0,
+                              highlightAnimationEndColor: Colors.transparent,
+                              hasTextBorderColor: Colors.transparent,
+                              pinBoxDecoration: ProvidedPinBoxDecoration
+                                  .defaultPinBoxDecoration,
+                              onTextChanged: (text) =>
+                                  {text = text.toUpperCase(), print(text)},
+                              pinTextStyle: TextStyle(
+                                  color: Color(0xffF1F1F1), fontSize: 23),
+                              pinBoxHeight: Get.width / 8.3,
+                              pinBoxWidth: Get.width / 8.3,
+                              onDone: (text) {
+                                if (text.isEmpty) {
+                                  showSnackBar(
+                                      "You forgot to enter a server code");
+                                }
+                                servermodel.serverCode = text;
+                              },
+                            ),
+                          )),
+                    ],
                   ),
                   SizedBox(
                     height: sizedBoxSmallSpace,
