@@ -7,7 +7,7 @@ import 'package:taskmanager/View/Pages/create_task.dart';
 
 class TasksList extends StatelessWidget {
   final serverId;
-  const TasksList({Key key, this.serverId}) : super(key: key);
+  const TasksList({Key key, @required this.serverId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
