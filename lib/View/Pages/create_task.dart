@@ -15,12 +15,13 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 class CreateTask extends GetView<ServerController> {
   CreateTask({Key key, @required this.serverId}) : super(key: key);
   final serverId;
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     Servermodel servermodel = Servermodel();
     Taskmodel taskmodel = Taskmodel();
     // return Obx(() {

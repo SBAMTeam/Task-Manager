@@ -56,13 +56,11 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         borderRadius: BorderRadius.circular(9),
         child: Container(
           child: TextFormField(
+            // controller: TextEditingController(),
             minLines: widget.minLines ?? 1,
-            maxLines: widget.maxLines ?? 30,
-            maxLength: widget.maxLength ?? 100,
-            inputFormatters: widget.inputFormatter ??
-                [
-                  LengthLimitingTextInputFormatter(20),
-                ],
+            maxLines: widget.maxLines ?? 1,
+            maxLength: widget.maxLength ?? null,
+            inputFormatters: widget.inputFormatter ?? null,
             autofocus: widget.autoFocus ?? false,
             autovalidateMode:
                 widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,

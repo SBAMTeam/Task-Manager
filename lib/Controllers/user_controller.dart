@@ -26,7 +26,7 @@ class UserController extends GetxController {
     loggedIn(await DBFunctions.isUserLoggedIn());
   }
 
-  static Future register(Usermodel usermodel) async {
+  Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
         body: jsonEncode(usermodel.toJson()));
     print("Im response body ${response.body}\n");
@@ -34,11 +34,8 @@ class UserController extends GetxController {
   }
 
   Future<int> login(Usermodel usermodel) async {
-    final response = await http
-        .post(Uri.parse(loginUrl), body: jsonEncode(usermodel.toJson()))
-        .timeout(Duration(seconds: 5), onTimeout: () {
-      throw TimeoutException('The connection has timed out, Please try again!');
-    });
+    final response = await http.post(Uri.parse(loginUrl),
+        body: jsonEncode(usermodel.toJson()));
     print(usermodel.toJson());
     if (response.statusCode == 200) {
       loggedIn(false);
@@ -50,6 +47,7 @@ class UserController extends GetxController {
         print("error sqlite exception is $e");
       }
     } else {
+      print(response.body);
       showSnackBar("User doesn't exist");
       Get.offAll(() => Login());
     }

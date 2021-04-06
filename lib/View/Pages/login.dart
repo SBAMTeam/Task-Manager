@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
-import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/functions.dart';
@@ -13,13 +12,24 @@ import 'package:crypto/crypto.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'register.dart';
 
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class Login extends StatefulWidget {
+  Login({Key key}) : super(key: key);
 
-class Login extends GetView<UserController> {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  var _formKey;
+  @override
+  void initState() {
+    super.initState();
+    _formKey = GlobalKey<FormState>();
+  }
+
   final Usermodel usermodel = Usermodel();
-
+  final controller = Get.find<UserController>();
   final maxheight = Get.height;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,7 +141,6 @@ class Login extends GetView<UserController> {
                     ),
                   ],
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -158,35 +167,6 @@ class Login extends GetView<UserController> {
                     ),
                   ],
                 ),
-
-                // Expanded(
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Text(
-                //             "Don't have an account?",
-                //             style: TextStyle(
-                //                 color: Colors.white.withAlpha(127),
-                //                 fontWeight: FontWeight.w600),
-                //           ),
-                //           ButtonBuilder(
-                //             onPress: () {
-                //               Get.to(() => Register());
-                //             },
-                //             child: Text(
-                //               "Sign up",
-                //               style: TextStyle(fontWeight: FontWeight.w600),
-                //               textAlign: TextAlign.start,
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),

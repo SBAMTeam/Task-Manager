@@ -86,7 +86,7 @@ class ServerListBuilder extends GetView<ServerController> {
           return Center(
             child: TextBuilder(
               text: "No servers! try creating or joining one.",
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 22,
             ),
           );

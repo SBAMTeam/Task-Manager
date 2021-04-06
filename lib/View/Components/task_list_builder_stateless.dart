@@ -77,10 +77,9 @@ class TaskListBuilder extends GetView<TaskController> {
               },
             ),
           );
-        } else if (controller.serverTasksList.length < 1) {
+        } else if (controller.serverTasksList.length == 0) {
           return Center(
             child: TextBuilder(
-              textAlign: TextAlign.center,
               text:
                   "No Tasks! Wait until you get assigned one, or create one yourself!",
               color: Colors.white,
@@ -120,19 +119,15 @@ class TaskListBuilder extends GetView<TaskController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      controller
-                                          .serverTasksList[index].taskName,
+                                      "Title: ${controller.serverTasksList[index].taskName}",
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
-                                      controller
-                                          .serverTasksList[index].taskDetails,
+                                      "Start date: ${controller.serverTasksList[index].taskStartDate.toString()}",
                                       style: TextStyle(fontSize: 18),
                                     ),
                                     Text(
-                                      controller
-                                          .serverTasksList[index].taskDeadline
-                                          .toString(),
+                                      "Deadline: ${controller.serverTasksList[index].taskDeadline.toString()}",
                                       style: TextStyle(fontSize: 18),
                                     ),
                                   ],
