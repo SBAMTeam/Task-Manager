@@ -10,6 +10,7 @@ import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
+import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
@@ -24,11 +25,14 @@ class CreateTask extends GetView<ServerController> {
     Taskmodel taskmodel = Taskmodel();
     // return Obx(() {
     return Scaffold(
+      backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextButton(
                   onPressed: () async {
@@ -42,49 +46,78 @@ class CreateTask extends GetView<ServerController> {
                     int userId = await DBFunctions.getUserIdInteger();
                     _createTask(taskmodel, serverId, userId);
                     // _selectServer(controller, servermodel, serverId, userId);
-                    Get.off(() => TasksList());
+                    Get.until(
+                        (route) => Get.currentRoute == '/() => TasksList');
                   },
-                  child: Text("Submit"),
+                  child: Text(
+                    "Submit",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                TextFormField(
+                TextFieldBuilder(
+                  hint: 'Task name',
+                  icon: Icons.add,
+                  // style: TextStyle(color: Colors.white),
                   maxLength: 20,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(20),
-                  ],
-                  decoration: InputDecoration(labelText: "Task Name"),
-                  onSaved: (value) {
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
+
+                  // de: InputDecoration(labelText: "Task Name"),
+                  onSavedFunc: (value) {
                     taskmodel.taskName = value.trim();
                     print("Task name : ${taskmodel.taskName}");
                   },
-                  validator: (String value) {
+                  validatorFunction: (String value) {
                     if (value.isEmpty) {
                       return "Task name field is empty";
                     }
                   },
                 ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: "Task Details"),
+                TextFieldBuilder(
+                  hint: 'Task Detauls',
+                  icon: Icons.details,
+                  // decoration: InputDecoration(labelText: "Task Details"),
                   maxLength: 600,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  inputFormatters: [
+                  autoValidateMode: AutovalidateMode.onUserInteraction,
+                  inputFormatter: [
                     LengthLimitingTextInputFormatter(600),
                   ],
-                  keyboardType: TextInputType.multiline,
+                  textInputType: TextInputType.multiline,
                   minLines: 1,
                   maxLines: 10,
-                  onSaved: (value) {
+                  onSavedFunc: (value) {
                     taskmodel.taskDetails = value.trim();
                     print("Task details : ${taskmodel.taskDetails}");
                   },
-                  validator: (String value) {
+                  validatorFunction: (String value) {
                     if (value.trim().isEmpty) {
                       return "Task details field is empty";
                     }
                   },
                 ),
                 DateTimePicker(
-                  decoration: InputDecoration(labelText: "Task Start Date"),
+                  decoration: InputDecoration(
+                    errorMaxLines: 3,
+                    // helperText: '',
+                    contentPadding: EdgeInsets.symmetric(vertical: 1.0),
+                    prefixIcon: Icon(
+                      Icons.date_range,
+                      size: 35,
+                      color: Color(iconColor),
+                    ),
+                    filled: true,
+                    fillColor: Color(textFieldColor),
+                    hintText: 'Start Date',
+                    hintStyle: TextStyle(
+                      color: Color(textColor),
+                      fontSize: 18,
+                      height: 0.9,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusColor: Color(textFieldColor),
+                  ),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
@@ -98,8 +131,33 @@ class CreateTask extends GetView<ServerController> {
                     }
                   },
                 ),
+                SizedBox(
+                  height: 25,
+                ),
                 DateTimePicker(
-                  decoration: InputDecoration(labelText: "Task Deadline"),
+                  decoration: InputDecoration(
+                    errorMaxLines: 3,
+                    // helperText: '',
+                    contentPadding: EdgeInsets.symmetric(vertical: 1.0),
+                    prefixIcon: Icon(
+                      Icons.timer,
+                      size: 35,
+                      color: Color(iconColor),
+                    ),
+                    filled: true,
+                    fillColor: Color(textFieldColor),
+                    hintText: 'Deadline',
+                    hintStyle: TextStyle(
+                      color: Color(textColor),
+                      fontSize: 18,
+                      height: 0.9,
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    focusColor: Color(textFieldColor),
+                  ),
                   type: DateTimePickerType.dateTime,
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
@@ -143,8 +201,10 @@ class CreateTask extends GetView<ServerController> {
 //   }
 // }
 
-_createTask(Taskmodel taskmodel, serverId, userId) {
+_createTask(Taskmodel taskmodel, serverId, userId) async {
   taskmodel.taskServerId = serverId.toString();
   taskmodel.taskCreatorId = userId.toString();
-  taskController.createTask(taskmodel);
+  await taskController
+      .createTask(taskmodel)
+      .then((value) => taskController.update());
 }

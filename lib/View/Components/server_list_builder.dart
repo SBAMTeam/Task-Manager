@@ -98,7 +98,8 @@ class ServerListBuilder extends GetView<ServerController> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return Container(
-              padding: EdgeInsets.only(top: 4),
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              // margin: EdgeInsets.symmetric(vertical: 5),
               child: TextButton(
                 onPressed: () async {
                   int serverId;
@@ -106,44 +107,32 @@ class ServerListBuilder extends GetView<ServerController> {
 
                   Get.to(() => TasksList(serverId: serverId));
                 },
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CircleAvatar(
-                            radius: 40,
-                            backgroundImage:
-                                NetworkImage("http://via.placeholder.com/360"),
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Flexible(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  controller.serverList[index].serverName,
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      SizedBox(
-                        height: 4,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Image.network("http://via.placeholder.com/360"),
                       ),
-                      Container(
-                        height: 1,
-                        color: Colors.grey.withAlpha(128),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Center(
+                      child: Text(
+                        controller.serverList[index].serverName,
+                        style: TextStyle(fontSize: 18),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
             );
           },

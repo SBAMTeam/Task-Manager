@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldBuilder extends StatefulWidget {
   TextFieldBuilder({
@@ -19,6 +20,11 @@ class TextFieldBuilder extends StatefulWidget {
     this.onSavedFunc,
     this.autoValidateMode,
     this.autoFocus,
+    this.inputFormatter,
+    this.maxLength,
+    this.keyboardType,
+    this.minLines,
+    this.maxLines,
   }) : super(key: key);
   final IconData icon;
   final String hint;
@@ -31,6 +37,11 @@ class TextFieldBuilder extends StatefulWidget {
   final onSavedFunc;
   final autoFocus;
   final autoValidateMode;
+  final inputFormatter;
+  final maxLength;
+  final keyboardType;
+  final minLines;
+  final maxLines;
   @override
   _TextFieldBuilderState createState() => _TextFieldBuilderState();
 }
@@ -45,6 +56,13 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         borderRadius: BorderRadius.circular(9),
         child: Container(
           child: TextFormField(
+            minLines: widget.minLines ?? 1,
+            maxLines: widget.maxLines ?? 30,
+            maxLength: widget.maxLength ?? 100,
+            inputFormatters: widget.inputFormatter ??
+                [
+                  LengthLimitingTextInputFormatter(20),
+                ],
             autofocus: widget.autoFocus ?? false,
             autovalidateMode:
                 widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
@@ -66,7 +84,6 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             obscureText: widget.obscure ?? false,
             decoration: InputDecoration(
               errorMaxLines: 3,
-              // helperText: '',
               contentPadding: EdgeInsets.symmetric(vertical: 1.0),
               prefixIcon: Icon(
                 widget.icon ?? Icons.error,
