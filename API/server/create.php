@@ -36,9 +36,29 @@ $stmt = $conn->prepare($query);
 $stmt->bindParam(':serverName', $serverName);
 $stmt->bindParam(':serverCode', $serverCode);
 $stmt->bindParam(':ownerId', $serverOwnerId);
-
 if($stmt->execute())
 {
+    $queryId = "select * from servers where Owner_ID = :ownerId and Login_CODE = :serverCode Limit 0,1";
+
+    $stmt1 = $conn->prepare($queryId);
+
+    $stmt1->bindParam(':ownerId', $serverOwnerId);
+    $stmt1->bindParam(':serverCode', $serverCode);
+    $stmt1->execute();
+
+    while($row = $stmt1->fetch(PDO::FETCH_ASSOC))
+    {
+        $serverId =   $row['Server_id'];
+    }
+     echo $serverId;
+    $queryUserServer = "INSERT into userservers SET User_ID = :userID, SERVER_ID = :serverID";
+	
+    $stmt2 = $conn->prepare($queryUserServer);
+    $stmt2->bindParam(':userID', $serverOwnerId);
+    $stmt2->bindParam(':serverID', $serverId );
+
+    $stmt2->execute();
+
     http_response_code(200);
     echo json_encode(array("logMessage" => " Server created successfully", "serverName" => $serverName,
                             "serverCode" => $serverCode, "serverOwnerId" => $serverOwnerId));
