@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
@@ -14,58 +15,97 @@ import 'package:taskmanager/View/Pages/tasks_list.dart';
 
 import 'constants.dart';
 
-class ServerUI extends GetView<ServerController> {
-  const ServerUI({Key key}) : super(key: key);
+class ServerListBuilder extends GetView<ServerController> {
+  const ServerListBuilder({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var servermodel = Servermodel();
+    // var servermodel = Servermodel();
     controller.getUserServersFromDB();
-    return Obx(() {
-      if (controller.isLoading.value == true) {
-        return Center(child: CircularProgressIndicator());
-      } else if (controller.serverList.length == 0) {
-        return Center(
-          child: TextBuilder(
-            text: "No servers! try creating or joining one.",
-            color: Colors.black,
-            fontSize: 22,
-          ),
-        );
-      }
+    return Obx(
+      () {
+        if (controller.isLoading.value == true) {
+          // if (controller.taskList.length < 1) {
+          int offset = 0;
+          int time = 800;
+          int count = Get.height ~/ 120;
+          return SafeArea(
+            child: ListView.builder(
+              itemCount: count,
+              scrollDirection: Axis.vertical,
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                offset += 5;
+                time = 800 + offset;
 
-      return ListView.builder(
+                // print(time);
+                double containerWidth = 280;
+                double containerHeight = 20;
+
+                return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Shimmer.fromColors(
+                      highlightColor: Colors.white,
+                      baseColor: Colors.grey[300],
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 7.5),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.grey,
+                              ),
+                              height: 100,
+                              width: 100,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(9),
+                                    color: Colors.grey,
+                                  ),
+                                  height: containerHeight,
+                                  width: containerWidth,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      period: Duration(milliseconds: time),
+                    ));
+              },
+            ),
+          );
+        } else if (controller.serverList.length == 0) {
+          return Center(
+            child: TextBuilder(
+              text: "No servers! try creating or joining one.",
+              color: Colors.black,
+              fontSize: 22,
+            ),
+          );
+        }
+        return ListView.builder(
           itemCount: controller.serverList.length,
           scrollDirection: Axis.vertical,
+          controller: ScrollController(),
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return Container(
               padding: EdgeInsets.only(top: 4),
               child: TextButton(
                 onPressed: () async {
-                  int serverId, userId;
+                  int serverId;
                   serverId = (controller.serverList[index].serverId);
-                  userId = (await DBFunctions.getUserIdInteger());
 
-                  ////////////////////////////////////////////////////
-                  var serverUserTasks =
-                      await controller.selectServer(serverId, userId);
-                  if (!(serverUserTasks is int)) {
-                    try {
-                      servermodel = servermodelFromJson(serverUserTasks);
-                      servermodel.serverId = serverId.toString();
-                      await DBFunctions.insertTasks(servermodel.userTasks,
-                          int.parse(servermodel.serverId));
-                    } catch (e) {
-                      print("error is : $e");
-                    }
-                    Get.to(() => TasksList(serverId: serverId))
-                        .then((value) => taskController.update());
-                    return;
-                  } else {
-                    showSnackBar("No tasks");
-                  }
-                  // Get.to(() => TasksList(serverId: serverId));
+                  Get.to(() => TasksList(serverId: serverId));
                 },
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,7 +147,9 @@ class ServerUI extends GetView<ServerController> {
                     ]),
               ),
             );
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }

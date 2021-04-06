@@ -99,7 +99,7 @@ class CreateServer extends GetView<ServerController> {
                         var statusCode =
                             await controller.createServer(servermodel);
                         if (statusCode == 200) {
-                          controller.fetchServers(int.parse(usermodel.userId));
+                          controller.fetchServers();
                         } else {
                           print("API Error, status code : $statusCode");
                         }

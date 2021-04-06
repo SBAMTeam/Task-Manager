@@ -12,7 +12,11 @@ class TasksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(backgroundColor),
       appBar: AppBar(
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -29,7 +33,11 @@ class TasksList extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [TaskListBuilder(serverId)],
+            children: [
+              TaskListBuilder(
+                serverId: serverId,
+              )
+            ],
           ),
         ),
       ),

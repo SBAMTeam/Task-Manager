@@ -51,30 +51,31 @@ class ServerController extends GetxController {
     return response.statusCode;
   }
 
-  Future selectServer(int serverId, int userId) async {
-    Taskmodel taskmodel = Taskmodel();
-    taskmodel.taskUserId = userId.toString();
-    taskmodel.taskServerId = serverId.toString();
+  // Future selectServer(int serverId, int userId) async {
+  //   Taskmodel taskmodel = Taskmodel();
+  //   taskmodel.taskUserId = userId.toString();
+  //   taskmodel.taskServerId = serverId.toString();
 
-    print("this is sent on selection: \n${taskmodel.toJson()}");
-    if (await checkInternetConnection()) {
-      final response = await http.post(Uri.parse(selectServerUrl),
-          body: jsonEncode(taskmodel));
-      print(response.statusCode);
-      print('IM BODY');
-      print(response.body);
-      if (response.statusCode == 200) {
-        // insertTaskToDB(response.body, serverId);
-        return response.body;
-      } else
-        return response.statusCode;
-    } else {
-      return;
-    }
-  }
+  //   print("this is sent on selection: \n${taskmodel.toJson()}");
+  //   if (await checkInternetConnection()) {
+  //     final response = await http.post(Uri.parse(selectServerUrl),
+  //         body: jsonEncode(taskmodel));
+  //     print(response.statusCode);
+  //     print('IM BODY');
+  //     print(response.body);
+  //     if (response.statusCode == 200) {
+  //       // insertTaskToDB(response.body, serverId);
+  //       return response.body;
+  //     } else
+  //       return response.statusCode;
+  //   } else {
+  //     return;
+  //   }
+  // }
 
-  Future fetchServers(int id) async {
+  Future fetchServers() async {
     if (await checkInternetConnection()) {
+      var id = await DBFunctions.getUserIdInteger();
       var usermodel = Usermodel();
       usermodel.userId = id.toString();
       final response = await http.post(Uri.parse(fetchUserServersUrl),
@@ -86,7 +87,6 @@ class ServerController extends GetxController {
         usermodel.userId = id.toString();
         await DBFunctions.insertServers(usermodel);
         await getUserServersFromDB();
-        // insertTaskToDB(response.body, serverId);
       }
       return response.statusCode;
     }

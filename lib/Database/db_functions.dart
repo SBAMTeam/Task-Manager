@@ -111,7 +111,7 @@ class DBFunctions {
     ];
   }
 
-  static Future getUserIdInteger() async {
+  static Future<int> getUserIdInteger() async {
     var tmp = await userDao.getUserData();
     return tmp[0].userId;
   }

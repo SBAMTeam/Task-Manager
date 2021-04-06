@@ -159,10 +159,9 @@ class LoggedInPage extends GetView<ServerController> {
                         text: 'Home',
                         textColor: Color(textColor),
                         color: Color(buttonColorTwo),
-                        onPress: () async {
-                          await controller.fetchServers(
-                              await DBFunctions.getUserIdInteger());
+                        onPress: () {
                           Get.to(() => ServersList());
+                          controller.fetchServers();
                         },
                       ),
                     ),

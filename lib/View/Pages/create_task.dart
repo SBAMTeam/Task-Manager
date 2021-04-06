@@ -41,8 +41,8 @@ class CreateTask extends GetView<ServerController> {
                     _formKey.currentState.save();
                     int userId = await DBFunctions.getUserIdInteger();
                     _createTask(taskmodel, serverId, userId);
-                    _selectServer(controller, servermodel, serverId, userId);
-                    Get.offAll(() => TasksList());
+                    // _selectServer(controller, servermodel, serverId, userId);
+                    Get.off(() => TasksList());
                   },
                   child: Text("Submit"),
                 ),
@@ -123,25 +123,25 @@ class CreateTask extends GetView<ServerController> {
   }
 }
 
-_selectServer(ServerController controller, Servermodel servermodel,
-    int serverId, int userId) async {
-  var serverUserTasks = await controller.selectServer(serverId, userId);
-  if (!(serverUserTasks is int)) {
-    try {
-      servermodel = servermodelFromJson(serverUserTasks);
-      servermodel.serverId = serverId.toString();
-      await DBFunctions.insertTasks(
-          servermodel.userTasks, int.parse(servermodel.serverId));
-      controller.isLoading(true);
-      controller.update();
-    } catch (e) {
-      print("error is : $e");
-    }
-    return;
-  } else {
-    showSnackBar("Error fetching Tasks \nResponse code is : $serverUserTasks");
-  }
-}
+// _selectServer(ServerController controller, Servermodel servermodel,
+//     int serverId, int userId) async {
+//   var serverUserTasks = await controller.selectServer(serverId, userId);
+//   if (!(serverUserTasks is int)) {
+//     try {
+//       servermodel = servermodelFromJson(serverUserTasks);
+//       servermodel.serverId = serverId.toString();
+//       await DBFunctions.insertTasks(
+//           servermodel.userTasks, int.parse(servermodel.serverId));
+//       controller.isLoading(true);
+//       controller.update();
+//     } catch (e) {
+//       print("error is : $e");
+//     }
+//     return;
+//   } else {
+//     showSnackBar("Error fetching Tasks \nResponse code is : $serverUserTasks");
+//   }
+// }
 
 _createTask(Taskmodel taskmodel, serverId, userId) {
   taskmodel.taskServerId = serverId.toString();

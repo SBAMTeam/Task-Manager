@@ -17,7 +17,8 @@ import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class JoinServer extends GetView<ServerController> {
-  const JoinServer({Key key}) : super(key: key);
+  JoinServer({Key key}) : super(key: key);
+  var txtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,6 @@ class JoinServer extends GetView<ServerController> {
                     children: [
                       GestureDetector(
                           onLongPress: () async {
-                            var controller = TextEditingController();
                             showDialog(
                                 context: Get.context,
                                 builder: (BuildContext context) {
@@ -67,10 +67,11 @@ class JoinServer extends GetView<ServerController> {
                                     actions: [
                                       TextButton(
                                           onPressed: () async {
-                                            controller?.text =
+                                            txtController.text =
                                                 await FlutterClipboard.paste();
                                             servermodel.serverCode =
-                                                controller.text.toUpperCase();
+                                                txtController.text
+                                                    .toUpperCase();
                                             Get.back();
                                             FocusScope.of(context).unfocus();
                                           },
@@ -81,7 +82,7 @@ class JoinServer extends GetView<ServerController> {
                           },
                           child: Center(
                             child: PinCodeTextField(
-                              // controller: controller,
+                              controller: txtController,
                               defaultBorderColor: Color(buttonColorTwo),
                               keyboardType: TextInputType.text,
                               autofocus: true,
