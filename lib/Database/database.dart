@@ -56,7 +56,8 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
 
   UserDao(this.db) : super(db);
 
-  Future insertUser(Insertable<User> user) => into(users).insert(user);
+  Future insertUser(Insertable<User> user) => into(users).insert(user,
+      onConflict: DoUpdate((_) => user, target: [db.users.userId]));
   Future updateUser(Insertable<User> user) => update(users).replace(user);
   Future deleteUser(Insertable<User> user) => delete(users).delete(user);
   Future getUserData() => select(users).get();
@@ -84,8 +85,8 @@ class ServerDao extends DatabaseAccessor<Database> with _$ServerDaoMixin {
   ServerDao(this.db) : super(db);
 
   Stream<List<Server>> watchServers() => select(servers).watch();
-  Future insertServer(Insertable<Server> server) =>
-      into(servers).insert(server);
+  Future insertServer(Insertable<Server> server) => into(servers).insert(server,
+      onConflict: DoUpdate((_) => server, target: [db.servers.serverId]));
 
   Future getServers() => select(servers).get();
 }

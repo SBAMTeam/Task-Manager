@@ -14,7 +14,9 @@ showSnackBar(String text) {
 Future<bool> checkInternetConnection() async {
   try {
     final result = await InternetAddress.lookup('example.com');
-    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+    final result1 = await InternetAddress.lookup('google.com');
+    if ((result.isNotEmpty && result[0].rawAddress.isNotEmpty) ||
+        (result1.isNotEmpty && result1[0].rawAddress.isNotEmpty)) {
       print('Connected to internet');
       return true;
     }

@@ -31,7 +31,7 @@ class TaskController extends GetxController {
 
   var taskmodel = Taskmodel().obs;
 
-  static Future createTask(Taskmodel taskmodel) async {
+  Future createTask(Taskmodel taskmodel) async {
     final response = await http.post(Uri.parse(createTaskUrl),
         body: jsonEncode(taskmodel.toJson()));
     print("this is sent on creation : \n${taskmodel.toJson()}");

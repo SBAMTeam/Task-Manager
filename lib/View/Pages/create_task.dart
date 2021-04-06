@@ -10,6 +10,7 @@ import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
+import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
@@ -145,5 +146,5 @@ _selectServer(ServerController controller, Servermodel servermodel,
 _createTask(Taskmodel taskmodel, serverId, userId) {
   taskmodel.taskServerId = serverId.toString();
   taskmodel.taskCreatorId = userId.toString();
-  TaskController.createTask(taskmodel);
+  taskController.createTask(taskmodel);
 }

@@ -1,4 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/server_controller.dart';
+import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Controllers/user_controller.dart';
 
 var iconColor = 0xffF1F1F1;
 var textColor = 0xffF1F1F1;
@@ -16,6 +20,11 @@ var email = 'Email Address';
 var password = 'Password';
 var placeholder = 'PLACEHOLDER';
 var phone = 'Phone Number';
+var statusBarHeight = MediaQuery.of(Get.context).padding.top;
+final taskController = Get.find<TaskController>();
+final userController = Get.find<UserController>();
+final serverController = Get.find<ServerController>();
+
 final baseAPIURL = 'http://3.142.29.182';
 final loginUrl = baseAPIURL + '/user/login.php';
 final registerUrl = baseAPIURL + '/user/Register.php';

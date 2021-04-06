@@ -14,12 +14,13 @@ import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 import 'registration_complete.dart';
 import 'dart:convert';
 
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 class Register extends StatelessWidget {
   Register({Key key}) : super(key: key);
   final Usermodel usermodel = Usermodel();
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     var passwordOne, passwordTwo;
     return Scaffold(
       appBar: TransparentAppBar(),
@@ -36,6 +37,7 @@ class Register extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFieldBuilder(
+                    autoFocus: true,
                     icon: Icons.person,
                     hint: 'Username',
                     onSavedFunc: (value) {

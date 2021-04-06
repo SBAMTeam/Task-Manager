@@ -48,7 +48,7 @@ class TaskManager extends StatelessWidget {
         Provider(create: (_) => db.taskDao),
       ],
       child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
+        // debugShowCheckedModeBanner: false,
         title: 'SBAM Tasks',
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,

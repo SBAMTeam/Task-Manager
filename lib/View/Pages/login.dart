@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/functions.dart';
@@ -11,17 +10,17 @@ import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:crypto/crypto.dart';
-import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'register.dart';
 
-class Login extends StatelessWidget {
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+class Login extends GetView<UserController> {
   final Usermodel usermodel = Usermodel();
   final maxheight = Get.height;
+
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SingleChildScrollView(
@@ -30,7 +29,7 @@ class Login extends StatelessWidget {
           padding: EdgeInsets.only(
             left: horizontalPadding,
             right: horizontalPadding,
-            top: (Get.statusBarHeight),
+            top: statusBarHeight * 2,
           ),
           // , vertical: Get.height / 13),
           child: Form(
@@ -40,10 +39,11 @@ class Login extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Image.asset('assets/images/signin_image_dark.png'),
                     SizedBox(
-                      height: 10,
+                      height: maxheight / 25,
                     ),
                     Row(
                       children: [
@@ -58,6 +58,7 @@ class Login extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         TextFieldBuilder(
+                          autoValidateMode: null,
                           hint: 'Username',
                           onSavedFunc: (String value) {
                             usermodel.userName = value.trim();
@@ -66,7 +67,7 @@ class Login extends StatelessWidget {
                           textInputType: TextInputType.text,
                           validatorFunction: (String value) {
                             if (value.trim().isEmpty) {
-                              return 'Please enter your username.';
+                              return "Username can't be empty";
                             }
                           },
                         ),
@@ -74,6 +75,7 @@ class Login extends StatelessWidget {
                           height: 10,
                         ),
                         TextFieldBuilder(
+                          autoValidateMode: null,
                           hint: password,
                           onSavedFunc: (String value) {
                             var bytes = utf8.encode(value.trim());
@@ -118,19 +120,14 @@ class Login extends StatelessWidget {
                               return;
                             }
                             _formKey.currentState.save();
-                            var tmp = await (UserController.login(usermodel));
-                            if (!(tmp is int)) {
-                              Usermodel u = usermodelFromJson(tmp);
-                              // print(u.toJson());
-                              // print(u.userServers.toList().toString());
-                              await DBFunctions.insertUserAndServer(u);
-                              print(await DBFunctions.getAllDetails());
-
+                            var statusCode =
+                                await (controller.login(usermodel));
+                            if (statusCode == 200) {
                               Get.offAll(() => LoggedInPage());
-                              tmp = null;
+                              statusCode = null;
                               return;
                             } else {
-                              print("Error code: $tmp");
+                              print("Error code: $statusCode");
                             }
                           },
                         ),

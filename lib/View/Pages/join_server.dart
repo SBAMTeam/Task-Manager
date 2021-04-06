@@ -14,12 +14,13 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 
-class JoinServer extends StatelessWidget {
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+class JoinServer extends GetView<ServerController> {
   const JoinServer({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     final Servermodel servermodel = Servermodel();
     final Usermodel usermodel = Usermodel();
     return Scaffold(
@@ -128,8 +129,7 @@ class JoinServer extends StatelessWidget {
                       usermodel.userId =
                           (await DBFunctions.getUserIdInteger()).toString();
 
-                      if (await ServerController.joinServer(
-                              servermodel, usermodel) ==
+                      if (await controller.joinServer(servermodel, usermodel) ==
                           200) {
                         Get.off(() => HomePage());
                       }

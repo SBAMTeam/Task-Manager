@@ -7,7 +7,17 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 
 class UserController extends GetxController {
-  var isLoading = true.obs;
+  var loggedIn = false.obs;
+
+  @override
+  void onInit() {
+    userLoggedIn();
+    super.onInit();
+  }
+
+  userLoggedIn() async {
+    loggedIn(await DBFunctions.isUserLoggedIn());
+  }
 
   static Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
@@ -16,17 +26,20 @@ class UserController extends GetxController {
     return response.statusCode;
   }
 
-  static Future login(Usermodel usermodel) async {
+  Future<int> login(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
     if (response.statusCode == 200) {
-      print(response.body);
-      return response.body;
-    } else {
-      print("im error response body : \n");
-      print(response.body);
-      return response.statusCode;
+      try {
+        loggedIn(false);
+      } catch (e) {
+        print("exception $e in user controller");
+      } finally {
+        Usermodel u = usermodelFromJson(response.body);
+        await DBFunctions.insertUserAndServer(u);
+      }
     }
+    return response.statusCode;
   }
 
   Future<String> getUsername() async {

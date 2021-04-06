@@ -17,6 +17,8 @@ class TextFieldBuilder extends StatefulWidget {
     this.textInputType,
     this.initialValue,
     this.onSavedFunc,
+    this.autoValidateMode,
+    this.autoFocus,
   }) : super(key: key);
   final IconData icon;
   final String hint;
@@ -27,6 +29,8 @@ class TextFieldBuilder extends StatefulWidget {
   final textInputType;
   final initialValue;
   final onSavedFunc;
+  final autoFocus;
+  final autoValidateMode;
   @override
   _TextFieldBuilderState createState() => _TextFieldBuilderState();
 }
@@ -40,16 +44,10 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(9),
         child: Container(
-          decoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(9), boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 4,
-              offset: Offset(1, 3),
-            )
-          ]),
           child: TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            autofocus: widget.autoFocus ?? false,
+            autovalidateMode:
+                widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
             onSaved: widget.onSavedFunc ??
@@ -67,6 +65,8 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             ),
             obscureText: widget.obscure ?? false,
             decoration: InputDecoration(
+              errorMaxLines: 3,
+              // helperText: '',
               contentPadding: EdgeInsets.symmetric(vertical: 1.0),
               prefixIcon: Icon(
                 widget.icon ?? Icons.error,

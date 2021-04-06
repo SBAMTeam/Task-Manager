@@ -12,12 +12,15 @@ import 'package:taskmanager/View/Components/text_builder.dart';
 
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
+import 'constants.dart';
+
 class ServerUI extends GetView<ServerController> {
   const ServerUI({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var servermodel = Servermodel();
+    controller.getUserServersFromDB();
     return Obx(() {
       if (controller.isLoading.value == true) {
         return Center(child: CircularProgressIndicator());
@@ -56,9 +59,8 @@ class ServerUI extends GetView<ServerController> {
                     } catch (e) {
                       print("error is : $e");
                     }
-                    var tc = Get.find<TaskController>();
                     Get.to(() => TasksList(serverId: serverId))
-                        .then((value) => tc.update());
+                        .then((value) => taskController.update());
                     return;
                   } else {
                     showSnackBar("No tasks");

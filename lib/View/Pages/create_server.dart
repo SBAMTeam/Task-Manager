@@ -16,14 +16,15 @@ import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 import 'package:taskmanager/View/Pages/server_code_created.dart';
 import 'package:taskmanager/Database/database.dart';
 
-class CreateServer extends StatelessWidget {
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+class CreateServer extends GetView<ServerController> {
   CreateServer({Key key}) : super(key: key);
   final Servermodel servermodel = Servermodel();
   final Usermodel usermodel = Usermodel();
   @override
   Widget build(BuildContext context) {
     var serverCode;
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: TransparentAppBar(),
       backgroundColor: Color(backgroundColor),
@@ -96,9 +97,9 @@ class CreateServer extends StatelessWidget {
                         servermodel.serverOwnerId = usermodel.userId;
                         _formKey.currentState.save();
                         var statusCode =
-                            await ServerController.createServer(servermodel);
+                            await controller.createServer(servermodel);
                         if (statusCode == 200) {
-                          DBFunctions.insertServerOnCreation(servermodel);
+                          controller.fetchServers(int.parse(usermodel.userId));
                         } else {
                           print("API Error, status code : $statusCode");
                         }

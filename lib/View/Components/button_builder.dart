@@ -48,13 +48,13 @@ class ButtonBuilder extends StatelessWidget {
             height: height ?? defaultHeight,
             decoration: boxDecoration ??
                 BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 4,
-                      offset: Offset(1, 3),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.black.withOpacity(0.15),
+                  //     blurRadius: 4,
+                  //     offset: Offset(1, 3),
+                  //   ),
+                  // ],
                   color: color ?? Color(buttonColorOne),
                   borderRadius: BorderRadius.circular(edge ?? 9),
                 ),
