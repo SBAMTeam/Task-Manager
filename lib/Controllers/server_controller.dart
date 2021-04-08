@@ -33,21 +33,21 @@ class ServerController extends GetxController {
   Future createServer(Servermodel servermodel) async {
     final response = await http.post(Uri.parse(createServerUrl),
         body: jsonEncode(servermodel.toJson()));
-    print(servermodel.toJson());
-    print(response.body);
-    print(response.statusCode);
+    print(
+        "Creating server.. Sent:\n ${servermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     return response.statusCode;
   }
 
   Future joinServer(Servermodel servermodel, Usermodel usermodel) async {
     Map map = usermodel.toJson();
     map.addAll(servermodel.toJson());
-    print(map);
+    // print(map);
     final response =
         await http.post(Uri.parse(joinServerUrl), body: jsonEncode(map));
-    print("Join request sent. Status code : ${response.statusCode}");
-    print('IM BODY');
-    print(response.body);
+    print(
+        "Joining server.. Sent:\n $map \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     return response.statusCode;
   }
 
@@ -79,9 +79,10 @@ class ServerController extends GetxController {
       var usermodel = Usermodel();
       usermodel.userId = id.toString();
       final response = await http.post(Uri.parse(fetchUserServersUrl),
-          body: jsonEncode(usermodel));
-      print('IM BODY');
-      print(response.body);
+          body: jsonEncode(usermodel.toJson()));
+      print(
+          "Fetching servers.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
       if (response.statusCode == 200) {
         usermodel = usermodelFromJson(response.body);
         usermodel.userId = id.toString();

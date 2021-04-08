@@ -29,14 +29,16 @@ class UserController extends GetxController {
   Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
         body: jsonEncode(usermodel.toJson()));
-    print("Im response body ${response.body}\n");
+    print(
+        "Registering.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     return response.statusCode;
   }
 
   Future<int> login(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
-    print(usermodel.toJson());
+    print(
+        "Logging in.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     if (response.statusCode == 200) {
       loggedIn(false);
 
@@ -47,8 +49,7 @@ class UserController extends GetxController {
         print("error sqlite exception is $e");
       }
     } else {
-      print(response.body);
-      showSnackBar("User doesn't exist");
+      showSnackBar("User doesn't exist. Check username and password");
       Get.offAll(() => Login());
     }
     return response.statusCode;

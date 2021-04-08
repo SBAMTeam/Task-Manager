@@ -14,14 +14,14 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 class JoinServer extends GetView<ServerController> {
   JoinServer({Key key}) : super(key: key);
   var txtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     final Servermodel servermodel = Servermodel();
     final Usermodel usermodel = Usermodel();
     return Scaffold(
@@ -60,25 +60,35 @@ class JoinServer extends GetView<ServerController> {
                       GestureDetector(
                           onLongPress: () async {
                             showDialog(
-                                context: Get.context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text("Paste code?"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () async {
-                                            txtController.text =
-                                                await FlutterClipboard.paste();
-                                            servermodel.serverCode =
-                                                txtController.text
-                                                    .toUpperCase();
-                                            Get.back();
-                                            FocusScope.of(context).unfocus();
-                                          },
-                                          child: Text("OK"))
-                                    ],
-                                  );
-                                });
+                              context: Get.context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Paste code?"),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        String txt;
+                                        txt = await FlutterClipboard.paste();
+
+                                        if (txt != null && txt.length > 6) {
+                                          txt = txt.substring(
+                                              0,
+                                              txt.length -
+                                                  (6 - txt.length).abs());
+                                        }
+
+                                        txtController.text = txt;
+                                        servermodel.serverCode =
+                                            txtController.text.toUpperCase();
+                                        Get.back();
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                      child: Text("Yes"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           child: Center(
                             child: PinCodeTextField(

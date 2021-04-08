@@ -29,9 +29,9 @@ class TaskController extends GetxController {
   Future createTask(Taskmodel taskmodel) async {
     final response = await http.post(Uri.parse(createTaskUrl),
         body: jsonEncode(taskmodel.toJson()));
-    print("this is sent on creation : \n${taskmodel.toJson()}");
-    print(response.body);
-    print(response.statusCode);
+    print(
+        "Creating task.. Sent:\n ${taskmodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     fetchUserServerTasks(int.parse(taskmodel.taskServerId));
     return response.statusCode;
   }
@@ -40,11 +40,13 @@ class TaskController extends GetxController {
     FetchTasksModelTemporary a = FetchTasksModelTemporary();
     a.serverId = serverId.toString();
     a.userId = (await DBFunctions.getUserIdInteger()).toString();
-    print(a.toJson());
+
     final response =
         await http.post(Uri.parse(fetchTasksUrl), body: jsonEncode(a.toJson()));
 
-    print("fetching user tasks.. \n ${response.body}");
+    print(
+        "Fetching user tasks for server id $serverId.. Sent:\n ${a.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     if (response.statusCode == 200) {
       Servermodel servermodel = Servermodel();
       servermodel = servermodelFromJson(response.body);
