@@ -8,6 +8,7 @@ import 'dart:convert';
 
 class UserController extends GetxController {
   var isLoading = true.obs;
+  var username = "USERNAME".obs;
 
   static Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
@@ -30,6 +31,6 @@ class UserController extends GetxController {
   }
 
   Future<String> getUsername() async {
-    return await DBFunctions.getUsername();
+    username(await DBFunctions.getUsername());
   }
 }

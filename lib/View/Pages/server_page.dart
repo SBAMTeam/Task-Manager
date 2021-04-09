@@ -13,33 +13,14 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
-
-  @override
-  HomePageState createState() => HomePageState();
-}
-
-class HomePageState extends State<HomePage> {
-  var username;
-
-  final UserController uc = Get.put(UserController());
-  @override
-  void initState() {
-    uc.getUsername().then((String result) {
-      setState(() {
-        username = result;
-        return;
-      });
-      return;
-    });
-    super.initState();
-  }
-
+class HomePage extends GetView<UserController> {
+  const HomePage({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Usermodel usermodel = Usermodel();
+
     Servermodel servermodel = Servermodel();
+    controller.getUsername();
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -67,7 +48,7 @@ class HomePageState extends State<HomePage> {
                       children: [
                         RichText(
                           text: TextSpan(
-                              text: username,
+                              text: controller.username.value,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30),
