@@ -7,12 +7,16 @@ import 'package:taskmanager/View/Pages/create_task.dart';
 
 class TasksList extends StatelessWidget {
   final serverId;
-  const TasksList({Key key, this.serverId}) : super(key: key);
+  const TasksList({Key key, @required this.serverId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(backgroundColor),
       appBar: AppBar(
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -29,7 +33,11 @@ class TasksList extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [TaskListBuilder(serverId)],
+            children: [
+              TaskListBuilder(
+                serverId: serverId,
+              )
+            ],
           ),
         ),
       ),

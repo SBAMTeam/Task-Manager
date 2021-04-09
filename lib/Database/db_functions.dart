@@ -44,7 +44,7 @@ class DBFunctions {
     }
   }
 
-  static insertServersOnLogin(Usermodel usermodel) {
+  static insertServers(Usermodel usermodel) {
     try {
       if (usermodel.userServers != null) {
         if (usermodel.userServers.length > 0) {
@@ -64,14 +64,13 @@ class DBFunctions {
       } else
         return;
     } catch (e) {
-      print("insertServersOnLogin error: $e");
+      print("insertServers error: $e");
     }
   }
 
   static insertUserAndServer(Usermodel usermodel) {
     DBFunctions.insertUser(usermodel);
-    if (usermodel.userServers != null)
-      DBFunctions.insertServersOnLogin(usermodel);
+    if (usermodel.userServers != null) DBFunctions.insertServers(usermodel);
   }
 
   static insertTasks(List<Taskmodel> taskList, int serverId) {
@@ -112,7 +111,7 @@ class DBFunctions {
     ];
   }
 
-  static Future getUserIdInteger() async {
+  static Future<int> getUserIdInteger() async {
     var tmp = await userDao.getUserData();
     return tmp[0].userId;
   }
@@ -167,6 +166,12 @@ class DBFunctions {
   static Future getUserTasks() async {
     List<Task> tmp = await taskDao.getTasks();
     print(tmp);
+    return tmp;
+  }
+
+  static Future getServerTasks(int serverId) async {
+    List<Task> tmp = await taskDao.getServerTasks(serverId);
+    print("serverTasks are : \n $tmp");
     return tmp;
   }
 

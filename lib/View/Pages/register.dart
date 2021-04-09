@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
@@ -14,12 +15,26 @@ import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 import 'registration_complete.dart';
 import 'dart:convert';
 
-class Register extends StatelessWidget {
+class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
+
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+  var _formKey;
+  var controller;
+  @override
+  void initState() {
+    _formKey = GlobalKey<FormState>();
+    controller = Get.find<UserController>();
+    super.initState();
+  }
+
   final Usermodel usermodel = Usermodel();
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     var passwordOne, passwordTwo;
     return Scaffold(
       appBar: TransparentAppBar(),
@@ -36,6 +51,7 @@ class Register extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFieldBuilder(
+                    autoFocus: true,
                     icon: Icons.person,
                     hint: 'Username',
                     onSavedFunc: (value) {
@@ -138,8 +154,10 @@ class Register extends StatelessWidget {
                         }
                         _formKey.currentState.save();
                         print(usermodel.toJson());
-                        final data = await (UserController.register(usermodel));
+                        final data = await (controller.register(usermodel));
                         if (data == 200) {
+                          // _formKey = null;
+
                           Get.offAll(() => RegistrationComplete());
                         } else if (data == 404) {
                           showSnackBar("Server Error. Sorry!");

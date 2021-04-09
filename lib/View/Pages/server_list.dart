@@ -15,9 +15,14 @@ class _ServersListState extends State<ServersList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color(backgroundColor),
+      appBar: AppBar(
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.transparent,
+      ),
+      backgroundColor: Color(backgroundColor),
       body: SafeArea(
-        child: ServerUI(),
+        child: ServerListBuilder(),
       ),
     );
   }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
+import 'package:moor/ffi.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
@@ -6,28 +9,51 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 import 'dart:convert';
 
-class UserController extends GetxController {
-  var isLoading = true.obs;
-  var username = "USERNAME".obs;
+import 'package:taskmanager/View/Components/functions.dart';
+import 'package:taskmanager/View/Pages/logged_in_page.dart';
+import 'package:taskmanager/View/Pages/login.dart';
 
-  static Future register(Usermodel usermodel) async {
+class UserController extends GetxController {
+  var username = "USERNAME".obs;
+  var loggedIn = false.obs;
+
+  @override
+  void onInit() {
+    userLoggedIn();
+    super.onInit();
+  }
+
+  userLoggedIn() async {
+    loggedIn(await DBFunctions.isUserLoggedIn());
+  }
+
+  Future register(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(registerUrl),
         body: jsonEncode(usermodel.toJson()));
-    print("Im response body ${response.body}\n");
+    print(
+        "Registering.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     return response.statusCode;
   }
 
-  static Future login(Usermodel usermodel) async {
+  Future<int> login(Usermodel usermodel) async {
     final response = await http.post(Uri.parse(loginUrl),
         body: jsonEncode(usermodel.toJson()));
+    print(
+        "Logging in.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     if (response.statusCode == 200) {
-      print(response.body);
-      return response.body;
+      loggedIn(false);
+
+      try {
+        Usermodel u = usermodelFromJson(response.body);
+        await DBFunctions.insertUserAndServer(u);
+      } on SqliteException catch (e) {
+        print("error sqlite exception is $e");
+      }
     } else {
-      print("im error response body : \n");
-      print(response.body);
-      return response.statusCode;
+      showSnackBar("User doesn't exist. Check username and password");
+      Get.offAll(() => Login());
     }
+    return response.statusCode;
   }
 
   Future<String> getUsername() async {

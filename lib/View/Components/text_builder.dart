@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'constants.dart';
 
@@ -22,12 +23,13 @@ class TextBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return AutoSizeText(
       text ?? 'PLACEHOLDER',
       textAlign: textAlign ?? TextAlign.left,
+      // stepGranularity: ,
       style: TextStyle(
           //letterSpacing: 1,
-          fontSize: fontSize ?? 43.5,
+          fontSize: fontSize ?? 40,
           fontWeight: fontWeight ?? FontWeight.w300,
           color: color ?? Color(textColor),
           decoration: decoration ?? null,

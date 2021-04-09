@@ -30,46 +30,66 @@ class ServerController extends GetxController {
       return _serverController;
   }
 
-  static Future createServer(Servermodel servermodel) async {
+  Future createServer(Servermodel servermodel) async {
     final response = await http.post(Uri.parse(createServerUrl),
         body: jsonEncode(servermodel.toJson()));
-    print(servermodel.toJson());
-    print(response.body);
-    print(response.statusCode);
+    print(
+        "Creating server.. Sent:\n ${servermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     return response.statusCode;
   }
 
-  static Future joinServer(Servermodel servermodel, Usermodel usermodel) async {
+  Future joinServer(Servermodel servermodel, Usermodel usermodel) async {
     Map map = usermodel.toJson();
     map.addAll(servermodel.toJson());
-    print(map);
+    // print(map);
     final response =
         await http.post(Uri.parse(joinServerUrl), body: jsonEncode(map));
-    print("Join request sent. Status code : ${response.statusCode}");
-    print('IM BODY');
-    print(response.body);
+    print(
+        "Joining server.. Sent:\n $map \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
     return response.statusCode;
   }
 
-  Future selectServer(int serverId, int userId) async {
-    Taskmodel taskmodel = Taskmodel();
-    taskmodel.taskUserId = userId.toString();
-    taskmodel.taskServerId = serverId.toString();
+  // Future selectServer(int serverId, int userId) async {
+  //   Taskmodel taskmodel = Taskmodel();
+  //   taskmodel.taskUserId = userId.toString();
+  //   taskmodel.taskServerId = serverId.toString();
 
-    print("this is sent on selection: \n${taskmodel.toJson()}");
+  //   print("this is sent on selection: \n${taskmodel.toJson()}");
+  //   if (await checkInternetConnection()) {
+  //     final response = await http.post(Uri.parse(selectServerUrl),
+  //         body: jsonEncode(taskmodel));
+  //     print(response.statusCode);
+  //     print('IM BODY');
+  //     print(response.body);
+  //     if (response.statusCode == 200) {
+  //       // insertTaskToDB(response.body, serverId);
+  //       return response.body;
+  //     } else
+  //       return response.statusCode;
+  //   } else {
+  //     return;
+  //   }
+  // }
+
+  Future fetchServers() async {
     if (await checkInternetConnection()) {
-      final response = await http.post(Uri.parse(selectServerUrl),
-          body: jsonEncode(taskmodel));
-      print(response.statusCode);
-      print('IM BODY');
-      print(response.body);
+      var id = await DBFunctions.getUserIdInteger();
+      var usermodel = Usermodel();
+      usermodel.userId = id.toString();
+      final response = await http.post(Uri.parse(fetchUserServersUrl),
+          body: jsonEncode(usermodel.toJson()));
+      print(
+          "Fetching servers.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
       if (response.statusCode == 200) {
-        // insertTaskToDB(response.body, serverId);
-        return response.body;
-      } else
-        return response.statusCode;
-    } else {
-      return;
+        usermodel = usermodelFromJson(response.body);
+        usermodel.userId = id.toString();
+        await DBFunctions.insertServers(usermodel);
+        await getUserServersFromDB();
+      }
+      return response.statusCode;
     }
   }
 
@@ -92,15 +112,4 @@ class ServerController extends GetxController {
       );
     }
   }
-
-  // insertTaskToDB(String serverUserTasks, int serverId) async {
-  //   servermodel = servermodelFromJson(serverUserTasks);
-  //   servermodel.serverId = serverId.toString();
-  //   try {
-  //     await DBFunctions.insertTasks(
-  //         servermodel.userTasks, int.parse(servermodel.serverId));
-  //   } catch (e) {
-  //     print("error is : $e");
-  //   }
-  // }
 }

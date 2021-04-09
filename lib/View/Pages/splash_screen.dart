@@ -6,7 +6,7 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 
-import 'Login.dart';
+import 'login.dart';
 
 class SplashScreen extends GetView<UserController> {
   const SplashScreen({Key key}) : super(key: key);

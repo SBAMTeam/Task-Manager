@@ -14,12 +14,14 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 
-class JoinServer extends StatelessWidget {
-  const JoinServer({Key key}) : super(key: key);
+class JoinServer extends GetView<ServerController> {
+  JoinServer({Key key}) : super(key: key);
+  var txtController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     final Servermodel servermodel = Servermodel();
     final Usermodel usermodel = Usermodel();
     return Scaffold(
@@ -53,61 +55,73 @@ class JoinServer extends StatelessWidget {
                   SizedBox(
                     height: Get.height / 30,
                   ),
-                  GetBuilder(
-                    builder: (GetxController controller) {
-                      var controller = TextEditingController();
-                      return GestureDetector(
-                        onLongPress: () async {
-                          showDialog(
+                  Row(
+                    children: [
+                      GestureDetector(
+                          onLongPress: () async {
+                            showDialog(
                               context: Get.context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   title: Text("Paste code?"),
                                   actions: [
                                     TextButton(
-                                        onPressed: () async {
-                                          controller?.text =
-                                              await FlutterClipboard.paste();
-                                          servermodel.serverCode =
-                                              controller.text.toUpperCase();
-                                          Get.back();
-                                          FocusScope.of(context).unfocus();
-                                        },
-                                        child: Text("OK"))
+                                      onPressed: () async {
+                                        String txt;
+                                        txt = await FlutterClipboard.paste();
+
+                                        if (txt != null && txt.length > 6) {
+                                          txt = txt.substring(
+                                              0,
+                                              txt.length -
+                                                  (6 - txt.length).abs());
+                                        }
+
+                                        txtController.text = txt;
+                                        servermodel.serverCode =
+                                            txtController.text.toUpperCase();
+                                        Get.back();
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                      child: Text("Yes"),
+                                    ),
                                   ],
                                 );
-                              });
-                        },
-                        child: PinCodeTextField(
-                          // controller: controller,
-                          defaultBorderColor: Color(buttonColorTwo),
-                          keyboardType: TextInputType.text,
-                          autofocus: true,
-                          maxLength: 6,
-                          highlight: true,
-                          pinBoxColor: Color(buttonColorTwo),
-                          highlightPinBoxColor: Color(buttonColorOne),
-                          highlightAnimation: true,
-                          pinBoxRadius: 9.0,
-                          highlightAnimationEndColor: Colors.transparent,
-                          hasTextBorderColor: Colors.transparent,
-                          pinBoxDecoration:
-                              ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                          onTextChanged: (text) =>
-                              {text = text.toUpperCase(), print(text)},
-                          pinTextStyle:
-                              TextStyle(color: Color(0xffF1F1F1), fontSize: 23),
-                          pinBoxHeight: 45,
-                          pinBoxWidth: 45,
-                          onDone: (text) {
-                            if (text.isEmpty) {
-                              showSnackBar("You forgot to enter a server code");
-                            }
-                            servermodel.serverCode = text;
+                              },
+                            );
                           },
-                        ),
-                      );
-                    },
+                          child: Center(
+                            child: PinCodeTextField(
+                              controller: txtController,
+                              defaultBorderColor: Color(buttonColorTwo),
+                              keyboardType: TextInputType.text,
+                              autofocus: true,
+                              maxLength: 6,
+                              highlight: true,
+                              pinBoxColor: Color(buttonColorTwo),
+                              highlightPinBoxColor: Color(buttonColorOne),
+                              highlightAnimation: true,
+                              pinBoxRadius: 9.0,
+                              highlightAnimationEndColor: Colors.transparent,
+                              hasTextBorderColor: Colors.transparent,
+                              pinBoxDecoration: ProvidedPinBoxDecoration
+                                  .defaultPinBoxDecoration,
+                              onTextChanged: (text) =>
+                                  {text = text.toUpperCase(), print(text)},
+                              pinTextStyle: TextStyle(
+                                  color: Color(0xffF1F1F1), fontSize: 23),
+                              pinBoxHeight: Get.width / 8.3,
+                              pinBoxWidth: Get.width / 8.3,
+                              onDone: (text) {
+                                if (text.isEmpty) {
+                                  showSnackBar(
+                                      "You forgot to enter a server code");
+                                }
+                                servermodel.serverCode = text;
+                              },
+                            ),
+                          )),
+                    ],
                   ),
                   SizedBox(
                     height: sizedBoxSmallSpace,
@@ -128,8 +142,7 @@ class JoinServer extends StatelessWidget {
                       usermodel.userId =
                           (await DBFunctions.getUserIdInteger()).toString();
 
-                      if (await ServerController.joinServer(
-                              servermodel, usermodel) ==
+                      if (await controller.joinServer(servermodel, usermodel) ==
                           200) {
                         Get.off(() => HomePage());
                       }

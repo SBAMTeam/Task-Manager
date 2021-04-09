@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldBuilder extends StatefulWidget {
   TextFieldBuilder({
@@ -17,6 +18,13 @@ class TextFieldBuilder extends StatefulWidget {
     this.textInputType,
     this.initialValue,
     this.onSavedFunc,
+    this.autoValidateMode,
+    this.autoFocus,
+    this.inputFormatter,
+    this.maxLength,
+    this.keyboardType,
+    this.minLines,
+    this.maxLines,
   }) : super(key: key);
   final IconData icon;
   final String hint;
@@ -27,6 +35,13 @@ class TextFieldBuilder extends StatefulWidget {
   final textInputType;
   final initialValue;
   final onSavedFunc;
+  final autoFocus;
+  final autoValidateMode;
+  final inputFormatter;
+  final maxLength;
+  final keyboardType;
+  final minLines;
+  final maxLines;
   @override
   _TextFieldBuilderState createState() => _TextFieldBuilderState();
 }
@@ -40,16 +55,15 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(9),
         child: Container(
-          decoration:
-              BoxDecoration(borderRadius: BorderRadius.circular(9), boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 4,
-              offset: Offset(1, 3),
-            )
-          ]),
           child: TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
+            // controller: TextEditingController(),
+            minLines: widget.minLines ?? 1,
+            maxLines: widget.maxLines ?? 1,
+            maxLength: widget.maxLength ?? null,
+            inputFormatters: widget.inputFormatter ?? null,
+            autofocus: widget.autoFocus ?? false,
+            autovalidateMode:
+                widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
             onSaved: widget.onSavedFunc ??
@@ -67,6 +81,7 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             ),
             obscureText: widget.obscure ?? false,
             decoration: InputDecoration(
+              errorMaxLines: 3,
               contentPadding: EdgeInsets.symmetric(vertical: 1.0),
               prefixIcon: Icon(
                 widget.icon ?? Icons.error,

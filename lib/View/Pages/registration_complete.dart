@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 
-import 'Login.dart';
+import 'login.dart';
 
 class RegistrationComplete extends StatelessWidget {
   const RegistrationComplete({Key key}) : super(key: key);
