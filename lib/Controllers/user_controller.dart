@@ -14,8 +14,8 @@ import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'package:taskmanager/View/Pages/login.dart';
 
 class UserController extends GetxController {
-  var username = "USERNAME".obs;
   var loggedIn = false.obs;
+  var username = "USERNAME".obs;
 
   @override
   void onInit() {
