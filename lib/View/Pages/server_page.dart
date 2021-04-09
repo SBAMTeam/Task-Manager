@@ -12,6 +12,7 @@ import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/View/Components/user_info_bar.dart';
 
 class HomePage extends GetView<UserController> {
   const HomePage({Key key}) : super(key: key);
@@ -27,58 +28,49 @@ class HomePage extends GetView<UserController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-
-          // crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            // SizedBox(
-            //   height: sizedBoxBigSpace,
-            // ),
             Container(
               height: Get.height / 2.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Get.width / 16),
-                    child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                              text: controller.username.value,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30),
-                              children: [
-                                TextSpan(
-                                  text: '\nrole/job title',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 20),
-                                ),
-                              ]),
-                        ),
-                        // SizedBox(
-                        //   width: sizedBoxBigSpace * 3.04,
-                        // ),
-                        ClipRRect(
-                          borderRadius:
-                              BorderRadius.circular(9.0), //or 15.0
-                          child: Container(
-                            height: 60.0,
-                            width: 60.0,
-                            color: Color(buttonColorOne),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // SizedBox(
-                  //   height: 100,
+                  UserInfoBar(),
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //       horizontal: Get.width / 16),
+                  //   child: Row(
+                  //     mainAxisAlignment:
+                  //         MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       RichText(
+                  //         text: TextSpan(
+                  //             text: controller.username.value,
+                  //             style: TextStyle(
+                  //                 fontWeight: FontWeight.bold,
+                  //                 fontSize: 30),
+                  //             children: [
+                  //               TextSpan(
+                  //                 text: '\nrole/job title',
+                  //                 style: TextStyle(
+                  //                     fontWeight: FontWeight.normal,
+                  //                     fontSize: 20),
+                  //               ),
+                  //             ]),
+                  //       ),
+                  //       ClipRRect(
+                  //         borderRadius:
+                  //             BorderRadius.circular(9.0), //or 15.0
+                  //         child: Container(
+                  //           height: 60.0,
+                  //           width: 60.0,
+                  //           color: Color(buttonColorOne),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
                   // ),
+
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -93,7 +85,6 @@ class HomePage extends GetView<UserController> {
                 ],
               ),
             ),
-
             Container(
               height: Get.height / 1.8,
               child: Column(
