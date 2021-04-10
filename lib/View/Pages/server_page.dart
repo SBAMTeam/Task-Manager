@@ -15,6 +15,10 @@ class HomePage extends GetView<UserController> {
   final int serverId;
   @override
   Widget build(BuildContext context) {
+    var height = Get.height;
+    Usermodel usermodel = Usermodel();
+
+    Servermodel servermodel = Servermodel();
     controller.getUsername();
     controller.getNickname();
     taskController.fetchUserServerTasks(serverId);
@@ -28,7 +32,7 @@ class HomePage extends GetView<UserController> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              height: Get.height / 2.5,
+              height: height / 2.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -76,7 +80,7 @@ class HomePage extends GetView<UserController> {
               ),
             ),
             Container(
-              height: Get.height / 1.8,
+              height: height / 2,
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.start,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,

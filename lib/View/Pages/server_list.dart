@@ -14,12 +14,9 @@ class ServersList extends StatefulWidget {
 class _ServersListState extends State<ServersList> {
   @override
   Widget build(BuildContext context) {
+    serverController.fetchServers();
+
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Colors.transparent,
-      ),
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: ServerListBuilder(),

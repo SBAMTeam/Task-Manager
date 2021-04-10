@@ -3,13 +3,17 @@ import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/ExtraIcons.dart';
+import 'package:taskmanager/View/Components/server_list_builder.dart';
 
 import 'package:taskmanager/View/Pages/SearchTasks.dart';
+import 'package:taskmanager/View/Pages/server_list_builder_ui.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 
 class NavBar extends StatelessWidget {
-  final NavigationController navcontroller = Get.put(NavigationController());
-  final List<Widget> bodyContent = [SearchTasks()];
+  final NavigationController navcontroller =
+      Get.put(NavigationController());
+
+  final List<Widget> bodyContent = [HomePage(), ServersListUI()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +37,11 @@ class NavBar extends StatelessWidget {
                   ),
                   label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(ExtraIcons.fi_rr_search), label: 'Search'),
+                  icon: Icon(ExtraIcons.fi_rr_search),
+                  label: 'Search'),
               BottomNavigationBarItem(
-                  icon: Icon(ExtraIcons.fi_rr_settings), label: 'Settings'),
+                  icon: Icon(ExtraIcons.fi_rr_settings),
+                  label: 'Settings'),
             ],
             onTap: (index) => navcontroller.selectedTab = index),
       ),

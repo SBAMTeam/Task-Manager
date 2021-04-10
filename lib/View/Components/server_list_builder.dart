@@ -50,23 +50,28 @@ class ServerListBuilder extends GetView<ServerController> {
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 7.5),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius:
+                                    BorderRadius.circular(20),
                                 color: Colors.grey,
                               ),
                               height: 100,
                               width: 100,
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
                               children: <Widget>[
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(9),
+                                    borderRadius:
+                                        BorderRadius.circular(9),
                                     color: Colors.grey,
                                   ),
                                   height: containerHeight,
@@ -119,7 +124,8 @@ class ServerListBuilder extends GetView<ServerController> {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20.0),
-                        child: Image.network("http://via.placeholder.com/360"),
+                        child: Image.network(
+                            "http://via.placeholder.com/360"),
                       ),
                     ),
                     SizedBox(
