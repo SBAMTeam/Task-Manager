@@ -54,6 +54,8 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
       child: Material(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(9),
+        elevation: 4,
+        shadowColor: Colors.black.withOpacity(0.15),
         child: Container(
           child: TextFormField(
             // controller: TextEditingController(),
@@ -62,8 +64,8 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
             maxLength: widget.maxLength ?? null,
             inputFormatters: widget.inputFormatter ?? null,
             autofocus: widget.autoFocus ?? false,
-            autovalidateMode:
-                widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
+            autovalidateMode: widget.autoValidateMode ??
+                AutovalidateMode.onUserInteraction,
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
             onSaved: widget.onSavedFunc ??

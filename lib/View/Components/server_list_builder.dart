@@ -24,10 +24,10 @@ class ServerListBuilder extends GetView<ServerController> {
     return Obx(
       () {
         if (controller.isLoading.value == true) {
-          // if (controller.taskList.length < 1) {
+          // if (true) {
           int offset = 0;
           int time = 800;
-          int count = Get.height ~/ 120;
+          int count = Get.height ~/ 95;
           return SafeArea(
             child: ListView.builder(
               itemCount: count,
@@ -35,7 +35,7 @@ class ServerListBuilder extends GetView<ServerController> {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                offset += 5;
+                // offset = 5;
                 time = 800 + offset;
 
                 // print(time);
@@ -43,10 +43,16 @@ class ServerListBuilder extends GetView<ServerController> {
                 double containerHeight = 20;
 
                 return Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Color(buttonColorTwo),
+                      borderRadius: BorderRadius.circular(9),
+                    ),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: Get.width / 16, vertical: 8),
                     child: Shimmer.fromColors(
-                      highlightColor: Colors.white,
-                      baseColor: Colors.grey[300],
+                      highlightColor: Color(buttonColorOne),
+                      baseColor: Color(buttonColorTwo),
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 7.5),
                         child: Row(
@@ -58,11 +64,11 @@ class ServerListBuilder extends GetView<ServerController> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.circular(20),
+                                    BorderRadius.circular(9),
                                 color: Colors.grey,
                               ),
-                              height: 100,
-                              width: 100,
+                              height: 60,
+                              width: 60,
                             ),
                             Column(
                               crossAxisAlignment:
@@ -71,11 +77,11 @@ class ServerListBuilder extends GetView<ServerController> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius:
-                                        BorderRadius.circular(9),
+                                        BorderRadius.circular(6),
                                     color: Colors.grey,
                                   ),
                                   height: containerHeight,
-                                  width: containerWidth,
+                                  width: Get.width / 1.5,
                                 ),
                               ],
                             ),
@@ -103,8 +109,16 @@ class ServerListBuilder extends GetView<ServerController> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
+              margin: EdgeInsets.symmetric(
+                  horizontal: Get.width / 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: Color(buttonColorTwo),
+                borderRadius: BorderRadius.circular(9),
+              ),
+
+              // padding: EdgeInsets.symmetric(horizontal: 8),
               // margin: EdgeInsets.symmetric(vertical: 5),
+
               child: TextButton(
                 onPressed: () async {
                   int serverId;
@@ -117,24 +131,25 @@ class ServerListBuilder extends GetView<ServerController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      height: 100,
-                      width: 100,
+                      height: 60,
+                      width: 60,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(9),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
+                        borderRadius: BorderRadius.circular(9),
                         child: Image.network(
                             "http://via.placeholder.com/360"),
                       ),
                     ),
                     SizedBox(
-                      width: 8,
+                      width: 20,
                     ),
                     Center(
                       child: Text(
                         controller.serverList[index].serverName,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                            fontSize: 20, color: Colors.white),
                       ),
                     ),
                   ],

@@ -37,8 +37,7 @@ class NavBar extends StatelessWidget {
                   ),
                   label: 'Home'),
               BottomNavigationBarItem(
-                  icon: Icon(ExtraIcons.fi_rr_search),
-                  label: 'Search'),
+                  icon: Icon(Icons.dns_outlined), label: 'Servers'),
               BottomNavigationBarItem(
                   icon: Icon(ExtraIcons.fi_rr_settings),
                   label: 'Settings'),
