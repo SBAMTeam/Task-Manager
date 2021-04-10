@@ -4,7 +4,7 @@ import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Pages/logged_in_page.dart';
-import 'package:taskmanager/View/Pages/server_list_builder_ui.dart';
+import 'package:taskmanager/View/Pages/server_list.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 
 import 'login.dart';
@@ -15,10 +15,16 @@ class SplashScreen extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     controller.getUsername();
+    controller.getNickname();
+    controller.getUserLastServer();
     Future.delayed(Duration(seconds: 3), () async {
       if (await DBFunctions.isUserLoggedIn() == true) {
-        Get.off(() => LoggedInPage());
-        return;
+        if (controller.userLastServer.value != 0) {
+          Get.off(() => HomePage(controller.userLastServer.value));
+          return;
+        } else {
+          Get.off(() => ServersList());
+        }
       } else {
         Get.off(() => Login());
         return;
@@ -33,8 +39,7 @@ class SplashScreen extends GetView<UserController> {
           children: [
             Center(
               child: Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: Get.width / 12),
+                padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
                 // , vertical: Get.height / 13),
                 child: RichText(
                   text: TextSpan(

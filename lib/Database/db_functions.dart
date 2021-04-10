@@ -93,7 +93,7 @@ class DBFunctions {
               // taskProgress: //add later maybe
             );
             taskDao.insertTask(newTask);
-            print("IM HEEEEEEREEEEEEE $count");
+            // print("IM HEEEEEEREEEEEEE $count");
           }
         } else
           return;
@@ -104,21 +104,35 @@ class DBFunctions {
     }
   }
 
-  static Future<List<dynamic>> getAllDetails() async {
-    return [
-      await DBFunctions.getUserDetails(),
-      await DBFunctions.getUserServers()
-    ];
-  }
+  // static Future<List<dynamic>> getAllDetails() async {
+  //   return [
+  //     await DBFunctions.getUserDetails(),
+  //     await DBFunctions.getUserServers()
+  //   ];
+  // }
 
   static Future<int> getUserIdInteger() async {
     var tmp = await userDao.getUserData();
     return tmp[0].userId;
   }
 
-  static Future getUsername() async {
+  static Future<int> getUserLastServer() async {
     var tmp = await userDao.getUserData();
-    return tmp[0].userName;
+    return tmp[0].userLastServer;
+  }
+
+  static Future insertUserLastServer(int serverId) async {
+    int userId = await DBFunctions.getUserIdInteger();
+    userDao.insertUserLastServer(serverId, userId);
+    return;
+  }
+
+  static Future getUsername() async {
+    List tmp = await userDao.getUserData();
+    if (tmp.length > 0) {
+      return tmp[0].userName;
+    } else
+      return "USER_NAME";
   }
 
   static Future getUserEmail() async {
@@ -127,8 +141,11 @@ class DBFunctions {
   }
 
   static Future getUserNickname() async {
-    var tmp = await userDao.getUserData();
-    return tmp[0].userNickname;
+    List<User> tmp = await userDao.getUserData();
+    if (tmp.length > 0) {
+      return tmp[0].userNickname;
+    } else
+      return "USER_NICKNAME";
   }
 
   static Future getUserJwt() async {

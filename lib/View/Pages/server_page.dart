@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:taskmanager/Controllers/navigation_controller.dart';
+import 'package:intl/intl.dart';
+
 import 'package:taskmanager/Controllers/user_controller.dart';
-import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/server_model.dart';
-import 'package:taskmanager/Models/user_model.dart';
+
 import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/View/Components/ExtraIcons.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
+
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
-import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/View/Components/user_info_bar.dart';
 
 class HomePage extends GetView<UserController> {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage(this.serverId, {Key key}) : super(key: key);
+  final int serverId;
   @override
   Widget build(BuildContext context) {
     var height = Get.height;
@@ -23,6 +20,10 @@ class HomePage extends GetView<UserController> {
 
     Servermodel servermodel = Servermodel();
     controller.getUsername();
+    controller.getNickname();
+    taskController.fetchUserServerTasks(serverId);
+    int count = Get.height ~/ 120;
+
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -37,51 +38,43 @@ class HomePage extends GetView<UserController> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   UserInfoBar(),
-                  // Container(
-                  //   padding: EdgeInsets.symmetric(
-                  //       horizontal: Get.width / 16),
-                  //   child: Row(
-                  //     mainAxisAlignment:
-                  //         MainAxisAlignment.spaceBetween,
-                  //     children: [
-                  //       RichText(
-                  //         text: TextSpan(
-                  //             text: controller.username.value,
-                  //             style: TextStyle(
-                  //                 fontWeight: FontWeight.bold,
-                  //                 fontSize: 30),
-                  //             children: [
-                  //               TextSpan(
-                  //                 text: '\nrole/job title',
-                  //                 style: TextStyle(
-                  //                     fontWeight: FontWeight.normal,
-                  //                     fontSize: 20),
-                  //               ),
-                  //             ]),
-                  //       ),
-                  //       ClipRRect(
-                  //         borderRadius:
-                  //             BorderRadius.circular(9.0), //or 15.0
-                  //         child: Container(
-                  //           height: 60.0,
-                  //           width: 60.0,
-                  //           color: Color(buttonColorOne),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        // SizedBox(width: sizedBoxSmallSpace),
-                        CardBuilder(),
-                        // SizedBox(width: sizedBoxSmallSpace),
-                        CardBuilder(),
-                      ],
-                    ),
+                    child: ListView.builder(
+                        itemCount: count,
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var details = (taskController
+                              .serverTasksList[index].taskDetails);
+                          var detailsShort = (taskController
+                                  .serverTasksList[index].taskDetails)
+                              .substring(0,
+                                  details.length - (6 - details.length).abs());
+                          DateTime deadlineDate = (taskController
+                              .serverTasksList[index].taskDeadline);
+                          DateTime startDate = (taskController
+                              .serverTasksList[index].taskStartDate);
+                          final f = new DateFormat('yyyy-MM-dd hh:mm');
+                          f.format(deadlineDate);
+                          f.format(startDate);
+                          return CardBuilder(
+                            taskTitle:
+                                "Task title: ${taskController.serverTasksList[index].taskName}",
+                            taskDetails: "Task Details: $detailsShort",
+                            taskDeadline: "Task Deadline: $deadlineDate",
+                            taskStartDate: "Task Start Date: $startDate",
+                          );
+                        }),
+                    // child: Row(
+                    //   children: [
+                    //     // SizedBox(width: sizedBoxSmallSpace),
+                    //     CardBuilder(),
+                    //     // SizedBox(width: sizedBoxSmallSpace),
+                    //     CardBuilder(),
+                    //   ],
+                    // ),
                   ),
                 ],
               ),
@@ -93,8 +86,7 @@ class HomePage extends GetView<UserController> {
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: Get.width / 16),
+                    padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
                     child: Row(
                       children: [
                         TextBuilder(
@@ -108,8 +100,7 @@ class HomePage extends GetView<UserController> {
                   Container(
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.all(Get.width / 16),
-                    margin: EdgeInsets.symmetric(
-                        horizontal: Get.width / 16),
+                    margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
                     // height: Get.height / 4.5,
                     // width: Get.width,
                     decoration: BoxDecoration(
@@ -123,19 +114,16 @@ class HomePage extends GetView<UserController> {
                           )
                         ]),
                     child: Column(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
                                 ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(9.0),
+                                  borderRadius: BorderRadius.circular(9.0),
                                   child: Container(
                                     height: 60.0,
                                     width: 60.0,
@@ -167,14 +155,13 @@ class HomePage extends GetView<UserController> {
                           height: 10,
                         ),
                         Row(
-                          mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(
-                                      9.0), //or 15.0
+                                  borderRadius:
+                                      BorderRadius.circular(9.0), //or 15.0
                                   child: Container(
                                     height: 60.0,
                                     width: 60.0,

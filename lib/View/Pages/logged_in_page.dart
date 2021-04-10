@@ -14,6 +14,7 @@ import 'package:taskmanager/View/Pages/create_server.dart';
 import 'package:taskmanager/View/Pages/join_server.dart';
 import 'package:taskmanager/View/Pages/server_list_builder_ui.dart';
 import 'server_list.dart';
+import 'server_page.dart';
 
 class LoggedInPage extends GetView<ServerController> {
   LoggedInPage({Key key}) : super(key: key);
@@ -165,6 +166,8 @@ class LoggedInPage extends GetView<ServerController> {
                         textColor: Color(textColor),
                         color: Color(buttonColorTwo),
                         onPress: () {
+                          // Get.to(() => HomePage());
+                          // controller.fetchServers();
                           Get.to(() => NavBar());
                           // controller.fetchServers();
                         },
