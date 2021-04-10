@@ -11,7 +11,8 @@ class UserInfoBar extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+      padding: EdgeInsets.symmetric(
+          horizontal: Get.width / 16, vertical: Get.height / 32),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

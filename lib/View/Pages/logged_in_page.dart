@@ -5,12 +5,14 @@ import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/empty_button_container_round.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Pages/create_server.dart';
 import 'package:taskmanager/View/Pages/join_server.dart';
+import 'package:taskmanager/View/Pages/server_list_builder_ui.dart';
 import 'server_list.dart';
 
 class LoggedInPage extends GetView<ServerController> {
@@ -28,11 +30,13 @@ class LoggedInPage extends GetView<ServerController> {
         if (userController.loggedIn.value == false) {
           // if (true) {
           Future.delayed(Duration(seconds: 1), () async {
-            userController.loggedIn(await DBFunctions.isUserLoggedIn());
+            userController
+                .loggedIn(await DBFunctions.isUserLoggedIn());
           });
           return SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+              padding:
+                  EdgeInsets.symmetric(horizontal: Get.width / 12),
               // , vertical: Get.height / 13),
               child: SingleChildScrollView(
                 child: Column(
@@ -98,7 +102,8 @@ class LoggedInPage extends GetView<ServerController> {
         } else if (userController.loggedIn.value) {
           return SafeArea(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
+              padding:
+                  EdgeInsets.symmetric(horizontal: Get.width / 12),
               // , vertical: Get.height / 13),
               child: SingleChildScrollView(
                 child: Column(
@@ -160,8 +165,8 @@ class LoggedInPage extends GetView<ServerController> {
                         textColor: Color(textColor),
                         color: Color(buttonColorTwo),
                         onPress: () {
-                          Get.to(() => ServersList());
-                          controller.fetchServers();
+                          Get.to(() => NavBar());
+                          // controller.fetchServers();
                         },
                       ),
                     ),
@@ -171,7 +176,8 @@ class LoggedInPage extends GetView<ServerController> {
             ),
           );
         } else {
-          return Text("something's not rigght.. check logged_in_page");
+          return Text(
+              "something's not rigght.. check logged_in_page");
         }
       }),
     );
