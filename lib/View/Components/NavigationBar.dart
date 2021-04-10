@@ -9,7 +9,7 @@ import 'package:taskmanager/View/Pages/server_page.dart';
 
 class NavBar extends StatelessWidget {
   final NavigationController navcontroller = Get.put(NavigationController());
-  final List<Widget> bodyContent = [HomePage(), SearchTasks()];
+  final List<Widget> bodyContent = [SearchTasks()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

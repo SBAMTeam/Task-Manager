@@ -10,6 +10,8 @@ import 'dart:io';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3/open.dart';
 import 'package:moor/moor.dart';
+
+import 'db_functions.dart';
 part 'database.g.dart';
 
 class UserWithServers {
@@ -35,18 +37,21 @@ class Database extends _$Database {
   //       path: 'db.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
   @override
   MigrationStrategy get migration => MigrationStrategy(
-      // onUpgrade: (migrator, from, to) async {
-      //       if (from == 1) {
-      //         await migrator.addColumn(users, users._userName); //implement migrator when changing database after the app is published.
-      //         await migrator.createTable(tags);
-      //       }
-      //     },
-      // beforeOpen: (details) async {
-      //   await customStatement('PRAGMA foreign_keys = ON');
-      // },
+        onUpgrade: (Migrator migrator, from, to) async {
+          if (from < 2) {
+            await migrator.addColumn(
+                users,
+                users
+                    .userLastServer); //implement migrator when changing database after the app is published.
+            // await migrator.createTable(tags);
+          }
+        },
+        // beforeOpen: (details) async {
+        //   await customStatement('PRAGMA foreign_keys = ON');
+        // },
       );
 }
 
@@ -58,6 +63,34 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
 
   Future insertUser(Insertable<User> user) => into(users).insert(user,
       onConflict: DoUpdate((_) => user, target: [db.users.userId]));
+
+  Future insertUserLastServer(int serverId, int userId) async {
+    into(users).insert(
+      UsersCompanion(
+        userId: Value(userId),
+        userLastServer: Value(serverId),
+        userEmail: Value(await DBFunctions.getUserEmail()),
+        userJwt: Value(await DBFunctions.getUserJwt()),
+        userLogMessage: Value(await DBFunctions.getUserLogMessage()),
+        userLoggedIn: Value(await DBFunctions.isUserLoggedIn()),
+        userName: Value(await DBFunctions.getUsername()),
+        userNickname: Value(await DBFunctions.getUserNickname()),
+      ),
+      onConflict: DoUpdate(
+          (_) => UsersCompanion(
+                userLastServer: Value(serverId),
+              ),
+          target: [db.users.userId]),
+    );
+  }
+
+  Future ass(int serverId, int userId) =>
+      (update(users)..where((t) => t.userId.equals(userId))).write(
+        UsersCompanion(
+          userLastServer: Value(serverId),
+        ),
+      );
+
   Future updateUser(Insertable<User> user) => update(users).replace(user);
   Future deleteUser(Insertable<User> user) => delete(users).delete(user);
   Future getUserData() => select(users).get();

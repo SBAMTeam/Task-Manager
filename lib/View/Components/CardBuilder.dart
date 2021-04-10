@@ -4,8 +4,14 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 
 class CardBuilder extends StatelessWidget {
-  const CardBuilder({Key key}) : super(key: key);
-
+  const CardBuilder(
+      {Key key,
+      @required this.taskTitle,
+      @required this.taskDetails,
+      @required this.taskStartDate,
+      @required this.taskDeadline})
+      : super(key: key);
+  final taskTitle, taskDetails, taskStartDate, taskDeadline;
   @override
   Widget build(BuildContext context) {
     return Container(

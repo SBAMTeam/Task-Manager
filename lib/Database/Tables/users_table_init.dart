@@ -8,7 +8,9 @@ class Users extends Table {
   TextColumn get userNickname => text().withLength(min: 1, max: 50)();
   TextColumn get userJwt => text().withLength(min: 1, max: 300)();
   BoolColumn get userLoggedIn => boolean().withDefault(const Constant(false))();
-
+  IntColumn get userLastServer => integer()
+      .nullable()
+      .customConstraint("NULL REFERENCES servers(server_id)")();
   // Set<Column> get primrayKey => {userId};
 
   // List<String> get customConstraints => [

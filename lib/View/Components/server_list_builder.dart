@@ -102,10 +102,10 @@ class ServerListBuilder extends GetView<ServerController> {
               // margin: EdgeInsets.symmetric(vertical: 5),
               child: TextButton(
                 onPressed: () async {
-                  int serverId;
-                  serverId = (controller.serverList[index].serverId);
+                  int serverId = (controller.serverList[index].serverId);
 
                   Get.to(() => TasksList(serverId: serverId));
+                  await DBFunctions.insertUserLastServer(serverId);
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
