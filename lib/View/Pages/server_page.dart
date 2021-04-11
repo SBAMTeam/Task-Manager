@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +21,7 @@ class HomePage extends GetView<UserController> {
     controller.getUsername();
     controller.getNickname();
     taskController.fetchUserServerTasks(serverId);
-    // int count = Get.height ~/ 120;
+    int count = Get.height ~/ 120;
 
     return Scaffold(
       backgroundColor: Color(backgroundColor),
@@ -31,12 +32,26 @@ class HomePage extends GetView<UserController> {
           children: [
             Container(
               // height: height / 2.5,
+              padding: EdgeInsets.all(12),
               width: Get.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   UserInfoBar(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 50,
+                    child: TextBuilder(
+                      text: 'My Tasks',
+                      maxLines: 1,
+                      minFontSize: 12,
+                      // fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Container(
                     height: height / 4,
                     child: ListView.builder(
@@ -76,126 +91,124 @@ class HomePage extends GetView<UserController> {
                 ],
               ),
             ),
-            // Container(
-            //   height: height / 2,
-            //   child: Column(
-            //     // mainAxisAlignment: MainAxisAlignment.start,
-            //     // crossAxisAlignment: CrossAxisAlignment.stretch,
-            //     children: [
-            //       Container(
-            //         padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
-            //         child: Row(
-            //           children: [
-            //             TextBuilder(
-            //               text: 'My Tasks',
-            //               fontSize: 30,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //       Container(
-            //         alignment: Alignment.topLeft,
-            //         padding: EdgeInsets.all(Get.width / 16),
-            //         margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
-            //         // height: Get.height / 4.5,
-            //         // width: Get.width,
-            //         decoration: BoxDecoration(
-            //             color: Color(buttonColorTwo),
-            //             borderRadius: BorderRadius.circular(9),
-            //             boxShadow: [
-            //               BoxShadow(
-            //                 color: Colors.black.withOpacity(0.15),
-            //                 blurRadius: 4,
-            //                 offset: Offset(1, 3),
-            //               )
-            //             ]),
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-            //             Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Row(
-            //                   children: [
-            //                     ClipRRect(
-            //                       borderRadius: BorderRadius.circular(9.0),
-            //                       child: Container(
-            //                         height: 60.0,
-            //                         width: 60.0,
-            //                         color: Color(buttonColorOne),
-            //                         child: Icon(
-            //                           Icons.list,
-            //                           color: Colors.white,
-            //                           size: 60,
-            //                         ),
-            //                       ),
-            //                     ),
-            //                     SizedBox(
-            //                       width: 10,
-            //                     ),
-            //                     TextBuilder(
-            //                       text: "To Do",
-            //                       fontWeight: FontWeight.bold,
-            //                       fontSize: 25,
-            //                     ),
-            //                   ],
-            //                 ),
-            //                 TextBuilder(
-            //                   text: "5 tasks",
-            //                   fontSize: 16,
-            //                 ),
-            //               ],
-            //             ),
-            //             SizedBox(
-            //               height: 10,
-            //             ),
-            //             Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 Row(
-            //                   children: [
-            //                     ClipRRect(
-            //                       borderRadius:
-            //                           BorderRadius.circular(9.0), //or 15.0
-            //                       child: Container(
-            //                         height: 60.0,
-            //                         width: 60.0,
-            //                         color: Color(0xffFF0E58),
-            //                         child: Icon(
-            //                           Icons.list,
-            //                           color: Colors.white,
-            //                           size: 60,
-            //                         ),
-            //                       ),
-            //                     ),
-            //                     SizedBox(
-            //                       width: 10,
-            //                     ),
-            //                     TextBuilder(
-            //                       text: "Done",
-            //                       fontWeight: FontWeight.bold,
-            //                       fontSize: 25,
-            //                     ),
-            //                   ],
-            //                 ),
-
-            //                 // SizedBox(
-            //                 //   width: Get.width / 3.6,
-            //                 // ),
-            //                 TextBuilder(
-            //                   text: "4 tasks",
-            //                   fontSize: 16,
-            //                 ),
-            //               ],
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Container(
+              height: height / 2,
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: EdgeInsets.all(Get.width / 16),
+                    margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                    // height: Get.height / 4.5,
+                    // width: Get.width,
+                    decoration: BoxDecoration(
+                        color: Color(buttonColorTwo),
+                        borderRadius: BorderRadius.circular(9),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.15),
+                            blurRadius: 4,
+                            offset: Offset(1, 3),
+                          )
+                        ]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                  child: Container(
+                                    height: 60.0,
+                                    width: 60.0,
+                                    color: Color(buttonColorOne),
+                                    child: Icon(
+                                      Icons.list,
+                                      color: Colors.white,
+                                      size: 60,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  "To Do",
+                                  // minFontSize: 12,
+                                  textScaleFactor: 1.5,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    // fontSize: 24
+                                  ),
+                                  // fontSize: 25,
+                                ),
+                              ],
+                            ),
+                            TextBuilder(
+                              text:
+                                  "${taskController.serverTasksList.length} tasks",
+                              fontSize: 16,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(9.0), //or 15.0
+                                  child: Container(
+                                    height: 60.0,
+                                    width: 60.0,
+                                    color: Color(0xffFF0E58),
+                                    child: Icon(
+                                      Icons.list,
+                                      color: Colors.white,
+                                      size: 60,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                AutoSizeText(
+                                  "Done",
+                                  textScaleFactor: 1.5,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: Get.width / 3.6,
+                            ),
+                            TextBuilder(
+                              text:
+                                  "${taskController.serverTasksDoneList.length} tasks",
+                              fontSize: 16,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

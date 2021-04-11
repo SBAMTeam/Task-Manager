@@ -15,7 +15,7 @@ class TaskController extends GetxController {
   var isLoading = true.obs;
   // var taskList = List<Task>.empty(growable: true).obs;
   var serverTasksList = List<Task>.empty(growable: true).obs;
-
+  var serverTasksDoneList = List<Task>.empty(growable: true).obs;
   static TaskController _taskController;
   static TaskController getInstance() {
     if (_taskController == null)

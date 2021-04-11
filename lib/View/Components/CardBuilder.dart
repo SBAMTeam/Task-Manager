@@ -18,7 +18,7 @@ class CardBuilder extends StatelessWidget {
       padding: EdgeInsets.all(8),
       height: Get.height / 4.5,
       width: Get.width / 1.5,
-      margin: EdgeInsets.all(8),
+      margin: EdgeInsets.only(right: 8, bottom: 8, top: 8),
       decoration: BoxDecoration(
           color: Color(buttonColorTwo),
           borderRadius: BorderRadius.circular(9),
