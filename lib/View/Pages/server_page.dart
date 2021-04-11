@@ -32,7 +32,12 @@ class HomePage extends GetView<UserController> {
           children: [
             Container(
               // height: height / 2.5,
-              padding: EdgeInsets.all(12),
+              padding: EdgeInsets.only(
+                left: 12,
+                right: 12,
+                bottom: 12,
+                top: 24,
+              ),
               width: Get.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
