@@ -8,6 +8,9 @@ class TextBuilder extends StatelessWidget {
   final fontFamily;
   final fontStyle;
   final textAlign;
+  final minLines;
+  final maxLines;
+  final double minFontSize;
   final double fontSize;
   const TextBuilder(
       {Key key,
@@ -18,23 +21,31 @@ class TextBuilder extends StatelessWidget {
       this.decoration,
       this.fontFamily,
       this.fontStyle,
-      this.textAlign})
+      this.textAlign,
+      this.minLines,
+      this.maxLines,
+      this.minFontSize})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return AutoSizeText(
-      text ?? 'PLACEHOLDER',
-      textAlign: textAlign ?? TextAlign.left,
-      // stepGranularity: ,
-      style: TextStyle(
-          //letterSpacing: 1,
-          fontSize: fontSize ?? 40,
-          fontWeight: fontWeight ?? FontWeight.w300,
-          color: color ?? Color(textColor),
-          decoration: decoration ?? null,
-          fontFamily: fontFamily ?? 'Nunito',
-          fontStyle: fontStyle ?? FontStyle.normal),
+    return Flexible(
+      child: AutoSizeText(
+        text ?? 'PLACEHOLDER',
+        textAlign: textAlign ?? TextAlign.left,
+        maxLines: maxLines ?? null,
+        minFontSize: minFontSize ?? 16,
+        wrapWords: true,
+        // stepGranularity: ,
+        style: TextStyle(
+            //letterSpacing: 1,
+            fontSize: fontSize ?? 40,
+            fontWeight: fontWeight ?? FontWeight.w300,
+            color: color ?? Color(textColor),
+            decoration: decoration ?? null,
+            fontFamily: fontFamily ?? 'Nunito',
+            fontStyle: fontStyle ?? FontStyle.normal),
+      ),
     );
   }
 }
