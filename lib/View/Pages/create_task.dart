@@ -177,30 +177,9 @@ class CreateTask extends GetView<ServerController> {
           ),
         ),
       ),
-      // );
     );
   }
 }
-
-// _selectServer(ServerController controller, Servermodel servermodel,
-//     int serverId, int userId) async {
-//   var serverUserTasks = await controller.selectServer(serverId, userId);
-//   if (!(serverUserTasks is int)) {
-//     try {
-//       servermodel = servermodelFromJson(serverUserTasks);
-//       servermodel.serverId = serverId.toString();
-//       await DBFunctions.insertTasks(
-//           servermodel.userTasks, int.parse(servermodel.serverId));
-//       controller.isLoading(true);
-//       controller.update();
-//     } catch (e) {
-//       print("error is : $e");
-//     }
-//     return;
-//   } else {
-//     showSnackBar("Error fetching Tasks \nResponse code is : $serverUserTasks");
-//   }
-// }
 
 _createTask(Taskmodel taskmodel, serverId, userId) async {
   taskmodel.taskServerId = serverId.toString();

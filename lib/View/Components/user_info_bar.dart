@@ -8,13 +8,12 @@ import 'package:taskmanager/View/Components/constants.dart';
 
 class UserInfoBar extends GetView<UserController> {
   const UserInfoBar({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: Get.width / 20,
-      ),
+      // padding: EdgeInsets.symmetric(
+      //   horizontal: Get.width / 20,
+      // ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

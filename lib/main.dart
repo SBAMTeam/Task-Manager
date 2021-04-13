@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 import 'package:sqlite3/open.dart';
+import 'package:taskmanager/Controllers/navigation_controller.dart';
 import 'package:taskmanager/View/Pages/server_list.dart';
 
 import 'Database/database.dart' as myDB;
@@ -17,7 +18,7 @@ main() {
   Get.lazyPut(() => TaskController(), fenix: true);
   Get.lazyPut(() => UserController(), fenix: true);
   Get.lazyPut(() => ServerController(), fenix: true);
-
+  Get.lazyPut(() => NavigationController(), fenix: true);
   runApp(TaskManager());
 }
 

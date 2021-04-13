@@ -15,7 +15,6 @@ class TaskListBuilder extends GetView<TaskController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchUserServerTasks(serverId);
     return Obx(
       () {
         if (controller.isLoading.value == true) {

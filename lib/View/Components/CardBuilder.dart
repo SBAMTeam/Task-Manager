@@ -14,58 +14,72 @@ class CardBuilder extends StatelessWidget {
   final taskTitle, taskDetails, taskStartDate, taskDeadline;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      height: Get.height / 4.5,
-      width: Get.width / 1.5,
-      margin: EdgeInsets.only(right: 8, bottom: 8, top: 8),
-      decoration: BoxDecoration(
-          color: Color(buttonColorTwo),
-          borderRadius: BorderRadius.circular(9),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.15),
-              blurRadius: 4,
-              offset: Offset(1, 3),
-            )
-          ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextBuilder(
-            text: "$taskTitle" ?? "TASK_TITLE",
-            fontWeight: FontWeight.bold,
-            maxLines: 1,
-            // minFontSize: 20,
-            // fontSize: 20,
-          ),
-
-          Container(
-            child: TextBuilder(
-              text: taskDetails.length < 2
-                  ? "No details specified."
-                  : taskDetails,
-              fontWeight: FontWeight.bold,
-              maxLines: taskDetails.length < 2 ? 1 : 2,
-              // minFontSize: 20,
+    return InkWell(
+      highlightColor: Color(buttonColorTwo),
+      splashColor: Color(buttonColorTwo),
+      borderRadius: BorderRadius.circular(8),
+      onTap: () {},
+      child: Container(
+        padding: defaultPadding,
+        height: Get.height / 4.5,
+        width: Get.width / 1.5,
+        margin: EdgeInsets.only(right: 8, bottom: 8, top: 8),
+        decoration: BoxDecoration(
+            color: Color(buttonColorTwo),
+            borderRadius: BorderRadius.circular(9),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.15),
+                blurRadius: 4,
+                offset: Offset(1, 3),
+              )
+            ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              child: TextBuilder(
+                text: "$taskTitle" ?? "TASK_TITLE",
+                fontWeight: FontWeight.bold,
+                maxLines: 1,
+                // minFontSize: 20,
+                // fontSize: 20,
+              ),
             ),
-          ),
-          // SizedBox(
-          //   height: Get.height / 35,
-          // ),
-          TextBuilder(
-            text: "Start Date: $taskStartDate" ?? "START_DATE",
-            // fontWeight: FontWeight.bold,
-            fontSize: 20,
-            maxLines: 2,
-          ),
-          TextBuilder(
-            text: "Deadline: $taskDeadline" ?? "DEADLINE",
-            // fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ],
+            Container(
+              child: TextBuilder(
+                text: taskDetails.length < 1
+                    ? "No details specified."
+                    : taskDetails,
+                fontWeight: FontWeight.bold,
+                maxLines: taskDetails.length < 2 ? 1 : 2,
+                // minFontSize: 20,
+              ),
+              height: 25,
+              width: Get.width,
+            ),
+            Container(
+              child: TextBuilder(
+                text: "Start Date: $taskStartDate" ?? "START_DATE",
+                // fontWeight: FontWeight.bold,
+                fontSize: 20,
+                maxLines: 2,
+              ),
+              height: 25,
+              width: Get.width,
+            ),
+            Container(
+              child: TextBuilder(
+                text: "Deadline: $taskDeadline" ?? "DEADLINE",
+                // fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              height: 25,
+              width: Get.width,
+            ),
+          ],
+        ),
       ),
     );
   }

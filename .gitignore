@@ -3,3 +3,6 @@ build/
 API/config/*
 android/gradle/*
 android/.gradle/*
+.flutter-plugins
+
+.flutter-plugins-dependencies

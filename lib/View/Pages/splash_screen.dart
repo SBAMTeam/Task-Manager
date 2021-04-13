@@ -4,27 +4,28 @@ import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
-import 'package:taskmanager/View/Pages/server_list.dart';
-import 'package:taskmanager/View/Pages/server_page.dart';
-
 import 'login.dart';
-import 'server_list.dart';
+import 'server_list_ui.dart';
 
 class SplashScreen extends GetView<UserController> {
   const SplashScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller.getUsername();
-    controller.getNickname();
     controller.getUserLastServer();
-    taskController.fetchUserServerTasks(controller.userLastServer.value);
+
     Future.delayed(Duration(seconds: 3), () async {
       if (await DBFunctions.isUserLoggedIn() == true) {
+        controller.getUsername();
+        controller.getNickname(); //get needed userinfo for next screen
+        taskController.fetchUserServerTasks(controller.userLastServer.value);
         if (controller.userLastServer.value != null) {
           Get.off(() => NavBar());
           return;
         } else {
-          Get.off(() => ServersList());
+          Get.off(() => ServersListUI(
+                firstEntry: true,
+              ));
+          return;
         }
       } else {
         Get.off(() => Login());

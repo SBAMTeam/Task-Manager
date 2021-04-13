@@ -89,7 +89,9 @@ class DBFunctions {
               taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
               taskDetails: moor.Value(task.taskDetails),
               taskName: moor.Value(task.taskName),
-              taskStartDate: moor.Value(DateTime.parse(task.taskStartDate)),
+              taskStartDate: moor.Value(
+                DateTime.parse(task.taskStartDate),
+              ),
               // taskProgress: //add later maybe
             );
             taskDao.insertTask(newTask);
@@ -104,11 +106,13 @@ class DBFunctions {
     }
   }
 
-  // static Future<List<dynamic>> getAllDetails() async {
-  //   return [
-  //     await DBFunctions.getUserDetails(),
-  //     await DBFunctions.getUserServers()
-  //   ];
+  // static Future<String> getServerNameById(int id) async {
+  //   List<Server> tmp = await serverDao.getServers();
+  //   for (Server server in tmp) {
+  //     if (server.serverId == id) {
+  //       return server.serverName;
+  //     }
+  //   }
   // }
 
   static Future<int> getUserIdInteger() async {
@@ -120,6 +124,8 @@ class DBFunctions {
     var tmp = await userDao.getUserData();
     if (tmp.length > 0) if (tmp[0].userLastServer != null)
       return tmp[0].userLastServer;
+    else
+      return -1;
     else
       return -1;
   }

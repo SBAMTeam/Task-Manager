@@ -10,12 +10,13 @@ import 'package:taskmanager/Models/task_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/functions.dart';
 
 class TaskController extends GetxController {
   var isLoading = true.obs;
-  // var taskList = List<Task>.empty(growable: true).obs;
   var serverTasksList = List<Task>.empty(growable: true).obs;
   var serverTasksDoneList = List<Task>.empty(growable: true).obs;
+
   static TaskController _taskController;
   static TaskController getInstance() {
     if (_taskController == null)
@@ -37,58 +38,50 @@ class TaskController extends GetxController {
   }
 
   Future fetchUserServerTasks(int serverId) async {
-    if (serverId == null || serverId < 0) return;
-    FetchTasksModelTemporary a = FetchTasksModelTemporary();
-    a.serverId = serverId.toString();
-    a.userId = (await DBFunctions.getUserIdInteger()).toString();
+    if (await checkInternetConnection()) {
+      if (serverId == null || serverId < 0) return;
+      FetchTasksModelTemporary a = FetchTasksModelTemporary();
+      a.serverId = serverId.toString();
+      a.userId = (await DBFunctions.getUserIdInteger()).toString();
+      // serverController.getServerNameById(serverId);
 
-    final response =
-        await http.post(Uri.parse(fetchTasksUrl), body: jsonEncode(a.toJson()));
+      final response = await http.post(Uri.parse(fetchTasksUrl),
+          body: jsonEncode(a.toJson()));
 
-    print(
-        "Fetching user tasks for server id $serverId.. Sent:\n ${a.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+      print(
+          "Fetching user tasks for server id $serverId.. Sent:\n ${a.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
 
-    if (response.statusCode == 200) {
-      Servermodel servermodel = Servermodel();
-      servermodel = servermodelFromJson(response.body);
-      servermodel.serverId = serverId.toString();
-      try {
-        await DBFunctions.insertTasks(servermodel.serverTasks, serverId);
-        getServerTasksFromDB(serverId);
-      } catch (e) {
-        print("exception in fetchUserServerTasks insertTasks $e");
+      if (response.statusCode == 200) {
+        Servermodel servermodel = Servermodel();
+        servermodel = servermodelFromJson(response.body);
+        servermodel.serverId = serverId.toString();
+        try {
+          isLoading(true);
+          await DBFunctions.insertTasks(servermodel.serverTasks, serverId);
+          if (serverTasksList.length > 0)
+            serverTasksList.removeRange(0, serverTasksList.length);
+          // isLoading(true);
+          await getServerTasksFromDB(serverId);
+        } catch (e) {
+          print("exception in fetchUserServerTasks insertTasks $e");
+        } finally {
+          isLoading(false);
+        }
+      } else {
+        isLoading(false);
       }
-    } else {
-      isLoading(false);
+      return response.statusCode;
     }
-    return response.statusCode;
+
+    await getServerTasksFromDB(serverId);
+    return 400;
   }
 
-  // Future getUserTasksFromDB() async {
-  //   try {
-  //     isLoading(true);
-  //     var tasks = (await DBFunctions.getUserTasks()).toList();
-  //     print("all tasks list length is : ${tasks.length} //task controller");
-
-  //     if (tasks != null || tasks != []) {
-  //       taskList.assignAll(tasks);
-  //     }
-  //   } catch (e) {
-  //     print("exception $e in task controller");
-  //   } finally {
-  //     Future.delayed(
-  //       Duration(seconds: 1),
-  //       () {
-  //         isLoading(false);
-  //       },
-  //     );
-  //   }
-  // }
   Future getServerTasksFromDB(int serverId) async {
     try {
       isLoading(true);
       var tasks = (await DBFunctions.getServerTasks(serverId)).toList();
-      print("server tasks list length is : ${tasks.length} //task controller");
+      // print("server tasks list length is : ${tasks.length} //task controller");
 
       if (tasks != null || tasks != []) {
         serverTasksList.assignAll(tasks);
