@@ -118,7 +118,10 @@ class DBFunctions {
 
   static Future<int> getUserLastServer() async {
     var tmp = await userDao.getUserData();
-    return tmp[0].userLastServer;
+    if (tmp.length > 0) if (tmp[0].userLastServer != null)
+      return tmp[0].userLastServer;
+    else
+      return -1;
   }
 
   static Future insertUserLastServer(int serverId) async {

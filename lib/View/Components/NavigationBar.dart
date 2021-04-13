@@ -13,7 +13,10 @@ class NavBar extends StatelessWidget {
   final NavigationController navcontroller =
       Get.put(NavigationController());
 
-  final List<Widget> bodyContent = [ServersListUI()];
+  final List<Widget> bodyContent = [
+    HomePage(userController.userLastServer.value),
+    ServersListUI()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

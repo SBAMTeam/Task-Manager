@@ -16,10 +16,6 @@ class HomePage extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     var height = Get.height;
-
-    controller.getUsername();
-    controller.getNickname();
-    taskController.fetchUserServerTasks(serverId);
     int count = Get.height ~/ 120;
 
     return Scaffold(
@@ -36,49 +32,71 @@ class HomePage extends GetView<UserController> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   UserInfoBar(),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: ListView.builder(
-                        itemCount: count,
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          var details = (taskController
-                              .serverTasksList[index].taskDetails);
-                          var detailsShort = (taskController
-                                  .serverTasksList[index].taskDetails)
-                              .substring(
-                                  0,
-                                  details.length -
-                                      (6 - details.length).abs());
-                          DateTime deadlineDate = (taskController
-                              .serverTasksList[index].taskDeadline);
-                          DateTime startDate = (taskController
-                              .serverTasksList[index].taskStartDate);
-                          final f =
-                              new DateFormat('yyyy-MM-dd hh:mm');
-                          f.format(deadlineDate);
-                          f.format(startDate);
-                          return CardBuilder(
-                            taskTitle:
-                                "Task title: ${taskController.serverTasksList[index].taskName}",
-                            taskDetails:
-                                "Task Details: $detailsShort",
-                            taskDeadline:
-                                "Task Deadline: $deadlineDate",
-                            taskStartDate:
-                                "Task Start Date: $startDate",
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 50,
+                    child: TextBuilder(
+                      text: 'My Tasks',
+                      maxLines: 1,
+                      minFontSize: 12,
+                      // fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Container(
+                    height: height / 4,
+                    child: Obx(
+                      () {
+                        if (taskController.serverTasksList.length > 1)
+                          return ListView.builder(
+                            itemCount: taskController.serverTasksList.length,
+                            scrollDirection: Axis.horizontal,
+                            // physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              String details = (taskController
+                                  .serverTasksList[index].taskDetails);
+                              var detailsShort;
+                              if (details.length > 50) {
+                                detailsShort = (taskController
+                                        .serverTasksList[index].taskDetails)
+                                    .substring(
+                                        0,
+                                        details.length -
+                                            (40 - details.length).abs());
+
+                                detailsShort += "...";
+                              }
+                              DateTime deadlineDate = (taskController
+                                  .serverTasksList[index].taskDeadline);
+                              DateTime startDate = (taskController
+                                  .serverTasksList[index].taskStartDate);
+                              final f = new DateFormat('yyyy-MM-dd hh:mm');
+
+                              return CardBuilder(
+                                taskTitle:
+                                    "${taskController.serverTasksList[index].taskName}",
+                                taskDetails:
+                                    "${details.length > 50 ? detailsShort : details}",
+                                taskDeadline: "${f.format(deadlineDate)}",
+                                taskStartDate: "${f.format(startDate)}",
+                              );
+                            },
                           );
-                        }),
-                    // child: Row(
-                    //   children: [
-                    //     // SizedBox(width: sizedBoxSmallSpace),
-                    //     CardBuilder(),
-                    //     // SizedBox(width: sizedBoxSmallSpace),
-                    //     CardBuilder(),
-                    //   ],
-                    // ),
+                        else if (taskController.serverTasksList.length < 1) {
+                          return Center(
+                            child: TextBuilder(
+                              textAlign: TextAlign.center,
+                              text:
+                                  "Server doesn't have any tasks yet.\n Try creating one?",
+                              scale: 0.5,
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ],
               ),

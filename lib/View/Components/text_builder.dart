@@ -10,6 +10,7 @@ class TextBuilder extends StatelessWidget {
   final textAlign;
   final minLines;
   final maxLines;
+  final double scale;
   final double minFontSize;
   final double fontSize;
   const TextBuilder(
@@ -24,7 +25,8 @@ class TextBuilder extends StatelessWidget {
       this.textAlign,
       this.minLines,
       this.maxLines,
-      this.minFontSize})
+      this.minFontSize,
+      this.scale})
       : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class TextBuilder extends StatelessWidget {
         maxLines: maxLines ?? null,
         minFontSize: minFontSize ?? 16,
         wrapWords: true,
+        textScaleFactor: scale ?? 0.86,
         // stepGranularity: ,
         style: TextStyle(
             //letterSpacing: 1,

@@ -17,7 +17,7 @@ class UserController extends GetxController {
   var username = "USERNAME".obs;
   var email = "EMAIL".obs;
   var nickname = "NICKNAME".obs;
-  var userLastServer = 0.obs;
+  var userLastServer = (-1).obs;
   @override
   void onInit() {
     userLoggedIn();
@@ -76,6 +76,6 @@ class UserController extends GetxController {
 
   Future getUserLastServer() async {
     var tmp = await DBFunctions.getUserLastServer();
-    userLastServer(tmp);
+    if (tmp != null && tmp > -1) userLastServer(tmp);
   }
 }

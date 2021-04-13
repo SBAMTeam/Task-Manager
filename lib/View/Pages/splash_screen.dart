@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
-import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'package:taskmanager/View/Pages/server_list.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 
@@ -17,10 +17,11 @@ class SplashScreen extends GetView<UserController> {
     controller.getUsername();
     controller.getNickname();
     controller.getUserLastServer();
+    taskController.fetchUserServerTasks(controller.userLastServer.value);
     Future.delayed(Duration(seconds: 3), () async {
       if (await DBFunctions.isUserLoggedIn() == true) {
-        if (controller.userLastServer.value != 0) {
-          Get.off(() => HomePage(controller.userLastServer.value));
+        if (controller.userLastServer.value != null) {
+          Get.off(() => NavBar());
           return;
         } else {
           Get.off(() => ServersList());

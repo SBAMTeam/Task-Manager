@@ -37,6 +37,7 @@ class TaskController extends GetxController {
   }
 
   Future fetchUserServerTasks(int serverId) async {
+    if (serverId == null || serverId < 0) return;
     FetchTasksModelTemporary a = FetchTasksModelTemporary();
     a.serverId = serverId.toString();
     a.userId = (await DBFunctions.getUserIdInteger()).toString();
