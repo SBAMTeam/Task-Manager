@@ -16,9 +16,7 @@ class HomePage extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     var height = Get.height;
-    Usermodel usermodel = Usermodel();
 
-    Servermodel servermodel = Servermodel();
     controller.getUsername();
     controller.getNickname();
     taskController.fetchUserServerTasks(serverId);
@@ -50,21 +48,27 @@ class HomePage extends GetView<UserController> {
                               .serverTasksList[index].taskDetails);
                           var detailsShort = (taskController
                                   .serverTasksList[index].taskDetails)
-                              .substring(0,
-                                  details.length - (6 - details.length).abs());
+                              .substring(
+                                  0,
+                                  details.length -
+                                      (6 - details.length).abs());
                           DateTime deadlineDate = (taskController
                               .serverTasksList[index].taskDeadline);
                           DateTime startDate = (taskController
                               .serverTasksList[index].taskStartDate);
-                          final f = new DateFormat('yyyy-MM-dd hh:mm');
+                          final f =
+                              new DateFormat('yyyy-MM-dd hh:mm');
                           f.format(deadlineDate);
                           f.format(startDate);
                           return CardBuilder(
                             taskTitle:
                                 "Task title: ${taskController.serverTasksList[index].taskName}",
-                            taskDetails: "Task Details: $detailsShort",
-                            taskDeadline: "Task Deadline: $deadlineDate",
-                            taskStartDate: "Task Start Date: $startDate",
+                            taskDetails:
+                                "Task Details: $detailsShort",
+                            taskDeadline:
+                                "Task Deadline: $deadlineDate",
+                            taskStartDate:
+                                "Task Start Date: $startDate",
                           );
                         }),
                     // child: Row(
@@ -86,7 +90,8 @@ class HomePage extends GetView<UserController> {
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Get.width / 16),
                     child: Row(
                       children: [
                         TextBuilder(
@@ -100,7 +105,8 @@ class HomePage extends GetView<UserController> {
                   Container(
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.all(Get.width / 16),
-                    margin: EdgeInsets.symmetric(horizontal: Get.width / 16),
+                    margin: EdgeInsets.symmetric(
+                        horizontal: Get.width / 16),
                     // height: Get.height / 4.5,
                     // width: Get.width,
                     decoration: BoxDecoration(
@@ -114,16 +120,19 @@ class HomePage extends GetView<UserController> {
                           )
                         ]),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderRadius:
+                                      BorderRadius.circular(9.0),
                                   child: Container(
                                     height: 60.0,
                                     width: 60.0,
@@ -155,13 +164,14 @@ class HomePage extends GetView<UserController> {
                           height: 10,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
                                 ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(9.0), //or 15.0
+                                  borderRadius: BorderRadius.circular(
+                                      9.0), //or 15.0
                                   child: Container(
                                     height: 60.0,
                                     width: 60.0,
