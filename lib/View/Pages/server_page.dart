@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,67 +30,55 @@ class HomePage extends GetView<UserController> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              // height: height / 2.5,
-              padding: EdgeInsets.only(
-                left: 12,
-                right: 12,
-                bottom: 12,
-                top: 24,
-              ),
-              width: Get.width,
+              height: height / 2.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   UserInfoBar(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    height: 50,
-                    child: TextBuilder(
-                      text: 'My Tasks',
-                      maxLines: 1,
-                      minFontSize: 12,
-                      // fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    height: height / 4,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
                     child: ListView.builder(
-                      itemCount: taskController.serverTasksList.length,
-                      scrollDirection: Axis.horizontal,
-                      // physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        String details =
-                            (taskController.serverTasksList[index].taskDetails);
-                        var detailsShort;
-                        if (details.length > 50) {
-                          detailsShort = (taskController
+                        itemCount: count,
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var details = (taskController
+                              .serverTasksList[index].taskDetails);
+                          var detailsShort = (taskController
                                   .serverTasksList[index].taskDetails)
-                              .substring(0,
-                                  details.length - (40 - details.length).abs());
-
-                          detailsShort += "...";
-                        }
-                        DateTime deadlineDate = (taskController
-                            .serverTasksList[index].taskDeadline);
-                        DateTime startDate = (taskController
-                            .serverTasksList[index].taskStartDate);
-                        final f = new DateFormat('yyyy-MM-dd hh:mm');
-
-                        return CardBuilder(
-                          taskTitle:
-                              "${taskController.serverTasksList[index].taskName}",
-                          taskDetails:
-                              "${details.length > 50 ? detailsShort : details}",
-                          taskDeadline: "${f.format(deadlineDate)}",
-                          taskStartDate: "${f.format(startDate)}",
-                        );
-                      },
-                    ),
+                              .substring(
+                                  0,
+                                  details.length -
+                                      (6 - details.length).abs());
+                          DateTime deadlineDate = (taskController
+                              .serverTasksList[index].taskDeadline);
+                          DateTime startDate = (taskController
+                              .serverTasksList[index].taskStartDate);
+                          final f =
+                              new DateFormat('yyyy-MM-dd hh:mm');
+                          f.format(deadlineDate);
+                          f.format(startDate);
+                          return CardBuilder(
+                            taskTitle:
+                                "Task title: ${taskController.serverTasksList[index].taskName}",
+                            taskDetails:
+                                "Task Details: $detailsShort",
+                            taskDeadline:
+                                "Task Deadline: $deadlineDate",
+                            taskStartDate:
+                                "Task Start Date: $startDate",
+                          );
+                        }),
+                    // child: Row(
+                    //   children: [
+                    //     // SizedBox(width: sizedBoxSmallSpace),
+                    //     CardBuilder(),
+                    //     // SizedBox(width: sizedBoxSmallSpace),
+                    //     CardBuilder(),
+                    //   ],
+                    // ),
                   ),
                 ],
               ),
@@ -102,6 +89,19 @@ class HomePage extends GetView<UserController> {
                 // mainAxisAlignment: MainAxisAlignment.start,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Get.width / 16),
+                    child: Row(
+                      children: [
+                        TextBuilder(
+                          text: 'My Tasks',
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ],
+                    ),
+                  ),
                   Container(
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.all(Get.width / 16),
@@ -147,23 +147,15 @@ class HomePage extends GetView<UserController> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                AutoSizeText(
-                                  "To Do",
-                                  // minFontSize: 12,
-                                  textScaleFactor: 1.5,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    // fontSize: 24
-                                  ),
-                                  // fontSize: 25,
+                                TextBuilder(
+                                  text: "To Do",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
                                 ),
                               ],
                             ),
                             TextBuilder(
-                              text:
-                                  "${taskController.serverTasksList.length} tasks",
+                              text: "5 tasks",
                               fontSize: 16,
                             ),
                           ],
@@ -194,21 +186,19 @@ class HomePage extends GetView<UserController> {
                                 SizedBox(
                                   width: 10,
                                 ),
-                                AutoSizeText(
-                                  "Done",
-                                  textScaleFactor: 1.5,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
+                                TextBuilder(
+                                  text: "Done",
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: Get.width / 3.6,
-                            ),
+
+                            // SizedBox(
+                            //   width: Get.width / 3.6,
+                            // ),
                             TextBuilder(
-                              text:
-                                  "${taskController.serverTasksDoneList.length} tasks",
+                              text: "4 tasks",
                               fontSize: 16,
                             ),
                           ],
