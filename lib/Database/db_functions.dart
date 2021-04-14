@@ -89,11 +89,13 @@ class DBFunctions {
               taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
               taskDetails: moor.Value(task.taskDetails),
               taskName: moor.Value(task.taskName),
-              taskStartDate: moor.Value(DateTime.parse(task.taskStartDate)),
+              taskStartDate: moor.Value(
+                DateTime.parse(task.taskStartDate),
+              ),
               // taskProgress: //add later maybe
             );
             taskDao.insertTask(newTask);
-            print("IM HEEEEEEREEEEEEE $count");
+            // print("IM HEEEEEEREEEEEEE $count");
           }
         } else
           return;
@@ -104,21 +106,42 @@ class DBFunctions {
     }
   }
 
-  static Future<List<dynamic>> getAllDetails() async {
-    return [
-      await DBFunctions.getUserDetails(),
-      await DBFunctions.getUserServers()
-    ];
-  }
+  // static Future<String> getServerNameById(int id) async {
+  //   List<Server> tmp = await serverDao.getServers();
+  //   for (Server server in tmp) {
+  //     if (server.serverId == id) {
+  //       return server.serverName;
+  //     }
+  //   }
+  // }
 
   static Future<int> getUserIdInteger() async {
     var tmp = await userDao.getUserData();
     return tmp[0].userId;
   }
 
-  static Future getUsername() async {
+  static Future<int> getUserLastServer() async {
     var tmp = await userDao.getUserData();
-    return tmp[0].userName;
+    if (tmp.length > 0) if (tmp[0].userLastServer != null)
+      return tmp[0].userLastServer;
+    else
+      return -1;
+    else
+      return -1;
+  }
+
+  static Future insertUserLastServer(int serverId) async {
+    int userId = await DBFunctions.getUserIdInteger();
+    userDao.insertUserLastServer(serverId, userId);
+    return;
+  }
+
+  static Future getUsername() async {
+    List tmp = await userDao.getUserData();
+    if (tmp.length > 0) {
+      return tmp[0].userName;
+    } else
+      return "USER_NAME";
   }
 
   static Future getUserEmail() async {
@@ -127,8 +150,11 @@ class DBFunctions {
   }
 
   static Future getUserNickname() async {
-    var tmp = await userDao.getUserData();
-    return tmp[0].userNickname;
+    List<User> tmp = await userDao.getUserData();
+    if (tmp.length > 0) {
+      return tmp[0].userNickname;
+    } else
+      return "USER_NICKNAME";
   }
 
   static Future getUserJwt() async {

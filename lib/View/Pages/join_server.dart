@@ -144,7 +144,12 @@ class JoinServer extends GetView<ServerController> {
 
                       if (await controller.joinServer(servermodel, usermodel) ==
                           200) {
-                        Get.off(() => HomePage());
+                        Get.offAll(
+                          () => HomePage(
+                              serverId: int.parse(
+                            servermodel.serverId,
+                          )),
+                        );
                       }
                     },
                   ),

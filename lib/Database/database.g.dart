@@ -302,6 +302,7 @@ class User extends DataClass implements Insertable<User> {
   final String userNickname;
   final String userJwt;
   final bool userLoggedIn;
+  final int userLastServer;
   User(
       {@required this.userId,
       this.userName,
@@ -309,7 +310,8 @@ class User extends DataClass implements Insertable<User> {
       @required this.userLogMessage,
       @required this.userNickname,
       @required this.userJwt,
-      @required this.userLoggedIn});
+      @required this.userLoggedIn,
+      this.userLastServer});
   factory User.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -331,6 +333,8 @@ class User extends DataClass implements Insertable<User> {
           .mapFromDatabaseResponse(data['${effectivePrefix}user_jwt']),
       userLoggedIn: boolType
           .mapFromDatabaseResponse(data['${effectivePrefix}user_logged_in']),
+      userLastServer: intType
+          .mapFromDatabaseResponse(data['${effectivePrefix}user_last_server']),
     );
   }
   @override
@@ -357,6 +361,9 @@ class User extends DataClass implements Insertable<User> {
     if (!nullToAbsent || userLoggedIn != null) {
       map['user_logged_in'] = Variable<bool>(userLoggedIn);
     }
+    if (!nullToAbsent || userLastServer != null) {
+      map['user_last_server'] = Variable<int>(userLastServer);
+    }
     return map;
   }
 
@@ -382,6 +389,9 @@ class User extends DataClass implements Insertable<User> {
       userLoggedIn: userLoggedIn == null && nullToAbsent
           ? const Value.absent()
           : Value(userLoggedIn),
+      userLastServer: userLastServer == null && nullToAbsent
+          ? const Value.absent()
+          : Value(userLastServer),
     );
   }
 
@@ -396,6 +406,7 @@ class User extends DataClass implements Insertable<User> {
       userNickname: serializer.fromJson<String>(json['userNickname']),
       userJwt: serializer.fromJson<String>(json['userJwt']),
       userLoggedIn: serializer.fromJson<bool>(json['userLoggedIn']),
+      userLastServer: serializer.fromJson<int>(json['userLastServer']),
     );
   }
   @override
@@ -409,6 +420,7 @@ class User extends DataClass implements Insertable<User> {
       'userNickname': serializer.toJson<String>(userNickname),
       'userJwt': serializer.toJson<String>(userJwt),
       'userLoggedIn': serializer.toJson<bool>(userLoggedIn),
+      'userLastServer': serializer.toJson<int>(userLastServer),
     };
   }
 
@@ -419,7 +431,8 @@ class User extends DataClass implements Insertable<User> {
           String userLogMessage,
           String userNickname,
           String userJwt,
-          bool userLoggedIn}) =>
+          bool userLoggedIn,
+          int userLastServer}) =>
       User(
         userId: userId ?? this.userId,
         userName: userName ?? this.userName,
@@ -428,6 +441,7 @@ class User extends DataClass implements Insertable<User> {
         userNickname: userNickname ?? this.userNickname,
         userJwt: userJwt ?? this.userJwt,
         userLoggedIn: userLoggedIn ?? this.userLoggedIn,
+        userLastServer: userLastServer ?? this.userLastServer,
       );
   @override
   String toString() {
@@ -438,7 +452,8 @@ class User extends DataClass implements Insertable<User> {
           ..write('userLogMessage: $userLogMessage, ')
           ..write('userNickname: $userNickname, ')
           ..write('userJwt: $userJwt, ')
-          ..write('userLoggedIn: $userLoggedIn')
+          ..write('userLoggedIn: $userLoggedIn, ')
+          ..write('userLastServer: $userLastServer')
           ..write(')'))
         .toString();
   }
@@ -452,8 +467,12 @@ class User extends DataClass implements Insertable<User> {
               userEmail.hashCode,
               $mrjc(
                   userLogMessage.hashCode,
-                  $mrjc(userNickname.hashCode,
-                      $mrjc(userJwt.hashCode, userLoggedIn.hashCode)))))));
+                  $mrjc(
+                      userNickname.hashCode,
+                      $mrjc(
+                          userJwt.hashCode,
+                          $mrjc(userLoggedIn.hashCode,
+                              userLastServer.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -464,7 +483,8 @@ class User extends DataClass implements Insertable<User> {
           other.userLogMessage == this.userLogMessage &&
           other.userNickname == this.userNickname &&
           other.userJwt == this.userJwt &&
-          other.userLoggedIn == this.userLoggedIn);
+          other.userLoggedIn == this.userLoggedIn &&
+          other.userLastServer == this.userLastServer);
 }
 
 class UsersCompanion extends UpdateCompanion<User> {
@@ -475,6 +495,7 @@ class UsersCompanion extends UpdateCompanion<User> {
   final Value<String> userNickname;
   final Value<String> userJwt;
   final Value<bool> userLoggedIn;
+  final Value<int> userLastServer;
   const UsersCompanion({
     this.userId = const Value.absent(),
     this.userName = const Value.absent(),
@@ -483,6 +504,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     this.userNickname = const Value.absent(),
     this.userJwt = const Value.absent(),
     this.userLoggedIn = const Value.absent(),
+    this.userLastServer = const Value.absent(),
   });
   UsersCompanion.insert({
     @required int userId,
@@ -492,6 +514,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     @required String userNickname,
     @required String userJwt,
     this.userLoggedIn = const Value.absent(),
+    this.userLastServer = const Value.absent(),
   })  : userId = Value(userId),
         userEmail = Value(userEmail),
         userLogMessage = Value(userLogMessage),
@@ -505,6 +528,7 @@ class UsersCompanion extends UpdateCompanion<User> {
     Expression<String> userNickname,
     Expression<String> userJwt,
     Expression<bool> userLoggedIn,
+    Expression<int> userLastServer,
   }) {
     return RawValuesInsertable({
       if (userId != null) 'user_id': userId,
@@ -514,6 +538,7 @@ class UsersCompanion extends UpdateCompanion<User> {
       if (userNickname != null) 'user_nickname': userNickname,
       if (userJwt != null) 'user_jwt': userJwt,
       if (userLoggedIn != null) 'user_logged_in': userLoggedIn,
+      if (userLastServer != null) 'user_last_server': userLastServer,
     });
   }
 
@@ -524,7 +549,8 @@ class UsersCompanion extends UpdateCompanion<User> {
       Value<String> userLogMessage,
       Value<String> userNickname,
       Value<String> userJwt,
-      Value<bool> userLoggedIn}) {
+      Value<bool> userLoggedIn,
+      Value<int> userLastServer}) {
     return UsersCompanion(
       userId: userId ?? this.userId,
       userName: userName ?? this.userName,
@@ -533,6 +559,7 @@ class UsersCompanion extends UpdateCompanion<User> {
       userNickname: userNickname ?? this.userNickname,
       userJwt: userJwt ?? this.userJwt,
       userLoggedIn: userLoggedIn ?? this.userLoggedIn,
+      userLastServer: userLastServer ?? this.userLastServer,
     );
   }
 
@@ -560,6 +587,9 @@ class UsersCompanion extends UpdateCompanion<User> {
     if (userLoggedIn.present) {
       map['user_logged_in'] = Variable<bool>(userLoggedIn.value);
     }
+    if (userLastServer.present) {
+      map['user_last_server'] = Variable<int>(userLastServer.value);
+    }
     return map;
   }
 
@@ -572,7 +602,8 @@ class UsersCompanion extends UpdateCompanion<User> {
           ..write('userLogMessage: $userLogMessage, ')
           ..write('userNickname: $userNickname, ')
           ..write('userJwt: $userJwt, ')
-          ..write('userLoggedIn: $userLoggedIn')
+          ..write('userLoggedIn: $userLoggedIn, ')
+          ..write('userLastServer: $userLastServer')
           ..write(')'))
         .toString();
   }
@@ -651,6 +682,17 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         defaultValue: const Constant(false));
   }
 
+  final VerificationMeta _userLastServerMeta =
+      const VerificationMeta('userLastServer');
+  GeneratedIntColumn _userLastServer;
+  @override
+  GeneratedIntColumn get userLastServer =>
+      _userLastServer ??= _constructUserLastServer();
+  GeneratedIntColumn _constructUserLastServer() {
+    return GeneratedIntColumn('user_last_server', $tableName, true,
+        $customConstraints: 'NULL REFERENCES servers(server_id)');
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         userId,
@@ -659,7 +701,8 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
         userLogMessage,
         userNickname,
         userJwt,
-        userLoggedIn
+        userLoggedIn,
+        userLastServer
       ];
   @override
   $UsersTable get asDslTable => this;
@@ -715,6 +758,12 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
           _userLoggedInMeta,
           userLoggedIn.isAcceptableOrUnknown(
               data['user_logged_in'], _userLoggedInMeta));
+    }
+    if (data.containsKey('user_last_server')) {
+      context.handle(
+          _userLastServerMeta,
+          userLastServer.isAcceptableOrUnknown(
+              data['user_last_server'], _userLastServerMeta));
     }
     return context;
   }

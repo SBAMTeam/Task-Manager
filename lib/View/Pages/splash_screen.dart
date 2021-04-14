@@ -2,21 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
-import 'package:taskmanager/View/Pages/logged_in_page.dart';
-import 'package:taskmanager/View/Pages/server_page.dart';
-
 import 'login.dart';
+import 'server_list_ui.dart';
 
 class SplashScreen extends GetView<UserController> {
   const SplashScreen({Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    controller.getUsername();
+    controller.getUserLastServer();
+
     Future.delayed(Duration(seconds: 3), () async {
       if (await DBFunctions.isUserLoggedIn() == true) {
-        Get.off(() => HomePage());
-        return;
+        controller.getUsername();
+        controller.getNickname(); //get needed userinfo for next screen
+        taskController.fetchUserServerTasks(controller.userLastServer.value);
+        if (controller.userLastServer.value != null) {
+          Get.off(() => NavBar());
+          return;
+        } else {
+          Get.off(() => ServersListUI(
+                firstEntry: true,
+              ));
+          return;
+        }
       } else {
         Get.off(() => Login());
         return;
@@ -31,8 +41,7 @@ class SplashScreen extends GetView<UserController> {
           children: [
             Center(
               child: Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: Get.width / 12),
+                padding: EdgeInsets.symmetric(horizontal: Get.width / 12),
                 // , vertical: Get.height / 13),
                 child: RichText(
                   text: TextSpan(

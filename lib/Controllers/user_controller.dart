@@ -10,13 +10,14 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 
 import 'package:taskmanager/View/Components/functions.dart';
-import 'package:taskmanager/View/Pages/logged_in_page.dart';
 import 'package:taskmanager/View/Pages/login.dart';
 
 class UserController extends GetxController {
   var loggedIn = false.obs;
   var username = "USERNAME".obs;
-
+  var email = "EMAIL".obs;
+  var nickname = "NICKNAME".obs;
+  var userLastServer = (-1).obs;
   @override
   void onInit() {
     userLoggedIn();
@@ -56,7 +57,25 @@ class UserController extends GetxController {
     return response.statusCode;
   }
 
-  Future<String> getUsername() async {
-    username(await DBFunctions.getUsername());
+  Future getUsername() async {
+    var tmp = await DBFunctions.getUsername();
+    // print(tmp);
+
+    username(tmp);
+  }
+
+  Future getEmail() async {
+    email(await DBFunctions.getUserEmail());
+  }
+
+  Future getNickname() async {
+    var tmp = await DBFunctions.getUserNickname();
+    // print(tmp);
+    nickname(tmp);
+  }
+
+  Future getUserLastServer() async {
+    var tmp = await DBFunctions.getUserLastServer();
+    if (tmp != null && tmp > -1) userLastServer(tmp);
   }
 }

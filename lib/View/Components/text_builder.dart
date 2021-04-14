@@ -8,6 +8,10 @@ class TextBuilder extends StatelessWidget {
   final fontFamily;
   final fontStyle;
   final textAlign;
+  final minLines;
+  final maxLines;
+  final double scale;
+  final double minFontSize;
   final double fontSize;
   const TextBuilder(
       {Key key,
@@ -18,7 +22,11 @@ class TextBuilder extends StatelessWidget {
       this.decoration,
       this.fontFamily,
       this.fontStyle,
-      this.textAlign})
+      this.textAlign,
+      this.minLines,
+      this.maxLines,
+      this.minFontSize,
+      this.scale})
       : super(key: key);
 
   @override
@@ -26,6 +34,10 @@ class TextBuilder extends StatelessWidget {
     return AutoSizeText(
       text ?? 'PLACEHOLDER',
       textAlign: textAlign ?? TextAlign.left,
+      maxLines: maxLines ?? null,
+      minFontSize: minFontSize ?? 16,
+      wrapWords: true,
+      textScaleFactor: scale ?? 0.86,
       // stepGranularity: ,
       style: TextStyle(
           //letterSpacing: 1,

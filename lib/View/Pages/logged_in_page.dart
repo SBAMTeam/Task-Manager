@@ -5,13 +5,16 @@ import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/empty_button_container_round.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Pages/create_server.dart';
 import 'package:taskmanager/View/Pages/join_server.dart';
+import 'package:taskmanager/View/Pages/server_list_ui.dart';
 import 'server_list.dart';
+import 'server_page.dart';
 
 class LoggedInPage extends GetView<ServerController> {
   LoggedInPage({Key key}) : super(key: key);
@@ -160,8 +163,10 @@ class LoggedInPage extends GetView<ServerController> {
                         textColor: Color(textColor),
                         color: Color(buttonColorTwo),
                         onPress: () {
-                          Get.to(() => ServersList());
-                          controller.fetchServers();
+                          // Get.to(() => HomePage());
+                          // controller.fetchServers();
+                          Get.to(() => NavBar());
+                          // controller.fetchServers();
                         },
                       ),
                     ),
