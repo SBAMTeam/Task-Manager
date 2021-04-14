@@ -23,7 +23,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if (((!isset($data->taskName)) || (!isset($data->taskStartDate))) 
     || ((!isset($data->taskDeadline)) || (!isset($data->taskCreatorId)))
-    || (isset($data->taskId)))
+    || (!isset($data->taskId)))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Task Editing failed, Missing variables"));

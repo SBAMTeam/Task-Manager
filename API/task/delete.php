@@ -14,7 +14,7 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data->taskId))
+if (!isset($data->taskId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Task Deletion failed, Missing variables"));
