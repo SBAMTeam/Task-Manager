@@ -65,10 +65,13 @@ $stmt->bindParam(':taskServerId', $taskServerId);
 
 if($stmt->execute())
 {
+    $taskId = $conn->lastInsertId();
+
     http_response_code(200);
     echo json_encode(array("LogMessages" => "Task was successfully Created.", "taskName" => $taskName,
                            "taskDetails" => $taskDetails, "taskStartDate" => $taskStartDate,
-                           "taskDeadLine" => $taskDeadline, "taskServerId" => $taskServerId));
+                           "taskDeadLine" => $taskDeadline, "taskServerId" => $taskServerId,
+                           "taskId" => $taskId));
 }
 else
 {
