@@ -25,6 +25,7 @@ class TextFieldBuilder extends StatefulWidget {
     this.keyboardType,
     this.minLines,
     this.maxLines,
+    this.controller,
   }) : super(key: key);
   final IconData icon;
   final String hint;
@@ -42,6 +43,7 @@ class TextFieldBuilder extends StatefulWidget {
   final keyboardType;
   final minLines;
   final maxLines;
+  final controller;
   @override
   _TextFieldBuilderState createState() => _TextFieldBuilderState();
 }
@@ -58,14 +60,14 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         shadowColor: Colors.black.withOpacity(0.15),
         child: Container(
           child: TextFormField(
-            // controller: TextEditingController(),
+            controller: widget.controller ?? null,
             minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 1,
             maxLength: widget.maxLength ?? null,
             inputFormatters: widget.inputFormatter ?? null,
             autofocus: widget.autoFocus ?? false,
-            autovalidateMode: widget.autoValidateMode ??
-                AutovalidateMode.onUserInteraction,
+            autovalidateMode:
+                widget.autoValidateMode ?? AutovalidateMode.onUserInteraction,
             initialValue: widget.initialValue ?? null,
             keyboardType: widget.textInputType ?? null,
             onSaved: widget.onSavedFunc ??

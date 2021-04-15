@@ -5,10 +5,13 @@ import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 
 import 'package:taskmanager/Controllers/task_controller.dart';
+import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/View/Components/CardBuilder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Components/user_info_bar.dart';
+import 'package:taskmanager/View/Pages/create_task.dart';
 
 var height = Get.height - Get.statusBarHeight;
 
@@ -34,7 +37,7 @@ class HomePage extends GetView<TaskController> {
                     return serverLoadingShimmer();
                   // taskController.isLoading.value = true;
                   else
-                    return serverIsLoaded();
+                    return serverIsLoaded(serverId);
                 },
               ),
             ],
@@ -271,7 +274,7 @@ Widget serverTasksLoaded() {
     height: height / 3,
     child: Obx(
       () {
-        if (taskController.serverTasksList.length > 1)
+        if (taskController.serverTasksList.length > 0)
           return ListView.builder(
             itemCount: taskController.serverTasksList.length,
             scrollDirection: Axis.horizontal,
@@ -299,6 +302,23 @@ Widget serverTasksLoaded() {
                 taskDetails: "${details.length > 50 ? detailsShort : details}",
                 taskDeadline: "${f.format(deadlineDate)}",
                 taskStartDate: "${f.format(startDate)}",
+                onLongPress: () {
+                  showCustomBottomSheet(
+                    taskController.serverTasksList[index].taskName,
+                    details,
+                    taskController.serverTasksList[index].taskStartDate,
+                    taskController.serverTasksList[index].taskDeadline,
+                    taskController.serverTasksList[index].taskId,
+                    taskController.serverTasksList[index].serverId,
+                    taskController.serverTasksList[index].taskCreatorId,
+                  );
+                  // Get.to(() => TaskDetailsPage());
+                  // showDialog(
+                  //     context: Get.context,
+                  //     builder: (context) {
+                  //       return showCustomDialog();
+                  //     });
+                },
               );
             },
           );
@@ -316,7 +336,7 @@ Widget serverTasksLoaded() {
   );
 }
 
-Widget serverIsLoaded() {
+Widget serverIsLoaded(int serverId) {
   // var height = Get.height - Get.statusBarHeight;
   // int count = 3;
   String serverName = navController.serverName.value ?? "My";
@@ -456,6 +476,33 @@ Widget serverIsLoaded() {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Get.to(() => CreateTask(serverId: serverId));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.add_circle_outline_outlined,
+                                color: Colors.white,
+                              ),
+                              SizedBox(width: 10),
+                              TextBuilder(
+                                text: "Add task",
+                                scale: 0.5,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
                   ],
                 ),
               ),

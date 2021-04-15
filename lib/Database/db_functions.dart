@@ -201,6 +201,10 @@ class DBFunctions {
     return tmp;
   }
 
+  static Future deleteTaskById(int taskId) async {
+    print(await taskDao.deleteTask(taskId));
+  }
+
   // static Future getServerOwnerIdInteger(String inputServerCode) async {
   //   for (Servers server in await serverDao.getServers()) {
   //     if (server.serverCode.toString() == inputServerCode) {

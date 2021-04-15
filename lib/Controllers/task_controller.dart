@@ -37,6 +37,32 @@ class TaskController extends GetxController {
     return response.statusCode;
   }
 
+  Future editTask(Taskmodel taskmodel) async {
+    final response = await http.post(Uri.parse(editTaskUrl),
+        body: jsonEncode(taskmodel.toJson()));
+    print(
+        "Editing task.. Sent:\n ${taskmodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+
+    fetchUserServerTasks(int.parse(taskmodel.taskServerId));
+    return response.statusCode;
+  }
+
+  Future deleteTask(Taskmodel taskmodel) async {
+    final response = await http.post(Uri.parse(deleteTaskUrl),
+        body: jsonEncode(taskmodel.toJson()));
+    print(
+        "Deleting task.. Sent:\n ${taskmodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+    if (response.statusCode == 200) {
+      await DBFunctions.deleteTaskById(int.parse(taskmodel.taskId));
+      if (serverTasksList.length > 0)
+        serverTasksList.removeRange(0, serverTasksList.length);
+      // fetchUserServerTasks(int.parse(taskmodel.taskServerId));
+
+      await getServerTasksFromDB(int.parse(taskmodel.taskServerId));
+    }
+    return response.statusCode;
+  }
+
   Future fetchUserServerTasks(int serverId) async {
     if (await checkInternetConnection()) {
       if (serverId == null || serverId < 0) return;

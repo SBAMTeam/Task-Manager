@@ -17,13 +17,14 @@ import 'package:taskmanager/View/Pages/tasks_list.dart';
 
 GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-class CreateTask extends GetView<ServerController> {
-  CreateTask({Key key, @required this.serverId}) : super(key: key);
-  final int serverId;
+class EditTask extends GetView<TaskController> {
+  final Taskmodel taskmodel;
+  EditTask({Key key, @required this.taskmodel}) : super(key: key);
+
+  // final int serverId;
   @override
   Widget build(BuildContext context) {
-    Servermodel servermodel = Servermodel();
-    Taskmodel taskmodel = Taskmodel();
+    // Servermodel servermodel = Servermodel();
     // return Obx(() {
     return Scaffold(
       backgroundColor: Color(backgroundColor),
@@ -44,8 +45,8 @@ class CreateTask extends GetView<ServerController> {
                       return;
                     }
                     _formKey.currentState.save();
-                    int userId = await DBFunctions.getUserIdInteger();
-                    _createTask(taskmodel, serverId, userId);
+                    taskmodel.taskUserId = taskmodel.taskCreatorId;
+                    _editTask(taskmodel);
                     // _selectServer(controller, servermodel, serverId, userId);
                     Get.until((route) => Get.currentRoute == '/() => NavBar');
                   },
@@ -57,6 +58,7 @@ class CreateTask extends GetView<ServerController> {
                 TextFieldBuilder(
                   hint: 'Task name',
                   icon: Icons.add,
+                  controller: TextEditingController(text: taskmodel.taskName),
                   // style: TextStyle(color: Colors.white),
                   maxLength: 20,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
@@ -75,6 +77,9 @@ class CreateTask extends GetView<ServerController> {
                 TextFieldBuilder(
                   hint: 'Task Details',
                   icon: Icons.details,
+                  controller:
+                      TextEditingController(text: taskmodel.taskDetails),
+
                   // decoration: InputDecoration(labelText: "Task Details"),
                   maxLength: 600,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
@@ -95,9 +100,12 @@ class CreateTask extends GetView<ServerController> {
                   },
                 ),
                 DateTimePicker(
+                  controller:
+                      TextEditingController(text: taskmodel.taskStartDate),
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
+
                     contentPadding: EdgeInsets.symmetric(vertical: 1.0),
                     prefixIcon: Icon(
                       Icons.date_range,
@@ -135,6 +143,8 @@ class CreateTask extends GetView<ServerController> {
                   height: 25,
                 ),
                 DateTimePicker(
+                  controller:
+                      TextEditingController(text: taskmodel.taskDeadline),
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
@@ -180,12 +190,10 @@ class CreateTask extends GetView<ServerController> {
   }
 }
 
-_createTask(Taskmodel taskmodel, serverId, userId) async {
-  taskmodel.taskServerId = serverId.toString();
-  taskmodel.taskCreatorId = userId.toString();
-  taskmodel.taskUserId = userId.toString();
-
+_editTask(Taskmodel taskmodel) async {
+  // taskmodel.taskServerId = serverId.toString();
+  // taskmodel.taskCreatorId = userId.toString();
   await taskController
-      .createTask(taskmodel)
+      .editTask(taskmodel)
       .then((value) => taskController.update());
 }

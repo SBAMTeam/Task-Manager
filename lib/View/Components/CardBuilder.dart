@@ -9,16 +9,17 @@ class CardBuilder extends StatelessWidget {
       @required this.taskTitle,
       @required this.taskDetails,
       @required this.taskStartDate,
-      @required this.taskDeadline})
+      @required this.taskDeadline,
+      this.onLongPress})
       : super(key: key);
-  final taskTitle, taskDetails, taskStartDate, taskDeadline;
+  final taskTitle, taskDetails, taskStartDate, taskDeadline, onLongPress;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: Color(buttonColorTwo),
       splashColor: Color(buttonColorTwo),
       borderRadius: BorderRadius.circular(8),
-      onTap: () {},
+      onLongPress: onLongPress ?? null,
       child: Container(
         padding: defaultPadding,
         height: Get.height / 4.5,

@@ -3,9 +3,6 @@ import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/ExtraIcons.dart';
-import 'package:taskmanager/View/Components/server_list_builder.dart';
-
-import 'package:taskmanager/View/Pages/SearchTasks.dart';
 import 'package:taskmanager/View/Pages/server_list_ui.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 

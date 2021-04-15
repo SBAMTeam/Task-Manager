@@ -21,9 +21,7 @@ class UserWithServers {
   UserWithServers({@required this.user, @required this.servers});
 }
 
-@UseMoor(
-    tables: [Servers, Users, Tasks],
-    daos: [UserDao, ServerDao, TaskDao])
+@UseMoor(tables: [Servers, Users, Tasks], daos: [UserDao, ServerDao, TaskDao])
 class Database extends _$Database {
   Database()
       : super(
@@ -93,17 +91,15 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
         ),
       );
 
-  Future updateUser(Insertable<User> user) =>
-      update(users).replace(user);
-  Future deleteUser(Insertable<User> user) =>
-      delete(users).delete(user);
+  Future updateUser(Insertable<User> user) => update(users).replace(user);
+  Future deleteUser(Insertable<User> user) => delete(users).delete(user);
   Future getUserData() => select(users).get();
   Stream<List<UserWithServers>> watchUserData() {
     return (select(users)
           ..orderBy(
             [
-              (t) => OrderingTerm(
-                  expression: t.userId, mode: OrderingMode.desc),
+              (t) =>
+                  OrderingTerm(expression: t.userId, mode: OrderingMode.desc),
             ],
           ))
         .watch()
@@ -116,17 +112,14 @@ class UserDao extends DatabaseAccessor<Database> with _$UserDaoMixin {
 }
 
 @UseDao(tables: [Servers])
-class ServerDao extends DatabaseAccessor<Database>
-    with _$ServerDaoMixin {
+class ServerDao extends DatabaseAccessor<Database> with _$ServerDaoMixin {
   final Database db;
 
   ServerDao(this.db) : super(db);
 
   Stream<List<Server>> watchServers() => select(servers).watch();
-  Future insertServer(Insertable<Server> server) =>
-      into(servers).insert(server,
-          onConflict:
-              DoUpdate((_) => server, target: [db.servers.serverId]));
+  Future insertServer(Insertable<Server> server) => into(servers).insert(server,
+      onConflict: DoUpdate((_) => server, target: [db.servers.serverId]));
 
   Future getServers() => select(servers).get();
 }
@@ -141,8 +134,7 @@ class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
   Future insertTask(Insertable<Task> task) {
     try {
       return into(tasks).insert(task,
-          onConflict:
-              DoUpdate((_) => task, target: [db.tasks.taskId]));
+          onConflict: DoUpdate((_) => task, target: [db.tasks.taskId]));
     } catch (e) {
       print("error in insertTask in database.dart : $e");
       return null;
@@ -151,6 +143,8 @@ class TaskDao extends DatabaseAccessor<Database> with _$TaskDaoMixin {
 
   Future getTasks() => select(tasks).get();
   Future getServerTasks(int serverId) =>
-      (select(tasks)..where((task) => task.serverId.equals(serverId)))
-          .get();
+      (select(tasks)..where((task) => task.serverId.equals(serverId))).get();
+
+  Future deleteTask(int taskId) =>
+      (delete(tasks)..where((t) => t.taskId.equals(taskId))).go();
 }
