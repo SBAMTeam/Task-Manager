@@ -52,7 +52,7 @@ else
 
 $query = "INSERT INTO tasks SET Task_Descr  = :taskDescr,  Task_Detail = :taskDetail, 
                                 Task_Start_Date = :taskStartDate, Task_End_Date = :taskEndDate,
-                                creator_Id = :taskCreatorId, server_id = :taskServerId";
+                                creator_Id = :taskCreatorId, server_id = :taskServerId, STATUS_CODE = 1";
 
 $stmt = $conn->prepare($query);
 
@@ -65,6 +65,7 @@ $stmt->bindParam(':taskServerId', $taskServerId);
 
 if($stmt->execute())
 {
+
     $taskId = $conn->lastInsertId();
 
     http_response_code(200);

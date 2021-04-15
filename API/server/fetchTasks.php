@@ -27,7 +27,8 @@ $query =    "SELECT tasks.Task_id, tasks.Task_Descr, tasks.Task_Detail, tasks.Ta
             tasks.Task_End_Date, tasks.creator_Id, user_tasks.User_ID AS 'Assigned_User'
             FROM tasks LEFT JOIN user_TASKS
             on tasks.Task_id = user_tasks.Task_ID
-            WHERE tasks.server_id = :serverId";
+            WHERE tasks.server_id = :serverId
+            AND tasks.STATUS_CODE = 1";
 
 $stmt = $conn->prepare($query);
 $stmt->bindParam(":serverId", $serverId);
