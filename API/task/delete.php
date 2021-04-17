@@ -23,8 +23,7 @@ if (!isset($data->taskId))
 
 $taskId = $data->taskId;
 
-$query = "UPDATE tasks SET STATUS_CODE = 0; 
-          WHERE Task_id = :taskId";
+$query = "UPDATE tasks SET STATUS_CODE = 0 WHERE Task_id = :taskId";
 
 $stmt = $conn->prepare($query);
 

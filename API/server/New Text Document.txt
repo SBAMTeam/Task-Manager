@@ -1,0 +1,3 @@
+//$query = "SELECT tasks.Task_id, tasks.Task_Descr, tasks.Task_Detail, tasks.Task_Start_Date, tasks.Task_End_Date , tasks.creator_Id
+ //               from user_tasks UTask JOIN tasks ON UTask.Task_ID = tasks.Task_id
+  //        where UTask.User_ID = :USER_ID AND UTask.Server_ID = :SERVER_ID";

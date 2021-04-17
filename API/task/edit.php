@@ -7,6 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$taskId;
 $taskName;
 $taskDetails;
 $taskStartDate;
@@ -39,7 +40,7 @@ $taskId = $data->taskId;
 
 $query = "UPDATE tasks SET Task_Descr  = :taskDescr,  Task_Detail = :taskDetail, 
                                 Task_Start_Date = :taskStartDate, Task_End_Date = :taskEndDate,
-                                creator_Id = :taskCreatorId, server_id = :taskServerId, STATUS_CODE = 1"
+                                creator_Id = :taskCreatorId, server_id = :taskServerId, STATUS_CODE = 1
           WHERE Task_id = :taskId";
 
 $stmt = $conn->prepare($query);

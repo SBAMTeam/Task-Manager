@@ -39,7 +39,7 @@ if ($rowNum > 0)
 {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC))
     {
-	    $taskId         =   $row['Task_id']; 
+	$taskId         =   $row['Task_id']; 
         $taskName       =   $row['Task_Descr']; 
         $taskDetails    =   $row['Task_Detail'];
         $taskDeadline   =   $row['Task_Start_Date'];
