@@ -20,7 +20,7 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (((!isset($data->taskName)) || (!isset($data->taskStartDate))) || ((!isset($data->taskDeadline)) || (!isset($data->taskCreatorId))))
+if ( ! isset($data->taskName) || ! isset($data->taskCreatorId) || ! isset($data->taskServerId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Task Creation failed, Missing variables"));
@@ -28,9 +28,10 @@ if (((!isset($data->taskName)) || (!isset($data->taskStartDate))) || ((!isset($d
 }
 
 $taskName      = $data->taskName;
+$taskCreatorId = $data->taskCreatorId;
 $taskStartDate = $data->taskStartDate;
 $taskDeadline  = $data->taskDeadline;
-$taskCreatorId = $data->taskCreatorId;
+$taskServerId = $data->taskServerId;
 
 if (isset($data->taskDetails))
 {
@@ -41,14 +42,6 @@ else
     $taskDetails = " ";
 }
 
-if (isset($data->taskServerId))
-{
-    $taskServerId = $data->taskServerId;
-}
-else
-{
-    $taskServerId = " ";
-}
 
 $query = "INSERT INTO tasks SET Task_Descr  = :taskDescr,  Task_Detail = :taskDetail, 
                                 Task_Start_Date = :taskStartDate, Task_End_Date = :taskEndDate,
@@ -62,7 +55,7 @@ $stmt->bindParam(':taskStartDate', $taskStartDate);
 $stmt->bindParam(':taskEndDate', $taskDeadline);
 $stmt->bindParam(':taskCreatorId', $taskCreatorId);
 $stmt->bindParam(':taskServerId', $taskServerId);
-
+echo ' something heressss';
 if($stmt->execute())
 {
 
