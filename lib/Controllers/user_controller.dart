@@ -43,18 +43,22 @@ class UserController extends GetxController {
         body: jsonEncode(usermodel.toJson()));
     print(
         "Logging in.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
+    Get.offAll(() => ServersListUI(
+          firstEntry: true,
+        ));
     if (response.statusCode == 200) {
       loggedIn(false);
-      // serverController.currentServer.value = userLastServer.value;
-      Get.offAll(() => ServersListUI(
-            firstEntry: true,
-          ));
+      serverController.currentServer.value = userLastServer.value;
+
       try {
         Usermodel u = usermodelFromJson(response.body);
         await DBFunctions.insertUserAndServer(u);
       } on SqliteException catch (e) {
         print("error sqlite exception is $e");
       }
+      userController.getUsername();
+      userController.getNickname(); //get needed userinfo for next screen
+      taskController.fetchUserServerTasks(userController.userLastServer.value);
     } else {
       showSnackBar("User doesn't exist. Check username and password");
       Get.offAll(() => Login());

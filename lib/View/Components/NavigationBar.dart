@@ -7,7 +7,7 @@ import 'package:taskmanager/View/Pages/server_list_ui.dart';
 import 'package:taskmanager/View/Pages/server_page.dart';
 
 class NavBar extends StatelessWidget {
-  final NavigationController navcontroller = Get.put(NavigationController());
+  final NavigationController navcontroller = Get.find<NavigationController>();
   final List<Widget> bodyContent = [ServerPage(), ServersListUI()];
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class NavBar extends StatelessWidget {
                   label: 'Home'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.dns_outlined), label: 'Servers'),
-              BottomNavigationBarItem(
-                  icon: Icon(ExtraIcons.fi_rr_settings), label: 'Settings'),
+              // BottomNavigationBarItem(
+              //     icon: Icon(ExtraIcons.fi_rr_settings), label: 'Settings'),
             ],
             onTap: (index) => navcontroller.selectedTab = index),
       ),

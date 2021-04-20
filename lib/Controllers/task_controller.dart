@@ -13,7 +13,7 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 
 class TaskController extends GetxController {
-  var isLoading = false.obs;
+  var isLoading = true.obs;
   var serverTasksList = List<Task>.empty(growable: true).obs;
   var serverTasksDoneList = List<Task>.empty(growable: true).obs;
 
@@ -66,7 +66,8 @@ class TaskController extends GetxController {
 
   Future fetchUserServerTasks(int serverId) async {
     if (await checkInternetConnection()) {
-      serverTasksList.clear();
+      isLoading(true);
+
       if (serverId == null || serverId < 0) return;
       FetchTasksModelTemporary a = FetchTasksModelTemporary();
       a.serverId = serverId.toString();
@@ -80,6 +81,7 @@ class TaskController extends GetxController {
           "Fetching user tasks for server id $serverId.. Sent:\n ${a.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
 
       if (response.statusCode == 200) {
+        serverTasksList.clear();
         Servermodel servermodel = Servermodel();
         servermodel = servermodelFromJson(response.body);
         servermodel.serverId = serverId.toString();
@@ -92,6 +94,8 @@ class TaskController extends GetxController {
         } catch (e) {
           print("exception in fetchUserServerTasks insertTasks $e");
         }
+      } else {
+        getServerTasksFromDB(serverId);
       }
       // isLoading(false);
 

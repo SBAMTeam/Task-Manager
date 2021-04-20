@@ -10,7 +10,7 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 
 class ServerController extends GetxController {
-  var isLoading = false.obs;
+  var isLoading = true.obs;
   var serverList = List<Server>.empty(growable: true).obs;
   var servermodel = Servermodel().obs;
   var serverMembers = List<Usermodel>.empty(growable: true).obs;

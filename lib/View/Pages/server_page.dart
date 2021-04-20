@@ -19,6 +19,7 @@ class ServerPage extends GetView<TaskController> {
 
   @override
   Widget build(BuildContext context) {
+    print(serverController.currentServer.value);
     // controller.fetchUserServerTasks(serverId);
     return Scaffold(
       backgroundColor: Color(backgroundColor),
@@ -272,7 +273,8 @@ Widget serverTasksLoaded() {
     child: Obx(
       () {
         if (!taskController.isLoading.value) {
-          if (taskController.serverTasksList.length > 0) {
+          if (taskController.serverTasksList.length > 0 &&
+              !taskController.isLoading.value) {
             return ListView.builder(
               itemCount: taskController.serverTasksList.length,
               scrollDirection: Axis.horizontal,
@@ -280,7 +282,8 @@ Widget serverTasksLoaded() {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 String details =
-                    (taskController.serverTasksList[index].taskDetails);
+                    (taskController.serverTasksList[index].taskDetails) ??
+                        "No details";
                 var detailsShort;
                 if (details.length > 50) {
                   detailsShort =
@@ -302,10 +305,9 @@ Widget serverTasksLoaded() {
                   taskDetails: (details.length > 50 ? detailsShort : details),
                   taskDeadline: deadlineDate != null
                       ? f.format(deadlineDate)
-                      : "No deadline.",
-                  taskStartDate: startDate != null
-                      ? f.format(startDate)
                       : "No start date.",
+                  taskStartDate:
+                      startDate != null ? f.format(startDate) : "No deadline.",
                   onLongPress: () {
                     showTaskLongPressBottomSheet(
                       taskController.serverTasksList[index].taskName,
@@ -336,7 +338,7 @@ Widget serverTasksLoaded() {
               ),
             );
           }
-        } else if (taskController.isLoading.value) {
+        } else {
           return tasksShimmer();
         }
       },
@@ -348,179 +350,176 @@ Widget serverIsLoaded() {
   // var height = Get.height - Get.statusBarHeight;
   // int count = 3;
   String serverName = navController.serverName.value ?? "My";
-  return Expanded(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(top: 16),
-          child: AutoSizeText(
-            '$serverName Tasks',
-            textScaleFactor: 2,
-            textAlign: TextAlign.left,
-            maxLines: 2,
-            // maxFontSize: 1,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            // ),
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Container(
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(top: 16),
+        child: AutoSizeText(
+          '$serverName Tasks',
+          textScaleFactor: 2,
+          textAlign: TextAlign.left,
+          maxLines: 2,
+          // maxFontSize: 1,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          // ),
 
-            // padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
-          ),
+          // padding: EdgeInsets.symmetric(horizontal: Get.width / 16),
         ),
-        Container(child: serverTasksLoaded()),
-        Container(
-          height: height / 2.58,
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.all(Get.width / 16),
-                // margin: defaultPadding,
-                // height: Get.height / 4.5,
-                // width: Get.width,
-                decoration: BoxDecoration(
-                    color: Color(buttonColorTwo),
-                    borderRadius: BorderRadius.circular(9),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 4,
-                        offset: Offset(1, 3),
-                      )
-                    ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(9.0),
-                              child: Container(
-                                height: 60.0,
-                                width: 60.0,
-                                color: Color(buttonColorOne),
-                                child: Icon(
-                                  Icons.list,
-                                  color: Colors.white,
-                                  size: 60,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              "To Do",
-                              // minFontSize: 12,
-                              textScaleFactor: 1.5,
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                // fontSize: 24
-                              ),
-                              // fontSize: 25,
-                            ),
-                          ],
-                        ),
-                        Obx(
-                          () => TextBuilder(
-                            text:
-                                "${taskController.serverTasksList.length} tasks",
-                            fontSize: 16,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(9.0), //or 15.0
-                              child: Container(
-                                height: 60.0,
-                                width: 60.0,
-                                color: Color(0xffFF0E58),
-                                child: Icon(
-                                  Icons.list,
-                                  color: Colors.white,
-                                  size: 60,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            AutoSizeText(
-                              "Done",
-                              textScaleFactor: 1.5,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Obx(
-                          () => TextBuilder(
-                            text:
-                                "${taskController.serverTasksDoneList.length} tasks",
-                            fontSize: 16,
-                            maxLines: 1,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton(
-                          onPressed: () async {
-                            Get.to(() => CreateTask());
-                            await serverController.getServerMembers(
-                                serverController.currentServer.value);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.add_circle_outline_outlined,
-                                color: Colors.white,
-                              ),
-                              SizedBox(width: 10),
-                              TextBuilder(
-                                text: "Add task",
-                                scale: 0.5,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
+      ),
+      Container(child: serverTasksLoaded()),
+      Container(
+        height: height / 2.58,
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              alignment: Alignment.topLeft,
+              padding: EdgeInsets.all(Get.width / 16),
+              // margin: defaultPadding,
+              // height: Get.height / 4.5,
+              // width: Get.width,
+              decoration: BoxDecoration(
+                  color: Color(buttonColorTwo),
+                  borderRadius: BorderRadius.circular(9),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 4,
+                      offset: Offset(1, 3),
                     )
-                  ],
-                ),
+                  ]),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(9.0),
+                            child: Container(
+                              height: 60.0,
+                              width: 60.0,
+                              color: Color(buttonColorOne),
+                              child: Icon(
+                                Icons.list,
+                                color: Colors.white,
+                                size: 60,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          AutoSizeText(
+                            "To Do",
+                            // minFontSize: 12,
+                            textScaleFactor: 1.5,
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              // fontSize: 24
+                            ),
+                            // fontSize: 25,
+                          ),
+                        ],
+                      ),
+                      Obx(
+                        () => TextBuilder(
+                          text:
+                              "${taskController.serverTasksList.length} tasks",
+                          fontSize: 16,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(9.0), //or 15.0
+                            child: Container(
+                              height: 60.0,
+                              width: 60.0,
+                              color: Color(0xffFF0E58),
+                              child: Icon(
+                                Icons.list,
+                                color: Colors.white,
+                                size: 60,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          AutoSizeText(
+                            "Done",
+                            textScaleFactor: 1.5,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Obx(
+                        () => TextBuilder(
+                          text:
+                              "${taskController.serverTasksDoneList.length} tasks",
+                          fontSize: 16,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          Get.to(() => CreateTask());
+                          await serverController.getServerMembers(
+                              serverController.currentServer.value);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.add_circle_outline_outlined,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 10),
+                            TextBuilder(
+                              text: "Add task",
+                              scale: 0.5,
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  )
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
-    ),
+      ),
+    ],
   );
 }
 

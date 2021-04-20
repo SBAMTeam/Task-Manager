@@ -62,7 +62,7 @@ class CardBuilder extends StatelessWidget {
             ),
             Container(
               child: TextBuilder(
-                text: "Start Date: " + taskStartDate ?? "START_DATE",
+                text: "Start Date: " + taskDeadline ?? "START_DATE",
                 // fontWeight: FontWeight.bold,
                 fontSize: 20,
                 maxLines: 2,
@@ -72,7 +72,7 @@ class CardBuilder extends StatelessWidget {
             ),
             Container(
               child: TextBuilder(
-                text: "Deadline: " + taskDeadline ?? "DEADLINE",
+                text: "Deadline: " + taskStartDate ?? "DEADLINE",
                 // fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),

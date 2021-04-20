@@ -172,40 +172,24 @@ class CreateTask extends GetView<ServerController> {
                   //   }
                   // },
                 ),
-                Obx(() {
-                  if (serverController.serverMembers.length > 0)
-                    return ButtonBuilder(
-                        text: assigned.value == false
+                Obx(
+                  () {
+                    if (serverController.serverMembers.length > 0)
+                      return ButtonBuilder(
+                        text: assignedTo.value == null
                             ? "Assign task to.."
                             : "Assign task to ${assignedTo.value}",
                         onPress: () async {
                           showServerMembersInBottomSheet(
                               assigned, assignedTo, assignedToUserId);
-                        }
-                        // child: Obx(
-                        //   () {
-
-                        //       return TextButton(
-                        //           // key: _formKey,
-                        //           child: Obx(() {
-                        // if (assigned.value == false)
-                        //           return AutoSizeText("Assign task to..");
-                        //         else
-                        //           return AutoSizeText(assignedTo.value);
-                        //       }), onPressed: () async {
-                        //         showServerMembersInBottomSheet(
-                        //             taskmodel, assigned, assignedTo);
-                        //       });
-
-                        //   }
-
-                        //   ),
-                        );
-                  else
-                    return SizedBox(
-                      height: 0,
-                    );
-                })
+                        },
+                      );
+                    else
+                      return SizedBox(
+                        height: 0,
+                      );
+                  },
+                ),
               ],
             ),
           ),

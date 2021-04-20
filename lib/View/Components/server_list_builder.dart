@@ -61,14 +61,14 @@ Widget serverListFull(ServerController controller, firstEntry) {
             navController.selectedTab = 0;
 
             int serverId = (controller.serverList[index].serverId);
-            serverController.currentServer(serverId);
+            serverController.currentServer.value = serverId;
 
             await DBFunctions.insertUserLastServer(serverId);
             await taskController.fetchUserServerTasks(serverId);
             // await serverController.getServerNameById(serverId);
             userController.userLastServer.value = serverId;
             if (firstEntry == true) {
-              Get.offAll(NavBar());
+              Get.offAll(() => NavBar());
               return;
             }
             return;

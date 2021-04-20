@@ -6,7 +6,8 @@ import 'package:taskmanager/View/Pages/edit_task.dart';
 
 import 'constants.dart';
 
-showServerMembersInBottomSheet(assigned, assignedTo, assignedToUserId) {
+showServerMembersInBottomSheet(
+    RxBool assigned, RxString assignedTo, RxInt assignedToUserId) {
   return showModalBottomSheet(
     context: Get.context,
     builder: (context) => SingleChildScrollView(
@@ -70,7 +71,7 @@ showTaskLongPressBottomSheet(
                   'Edit Task',
                   style: TextStyle(color: Color(0xfff1f1f1)),
                 ),
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
                   Taskmodel taskmodel = Taskmodel();
                   taskmodel.taskId = taskId.toString();
@@ -81,7 +82,11 @@ showTaskLongPressBottomSheet(
                   taskmodel.taskDeadline = taskDeadline.toString();
                   taskmodel.taskCreatorId = taskCreatorId.toString();
                   taskmodel.userAssignedTask = userAssignedTask.toString();
+
                   Get.to(() => EditTask(taskmodel: taskmodel));
+
+                  await serverController
+                      .getServerMembers(serverController.currentServer.value);
                 },
               ),
               ListTile(

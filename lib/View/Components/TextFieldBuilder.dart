@@ -60,6 +60,9 @@ class _TextFieldBuilderState extends State<TextFieldBuilder> {
         shadowColor: Colors.black.withOpacity(0.15),
         child: Container(
           child: TextFormField(
+            // onChanged: (v) {
+            //   print(v);
+            // },
             controller: widget.controller ?? null,
             minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 1,
