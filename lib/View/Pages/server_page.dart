@@ -315,6 +315,7 @@ Widget serverTasksLoaded() {
                       taskController.serverTasksList[index].taskId,
                       taskController.serverTasksList[index].serverId,
                       taskController.serverTasksList[index].taskCreatorId,
+                      taskController.serverTasksList[index].userAssignedTask,
                     );
                     // Get.to(() => TaskDetailsPage());
                     // showDialog(

@@ -9,46 +9,50 @@ import 'constants.dart';
 showServerMembersInBottomSheet(assigned, assignedTo, assignedToUserId) {
   return showModalBottomSheet(
     context: Get.context,
-    builder: (context) => ListView.builder(
-      itemCount: serverController.serverMembers.length ?? 0,
-      scrollDirection: Axis.vertical,
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return Container(
-          color: Color(buttonColorOne),
-          child: ListTile(
-            leading: new Icon(
-              Icons.perm_identity,
-              color: Color(0xfff1f1f1),
-            ),
-            title: new Text(
-              serverController.serverMembers[index].userName,
-              style: TextStyle(color: Color(0xfff1f1f1)),
-            ),
-            onTap: () {
-              Navigator.pop(context);
+    builder: (context) => SingleChildScrollView(
+      child: ListView.builder(
+        itemCount: serverController.serverMembers.length ?? 0,
+        scrollDirection: Axis.vertical,
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Container(
+            color: Color(buttonColorOne),
+            child: ListTile(
+              leading: new Icon(
+                Icons.perm_identity,
+                color: Color(0xfff1f1f1),
+              ),
+              title: new Text(
+                serverController.serverMembers[index].userName,
+                style: TextStyle(color: Color(0xfff1f1f1)),
+              ),
+              onTap: () {
+                Navigator.pop(context);
 
-              assignedToUserId(
-                  int.parse(serverController.serverMembers[index].userId));
-              assignedTo(serverController.serverMembers[index].userName);
-              assigned(true);
-            },
-          ),
-        );
-      },
+                assignedToUserId(
+                    int.parse(serverController.serverMembers[index].userId));
+                assignedTo(serverController.serverMembers[index].userName);
+                assigned(true);
+              },
+            ),
+          );
+        },
+      ),
     ),
   );
 }
 
 showTaskLongPressBottomSheet(
-    String taskName,
-    String taskDetails,
-    DateTime taskStartDate,
-    DateTime taskDeadline,
-    int taskId,
-    int serverId,
-    int taskCreatorId) {
+  String taskName,
+  String taskDetails,
+  DateTime taskStartDate,
+  DateTime taskDeadline,
+  int taskId,
+  int serverId,
+  int taskCreatorId,
+  int userAssignedTask,
+) {
   return showModalBottomSheet(
       context: Get.context,
       builder: (context) {
@@ -76,6 +80,7 @@ showTaskLongPressBottomSheet(
                   taskmodel.taskStartDate = taskStartDate.toString();
                   taskmodel.taskDeadline = taskDeadline.toString();
                   taskmodel.taskCreatorId = taskCreatorId.toString();
+                  taskmodel.userAssignedTask = userAssignedTask.toString();
                   Get.to(() => EditTask(taskmodel: taskmodel));
                 },
               ),

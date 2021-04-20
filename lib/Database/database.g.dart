@@ -788,20 +788,18 @@ class Task extends DataClass implements Insertable<Task> {
   final String taskDetails;
   final DateTime taskStartDate;
   final DateTime taskDeadline;
-  final int taskProgress;
+  final int userAssignedTask;
   final int taskCreatorId;
   final int serverId;
-  final int userAssignedTask;
   Task(
       {@required this.taskId,
       @required this.taskName,
       this.taskDetails,
       this.taskStartDate,
       this.taskDeadline,
-      this.taskProgress,
+      this.userAssignedTask,
       this.taskCreatorId,
-      @required this.serverId,
-      this.userAssignedTask});
+      @required this.serverId});
   factory Task.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -819,14 +817,12 @@ class Task extends DataClass implements Insertable<Task> {
           .mapFromDatabaseResponse(data['${effectivePrefix}task_start_date']),
       taskDeadline: dateTimeType
           .mapFromDatabaseResponse(data['${effectivePrefix}task_deadline']),
-      taskProgress: intType
-          .mapFromDatabaseResponse(data['${effectivePrefix}task_progress']),
+      userAssignedTask: intType.mapFromDatabaseResponse(
+          data['${effectivePrefix}user_assigned_task']),
       taskCreatorId: intType
           .mapFromDatabaseResponse(data['${effectivePrefix}task_creator_id']),
       serverId:
           intType.mapFromDatabaseResponse(data['${effectivePrefix}server_id']),
-      userAssignedTask: intType.mapFromDatabaseResponse(
-          data['${effectivePrefix}user_assigned_task']),
     );
   }
   @override
@@ -847,17 +843,14 @@ class Task extends DataClass implements Insertable<Task> {
     if (!nullToAbsent || taskDeadline != null) {
       map['task_deadline'] = Variable<DateTime>(taskDeadline);
     }
-    if (!nullToAbsent || taskProgress != null) {
-      map['task_progress'] = Variable<int>(taskProgress);
+    if (!nullToAbsent || userAssignedTask != null) {
+      map['user_assigned_task'] = Variable<int>(userAssignedTask);
     }
     if (!nullToAbsent || taskCreatorId != null) {
       map['task_creator_id'] = Variable<int>(taskCreatorId);
     }
     if (!nullToAbsent || serverId != null) {
       map['server_id'] = Variable<int>(serverId);
-    }
-    if (!nullToAbsent || userAssignedTask != null) {
-      map['user_assigned_task'] = Variable<int>(userAssignedTask);
     }
     return map;
   }
@@ -878,18 +871,15 @@ class Task extends DataClass implements Insertable<Task> {
       taskDeadline: taskDeadline == null && nullToAbsent
           ? const Value.absent()
           : Value(taskDeadline),
-      taskProgress: taskProgress == null && nullToAbsent
+      userAssignedTask: userAssignedTask == null && nullToAbsent
           ? const Value.absent()
-          : Value(taskProgress),
+          : Value(userAssignedTask),
       taskCreatorId: taskCreatorId == null && nullToAbsent
           ? const Value.absent()
           : Value(taskCreatorId),
       serverId: serverId == null && nullToAbsent
           ? const Value.absent()
           : Value(serverId),
-      userAssignedTask: userAssignedTask == null && nullToAbsent
-          ? const Value.absent()
-          : Value(userAssignedTask),
     );
   }
 
@@ -902,10 +892,9 @@ class Task extends DataClass implements Insertable<Task> {
       taskDetails: serializer.fromJson<String>(json['taskDetails']),
       taskStartDate: serializer.fromJson<DateTime>(json['taskStartDate']),
       taskDeadline: serializer.fromJson<DateTime>(json['taskDeadline']),
-      taskProgress: serializer.fromJson<int>(json['taskProgress']),
+      userAssignedTask: serializer.fromJson<int>(json['userAssignedTask']),
       taskCreatorId: serializer.fromJson<int>(json['taskCreatorId']),
       serverId: serializer.fromJson<int>(json['serverId']),
-      userAssignedTask: serializer.fromJson<int>(json['userAssignedTask']),
     );
   }
   @override
@@ -917,10 +906,9 @@ class Task extends DataClass implements Insertable<Task> {
       'taskDetails': serializer.toJson<String>(taskDetails),
       'taskStartDate': serializer.toJson<DateTime>(taskStartDate),
       'taskDeadline': serializer.toJson<DateTime>(taskDeadline),
-      'taskProgress': serializer.toJson<int>(taskProgress),
+      'userAssignedTask': serializer.toJson<int>(userAssignedTask),
       'taskCreatorId': serializer.toJson<int>(taskCreatorId),
       'serverId': serializer.toJson<int>(serverId),
-      'userAssignedTask': serializer.toJson<int>(userAssignedTask),
     };
   }
 
@@ -930,20 +918,18 @@ class Task extends DataClass implements Insertable<Task> {
           String taskDetails,
           DateTime taskStartDate,
           DateTime taskDeadline,
-          int taskProgress,
+          int userAssignedTask,
           int taskCreatorId,
-          int serverId,
-          int userAssignedTask}) =>
+          int serverId}) =>
       Task(
         taskId: taskId ?? this.taskId,
         taskName: taskName ?? this.taskName,
         taskDetails: taskDetails ?? this.taskDetails,
         taskStartDate: taskStartDate ?? this.taskStartDate,
         taskDeadline: taskDeadline ?? this.taskDeadline,
-        taskProgress: taskProgress ?? this.taskProgress,
+        userAssignedTask: userAssignedTask ?? this.userAssignedTask,
         taskCreatorId: taskCreatorId ?? this.taskCreatorId,
         serverId: serverId ?? this.serverId,
-        userAssignedTask: userAssignedTask ?? this.userAssignedTask,
       );
   @override
   String toString() {
@@ -953,10 +939,9 @@ class Task extends DataClass implements Insertable<Task> {
           ..write('taskDetails: $taskDetails, ')
           ..write('taskStartDate: $taskStartDate, ')
           ..write('taskDeadline: $taskDeadline, ')
-          ..write('taskProgress: $taskProgress, ')
+          ..write('userAssignedTask: $userAssignedTask, ')
           ..write('taskCreatorId: $taskCreatorId, ')
-          ..write('serverId: $serverId, ')
-          ..write('userAssignedTask: $userAssignedTask')
+          ..write('serverId: $serverId')
           ..write(')'))
         .toString();
   }
@@ -973,11 +958,9 @@ class Task extends DataClass implements Insertable<Task> {
                   $mrjc(
                       taskDeadline.hashCode,
                       $mrjc(
-                          taskProgress.hashCode,
+                          userAssignedTask.hashCode,
                           $mrjc(
-                              taskCreatorId.hashCode,
-                              $mrjc(serverId.hashCode,
-                                  userAssignedTask.hashCode)))))))));
+                              taskCreatorId.hashCode, serverId.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -987,10 +970,9 @@ class Task extends DataClass implements Insertable<Task> {
           other.taskDetails == this.taskDetails &&
           other.taskStartDate == this.taskStartDate &&
           other.taskDeadline == this.taskDeadline &&
-          other.taskProgress == this.taskProgress &&
+          other.userAssignedTask == this.userAssignedTask &&
           other.taskCreatorId == this.taskCreatorId &&
-          other.serverId == this.serverId &&
-          other.userAssignedTask == this.userAssignedTask);
+          other.serverId == this.serverId);
 }
 
 class TasksCompanion extends UpdateCompanion<Task> {
@@ -999,20 +981,18 @@ class TasksCompanion extends UpdateCompanion<Task> {
   final Value<String> taskDetails;
   final Value<DateTime> taskStartDate;
   final Value<DateTime> taskDeadline;
-  final Value<int> taskProgress;
+  final Value<int> userAssignedTask;
   final Value<int> taskCreatorId;
   final Value<int> serverId;
-  final Value<int> userAssignedTask;
   const TasksCompanion({
     this.taskId = const Value.absent(),
     this.taskName = const Value.absent(),
     this.taskDetails = const Value.absent(),
     this.taskStartDate = const Value.absent(),
     this.taskDeadline = const Value.absent(),
-    this.taskProgress = const Value.absent(),
+    this.userAssignedTask = const Value.absent(),
     this.taskCreatorId = const Value.absent(),
     this.serverId = const Value.absent(),
-    this.userAssignedTask = const Value.absent(),
   });
   TasksCompanion.insert({
     @required int taskId,
@@ -1020,10 +1000,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
     this.taskDetails = const Value.absent(),
     this.taskStartDate = const Value.absent(),
     this.taskDeadline = const Value.absent(),
-    this.taskProgress = const Value.absent(),
+    this.userAssignedTask = const Value.absent(),
     this.taskCreatorId = const Value.absent(),
     @required int serverId,
-    this.userAssignedTask = const Value.absent(),
   })  : taskId = Value(taskId),
         taskName = Value(taskName),
         serverId = Value(serverId);
@@ -1033,10 +1012,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
     Expression<String> taskDetails,
     Expression<DateTime> taskStartDate,
     Expression<DateTime> taskDeadline,
-    Expression<int> taskProgress,
+    Expression<int> userAssignedTask,
     Expression<int> taskCreatorId,
     Expression<int> serverId,
-    Expression<int> userAssignedTask,
   }) {
     return RawValuesInsertable({
       if (taskId != null) 'task_id': taskId,
@@ -1044,10 +1022,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
       if (taskDetails != null) 'task_details': taskDetails,
       if (taskStartDate != null) 'task_start_date': taskStartDate,
       if (taskDeadline != null) 'task_deadline': taskDeadline,
-      if (taskProgress != null) 'task_progress': taskProgress,
+      if (userAssignedTask != null) 'user_assigned_task': userAssignedTask,
       if (taskCreatorId != null) 'task_creator_id': taskCreatorId,
       if (serverId != null) 'server_id': serverId,
-      if (userAssignedTask != null) 'user_assigned_task': userAssignedTask,
     });
   }
 
@@ -1057,20 +1034,18 @@ class TasksCompanion extends UpdateCompanion<Task> {
       Value<String> taskDetails,
       Value<DateTime> taskStartDate,
       Value<DateTime> taskDeadline,
-      Value<int> taskProgress,
+      Value<int> userAssignedTask,
       Value<int> taskCreatorId,
-      Value<int> serverId,
-      Value<int> userAssignedTask}) {
+      Value<int> serverId}) {
     return TasksCompanion(
       taskId: taskId ?? this.taskId,
       taskName: taskName ?? this.taskName,
       taskDetails: taskDetails ?? this.taskDetails,
       taskStartDate: taskStartDate ?? this.taskStartDate,
       taskDeadline: taskDeadline ?? this.taskDeadline,
-      taskProgress: taskProgress ?? this.taskProgress,
+      userAssignedTask: userAssignedTask ?? this.userAssignedTask,
       taskCreatorId: taskCreatorId ?? this.taskCreatorId,
       serverId: serverId ?? this.serverId,
-      userAssignedTask: userAssignedTask ?? this.userAssignedTask,
     );
   }
 
@@ -1092,17 +1067,14 @@ class TasksCompanion extends UpdateCompanion<Task> {
     if (taskDeadline.present) {
       map['task_deadline'] = Variable<DateTime>(taskDeadline.value);
     }
-    if (taskProgress.present) {
-      map['task_progress'] = Variable<int>(taskProgress.value);
+    if (userAssignedTask.present) {
+      map['user_assigned_task'] = Variable<int>(userAssignedTask.value);
     }
     if (taskCreatorId.present) {
       map['task_creator_id'] = Variable<int>(taskCreatorId.value);
     }
     if (serverId.present) {
       map['server_id'] = Variable<int>(serverId.value);
-    }
-    if (userAssignedTask.present) {
-      map['user_assigned_task'] = Variable<int>(userAssignedTask.value);
     }
     return map;
   }
@@ -1115,10 +1087,9 @@ class TasksCompanion extends UpdateCompanion<Task> {
           ..write('taskDetails: $taskDetails, ')
           ..write('taskStartDate: $taskStartDate, ')
           ..write('taskDeadline: $taskDeadline, ')
-          ..write('taskProgress: $taskProgress, ')
+          ..write('userAssignedTask: $userAssignedTask, ')
           ..write('taskCreatorId: $taskCreatorId, ')
-          ..write('serverId: $serverId, ')
-          ..write('userAssignedTask: $userAssignedTask')
+          ..write('serverId: $serverId')
           ..write(')'))
         .toString();
   }
@@ -1179,14 +1150,14 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
         $customConstraints: ' NULL ');
   }
 
-  final VerificationMeta _taskProgressMeta =
-      const VerificationMeta('taskProgress');
-  GeneratedIntColumn _taskProgress;
+  final VerificationMeta _userAssignedTaskMeta =
+      const VerificationMeta('userAssignedTask');
+  GeneratedIntColumn _userAssignedTask;
   @override
-  GeneratedIntColumn get taskProgress =>
-      _taskProgress ??= _constructTaskProgress();
-  GeneratedIntColumn _constructTaskProgress() {
-    return GeneratedIntColumn('task_progress', $tableName, true,
+  GeneratedIntColumn get userAssignedTask =>
+      _userAssignedTask ??= _constructUserAssignedTask();
+  GeneratedIntColumn _constructUserAssignedTask() {
+    return GeneratedIntColumn('user_assigned_task', $tableName, true,
         $customConstraints: ' NULL ');
   }
 
@@ -1210,17 +1181,6 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
         $customConstraints: ' REFERENCES servers(server_id) ');
   }
 
-  final VerificationMeta _userAssignedTaskMeta =
-      const VerificationMeta('userAssignedTask');
-  GeneratedIntColumn _userAssignedTask;
-  @override
-  GeneratedIntColumn get userAssignedTask =>
-      _userAssignedTask ??= _constructUserAssignedTask();
-  GeneratedIntColumn _constructUserAssignedTask() {
-    return GeneratedIntColumn('user_assigned_task', $tableName, true,
-        $customConstraints: ' NULL ');
-  }
-
   @override
   List<GeneratedColumn> get $columns => [
         taskId,
@@ -1228,10 +1188,9 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
         taskDetails,
         taskStartDate,
         taskDeadline,
-        taskProgress,
+        userAssignedTask,
         taskCreatorId,
-        serverId,
-        userAssignedTask
+        serverId
       ];
   @override
   $TasksTable get asDslTable => this;
@@ -1274,11 +1233,11 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
           taskDeadline.isAcceptableOrUnknown(
               data['task_deadline'], _taskDeadlineMeta));
     }
-    if (data.containsKey('task_progress')) {
+    if (data.containsKey('user_assigned_task')) {
       context.handle(
-          _taskProgressMeta,
-          taskProgress.isAcceptableOrUnknown(
-              data['task_progress'], _taskProgressMeta));
+          _userAssignedTaskMeta,
+          userAssignedTask.isAcceptableOrUnknown(
+              data['user_assigned_task'], _userAssignedTaskMeta));
     }
     if (data.containsKey('task_creator_id')) {
       context.handle(
@@ -1291,12 +1250,6 @@ class $TasksTable extends Tasks with TableInfo<$TasksTable, Task> {
           serverId.isAcceptableOrUnknown(data['server_id'], _serverIdMeta));
     } else if (isInserting) {
       context.missing(_serverIdMeta);
-    }
-    if (data.containsKey('user_assigned_task')) {
-      context.handle(
-          _userAssignedTaskMeta,
-          userAssignedTask.isAcceptableOrUnknown(
-              data['user_assigned_task'], _userAssignedTaskMeta));
     }
     return context;
   }

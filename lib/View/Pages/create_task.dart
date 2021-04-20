@@ -1,26 +1,22 @@
 import 'dart:convert';
 import 'dart:ui';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
-import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/functions.dart';
-import 'package:taskmanager/View/Pages/tasks_list.dart';
+
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class CreateTask extends GetView<ServerController> {
   CreateTask({Key key}) : super(key: key);
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +48,8 @@ class CreateTask extends GetView<ServerController> {
                     int creatorId = await DBFunctions.getUserIdInteger();
                     _createTask(taskmodel, creatorId, taskmodel);
                     // _selectServer(controller, servermodel, serverId, userId);
-                    Get.until((route) => Get.currentRoute == '/() => NavBar');
+                    // Get.until((route) => Get.currentRoute == '/() => NavBar');
+                    Get.back();
                   },
                   child: Text(
                     "Submit",

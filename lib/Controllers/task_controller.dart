@@ -13,7 +13,7 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 
 class TaskController extends GetxController {
-  var isLoading = true.obs;
+  var isLoading = false.obs;
   var serverTasksList = List<Task>.empty(growable: true).obs;
   var serverTasksDoneList = List<Task>.empty(growable: true).obs;
 
@@ -84,19 +84,17 @@ class TaskController extends GetxController {
         servermodel = servermodelFromJson(response.body);
         servermodel.serverId = serverId.toString();
         try {
-          isLoading(true);
+          // isLoading(true);
           // DBFunctions.deleteTable();
           await DBFunctions.insertTasks(servermodel.serverTasks, serverId);
           // isLoading(true);
           await getServerTasksFromDB(serverId);
         } catch (e) {
           print("exception in fetchUserServerTasks insertTasks $e");
-        } finally {
-          isLoading(false);
         }
-      } else {
-        isLoading(false);
       }
+      // isLoading(false);
+
       return response.statusCode;
     }
 

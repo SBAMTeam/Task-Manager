@@ -11,9 +11,13 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
+
+GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class EditTask extends GetView<TaskController> {
   final Taskmodel taskmodel;
@@ -22,9 +26,10 @@ class EditTask extends GetView<TaskController> {
   // final int serverId;
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
     // Servermodel servermodel = Servermodel();
+    var assigned = true.obs;
+    RxString assignedTo = "${taskmodel.userAssignedTask}".obs;
+    RxInt assignedToUserId = (-1).obs;
     // return Obx(() {
     return Scaffold(
       backgroundColor: Color(backgroundColor),
@@ -45,10 +50,12 @@ class EditTask extends GetView<TaskController> {
                       return;
                     }
                     _formKey.currentState.save();
-                    taskmodel.taskUserId = taskmodel.taskCreatorId;
+                    // int creatorId = await DBFunctions.getUserIdInteger();
+
                     _editTask(taskmodel);
                     // _selectServer(controller, servermodel, serverId, userId);
-                    Get.until((route) => Get.currentRoute == '/() => NavBar');
+                    // Get.until((route) => Get.currentRoute == '/() => NavBar');
+                    Get.back();
                   },
                   child: Text(
                     "Submit",
@@ -56,15 +63,12 @@ class EditTask extends GetView<TaskController> {
                   ),
                 ),
                 TextFieldBuilder(
+                  controller: TextEditingController(text: taskmodel.taskName),
                   hint: 'Task name',
                   autoFocus: true,
                   icon: Icons.add,
-                  controller: TextEditingController(text: taskmodel.taskName),
-                  // style: TextStyle(color: Colors.white),
                   maxLength: 20,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
-
-                  // de: InputDecoration(labelText: "Task Name"),
                   onSavedFunc: (value) {
                     if (value.length > 0) taskmodel.taskName = value.trim();
                     // print("Task name : ${taskmodel.taskName}");
@@ -76,11 +80,10 @@ class EditTask extends GetView<TaskController> {
                   },
                 ),
                 TextFieldBuilder(
-                  hint: 'Task Details',
-                  icon: Icons.details,
                   controller:
                       TextEditingController(text: taskmodel.taskDetails),
-
+                  hint: 'Task Details',
+                  icon: Icons.details,
                   // decoration: InputDecoration(labelText: "Task Details"),
                   maxLength: 600,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
@@ -103,10 +106,13 @@ class EditTask extends GetView<TaskController> {
                 DateTimePicker(
                   controller:
                       TextEditingController(text: taskmodel.taskStartDate),
+
+                  maxLength: 50,
+                  // controller:
+                  //     TextEditingController(text: DateTime.now().toString()),
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
-
                     contentPadding: EdgeInsets.symmetric(vertical: 1.0),
                     prefixIcon: Icon(
                       Icons.date_range,
@@ -131,8 +137,7 @@ class EditTask extends GetView<TaskController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    if (value.length > 0)
-                      taskmodel.taskStartDate = value.trim();
+                    if (value.length > 0) taskmodel.taskStartDate = value;
                     // print("Task will start on : ${taskmodel.taskStartDate}");
                   },
                   // validator: (String value) {
@@ -141,12 +146,11 @@ class EditTask extends GetView<TaskController> {
                   //   }
                   // },
                 ),
-                SizedBox(
-                  height: 25,
-                ),
                 DateTimePicker(
                   controller:
                       TextEditingController(text: taskmodel.taskDeadline),
+
+                  maxLength: 50,
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
@@ -174,7 +178,7 @@ class EditTask extends GetView<TaskController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    if (value.length > 0) taskmodel.taskDeadline = value.trim();
+                    if (value.length > 0) taskmodel.taskDeadline = value;
                     // print("Task will end on : ${taskmodel.taskDeadline}");
                   },
                   // validator: (String value) {
@@ -183,6 +187,42 @@ class EditTask extends GetView<TaskController> {
                   //   }
                   // },
                 ),
+                Obx(() {
+                  if (serverController.serverMembers.length > 0)
+                    return ButtonBuilder(
+                        text: assignedTo.value == null
+                            ? "Assign task to.."
+                            : "Assign task to ${assignedTo.value}",
+                        onPress: () async {
+                          showServerMembersInBottomSheet(
+                              assigned, assignedTo, assignedToUserId);
+                          await serverController.getServerMembers(
+                              serverController.currentServer.value);
+                        }
+                        // child: Obx(
+                        //   () {
+
+                        //       return TextButton(
+                        //           // key: _formKey,
+                        //           child: Obx(() {
+                        // if (assigned.value == false)
+                        //           return AutoSizeText("Assign task to..");
+                        //         else
+                        //           return AutoSizeText(assignedTo.value);
+                        //       }), onPressed: () async {
+                        //         showServerMembersInBottomSheet(
+                        //             taskmodel, assigned, assignedTo);
+                        //       });
+
+                        //   }
+
+                        //   ),
+                        );
+                  else
+                    return SizedBox(
+                      height: 0,
+                    );
+                })
               ],
             ),
           ),
@@ -195,6 +235,7 @@ class EditTask extends GetView<TaskController> {
 _editTask(Taskmodel taskmodel) async {
   // taskmodel.taskServerId = serverId.toString();
   // taskmodel.taskCreatorId = userId.toString();
+  print(taskmodel.toJson());
   await taskController
       .editTask(taskmodel)
       .then((value) => taskController.update());

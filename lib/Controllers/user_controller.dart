@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:moor/ffi.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
+import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -11,6 +12,7 @@ import 'dart:convert';
 
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/login.dart';
+import 'package:taskmanager/View/Pages/server_list_ui.dart';
 
 class UserController extends GetxController {
   var loggedIn = false.obs;
@@ -43,7 +45,10 @@ class UserController extends GetxController {
         "Logging in.. Sent:\n ${usermodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     if (response.statusCode == 200) {
       loggedIn(false);
-
+      // serverController.currentServer.value = userLastServer.value;
+      Get.offAll(() => ServersListUI(
+            firstEntry: true,
+          ));
       try {
         Usermodel u = usermodelFromJson(response.body);
         await DBFunctions.insertUserAndServer(u);

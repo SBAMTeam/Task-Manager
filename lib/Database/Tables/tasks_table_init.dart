@@ -11,14 +11,13 @@ class Tasks extends Table {
       dateTime().nullable().customConstraint(" NULL ")();
   DateTimeColumn get taskDeadline =>
       dateTime().nullable().customConstraint(" NULL ")();
-  IntColumn get taskProgress =>
+  IntColumn get userAssignedTask =>
       integer().nullable().customConstraint(" NULL ")();
   IntColumn get taskCreatorId =>
       integer().nullable().customConstraint(" NULL ")();
   IntColumn get serverId =>
       integer().customConstraint(' REFERENCES servers(server_id) ')();
-  IntColumn get userAssignedTask =>
-      integer().nullable().customConstraint(" NULL ")();
+
   // Set<Column> get primrayKey => {taskId};
 
   // @override

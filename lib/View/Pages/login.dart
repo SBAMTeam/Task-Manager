@@ -137,9 +137,6 @@ class _LoginState extends State<Login> {
                             userController.getUsername();
                             userController.getNickname();
                             await serverController.fetchServers();
-                            Get.offAll(() => ServersListUI(
-                                  firstEntry: true,
-                                ));
 
                             return;
                           },

@@ -86,7 +86,8 @@ class DBFunctions {
               taskDeadline: task.taskDeadline != null
                   ? moor.Value(DateTime.parse(task.taskDeadline))
                   : moor.Value.absent(),
-              taskDetails: moor.Value(task.taskDetails),
+              taskDetails: moor.Value(
+                  task.taskDetails.length > 0 ? task.taskDetails : null),
               taskName: moor.Value(task.taskName),
               taskStartDate: task.taskStartDate != null
                   ? moor.Value(
