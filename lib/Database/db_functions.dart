@@ -31,6 +31,7 @@ class DBFunctions {
     try {
       if (servermodel != null) {
         var ownerId = await getUserIdInteger();
+
         final newServer = ServersCompanion(
             serverId: moor.Value(int.parse("5")),
             serverName: moor.Value(servermodel.serverName),
@@ -75,23 +76,26 @@ class DBFunctions {
 
   static insertTasks(List<Taskmodel> taskList, int serverId) {
     try {
-      int count = 0;
       if (taskList != null) {
         if (taskList.length > 0) {
           for (Taskmodel task in taskList) {
-            if (serverId == 15) {
-              count++;
-            }
             final newTask = TasksCompanion(
               serverId: moor.Value(serverId),
               taskId: moor.Value(int.parse(task.taskId)),
               taskCreatorId: moor.Value(int.parse(task.taskCreatorId)),
-              taskDeadline: moor.Value(DateTime.parse(task.taskDeadline)),
+              taskDeadline: task.taskDeadline != null
+                  ? moor.Value(DateTime.parse(task.taskDeadline))
+                  : moor.Value.absent(),
               taskDetails: moor.Value(task.taskDetails),
               taskName: moor.Value(task.taskName),
-              taskStartDate: moor.Value(
-                DateTime.parse(task.taskStartDate),
-              ),
+              taskStartDate: task.taskStartDate != null
+                  ? moor.Value(
+                      DateTime.parse(task.taskStartDate),
+                    )
+                  : moor.Value.absent(),
+              userAssignedTask: task.userAssignedTask != null
+                  ? moor.Value(int.parse(task.userAssignedTask))
+                  : moor.Value.absent(),
               // taskProgress: //add later maybe
             );
             taskDao.insertTask(newTask);
@@ -116,8 +120,11 @@ class DBFunctions {
   // }
 
   static Future<int> getUserIdInteger() async {
-    var tmp = await userDao.getUserData();
-    return tmp[0].userId;
+    List<User> tmp = await userDao.getUserData();
+    if (tmp.length > 0)
+      return tmp[0].userId;
+    else
+      return null;
   }
 
   static Future<int> getUserLastServer() async {
@@ -132,7 +139,11 @@ class DBFunctions {
 
   static Future insertUserLastServer(int serverId) async {
     int userId = await DBFunctions.getUserIdInteger();
-    userDao.insertUserLastServer(serverId, userId);
+    if (userId != null)
+      userDao.insertUserLastServer(serverId, userId);
+    else {
+      // print("user id is null. DBFunctions insertUserLastServer");
+    }
     return;
   }
 
@@ -173,7 +184,7 @@ class DBFunctions {
       return false;
     } else {
       bool tmp1 = tmp[0].userLoggedIn;
-      print(tmp1);
+      // print(tmp1);
       return tmp1;
     }
   }
@@ -185,19 +196,19 @@ class DBFunctions {
 
   static Future<List<Server>> getUserServers() async {
     var tmp = await serverDao.getServers();
-    print(tmp);
+    // print(tmp);
     return tmp;
   }
 
   static Future getUserTasks() async {
     List<Task> tmp = await taskDao.getTasks();
-    print(tmp);
+    // print(tmp);
     return tmp;
   }
 
   static Future getServerTasks(int serverId) async {
     List<Task> tmp = await taskDao.getServerTasks(serverId);
-    print("serverTasks are : \n $tmp");
+    // print("serverTasks are : \n $tmp");
     return tmp;
   }
 

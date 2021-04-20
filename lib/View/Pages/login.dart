@@ -133,9 +133,10 @@ class _LoginState extends State<Login> {
                               return;
                             }
                             _formKey.currentState.save();
-                            controller.login(usermodel);
+                            await controller.login(usermodel);
                             userController.getUsername();
                             userController.getNickname();
+                            await serverController.fetchServers();
                             Get.offAll(() => ServersListUI(
                                   firstEntry: true,
                                 ));

@@ -19,6 +19,8 @@ class SplashScreen extends GetView<UserController> {
         controller.getNickname(); //get needed userinfo for next screen
         taskController.fetchUserServerTasks(controller.userLastServer.value);
         if (controller.userLastServer.value != null) {
+          serverController.currentServer.value =
+              controller.userLastServer.value;
           Get.off(() => NavBar());
           return;
         } else {

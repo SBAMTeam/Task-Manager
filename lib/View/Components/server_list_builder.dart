@@ -18,8 +18,8 @@ import 'package:taskmanager/View/Pages/tasks_list.dart';
 import 'constants.dart';
 
 class ServerListBuilder extends GetView<ServerController> {
-  ServerListBuilder(this.firstEntry, {Key key}) : super(key: key);
-  final firstEntry;
+  const ServerListBuilder(this.firstEntry, {Key key}) : super(key: key);
+  final bool firstEntry;
   @override
   Widget build(BuildContext context) {
     controller.getUserServersFromDB();
@@ -28,7 +28,7 @@ class ServerListBuilder extends GetView<ServerController> {
         if (controller.isLoading.value == true) {
           // if (true) {
           return serverListShimmer();
-        } else if (controller.serverList.length == 0) {
+        } else if (controller.serverList.length < 1) {
           return serverListEmpty();
         } else
           return serverListFull(controller, firstEntry);
@@ -56,16 +56,17 @@ Widget serverListFull(ServerController controller, firstEntry) {
 
         child: TextButton(
           onPressed: () async {
-            taskController.isLoading(true);
+            // taskController.isLoading(true);
             navController.serverName(controller.serverList[index].serverName);
             navController.selectedTab = 0;
 
             int serverId = (controller.serverList[index].serverId);
+            serverController.currentServer(serverId);
+
             await DBFunctions.insertUserLastServer(serverId);
             await taskController.fetchUserServerTasks(serverId);
             // await serverController.getServerNameById(serverId);
             userController.userLastServer.value = serverId;
-
             if (firstEntry == true) {
               Get.offAll(NavBar());
               return;

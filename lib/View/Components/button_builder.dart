@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/constants.dart';
@@ -36,8 +37,9 @@ class ButtonBuilder extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             // child: Center(
-            child: Text(
+            child: AutoSizeText(
               text ?? 'PLACEHOLDER',
+              maxLines: 1,
               style: TextStyle(
                   color: textColor ?? Colors.white,
                   fontSize: fontSize ?? 18,

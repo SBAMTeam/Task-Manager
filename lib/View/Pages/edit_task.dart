@@ -15,8 +15,6 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 class EditTask extends GetView<TaskController> {
   final Taskmodel taskmodel;
   EditTask({Key key, @required this.taskmodel}) : super(key: key);
@@ -24,6 +22,8 @@ class EditTask extends GetView<TaskController> {
   // final int serverId;
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     // Servermodel servermodel = Servermodel();
     // return Obx(() {
     return Scaffold(
@@ -57,6 +57,7 @@ class EditTask extends GetView<TaskController> {
                 ),
                 TextFieldBuilder(
                   hint: 'Task name',
+                  autoFocus: true,
                   icon: Icons.add,
                   controller: TextEditingController(text: taskmodel.taskName),
                   // style: TextStyle(color: Colors.white),
@@ -65,8 +66,8 @@ class EditTask extends GetView<TaskController> {
 
                   // de: InputDecoration(labelText: "Task Name"),
                   onSavedFunc: (value) {
-                    taskmodel.taskName = value.trim();
-                    print("Task name : ${taskmodel.taskName}");
+                    if (value.length > 0) taskmodel.taskName = value.trim();
+                    // print("Task name : ${taskmodel.taskName}");
                   },
                   validatorFunction: (String value) {
                     if (value.isEmpty) {
@@ -90,14 +91,14 @@ class EditTask extends GetView<TaskController> {
                   minLines: 1,
                   maxLines: 10,
                   onSavedFunc: (value) {
-                    taskmodel.taskDetails = value.trim();
-                    print("Task details : ${taskmodel.taskDetails}");
+                    if (value.length > 0) taskmodel.taskDetails = value.trim();
+                    // print("Task details : ${taskmodel.taskDetails}");
                   },
-                  validatorFunction: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task details field is empty";
-                    }
-                  },
+                  // validatorFunction: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task details field is empty";
+                  //   }
+                  // },
                 ),
                 DateTimePicker(
                   controller:
@@ -130,14 +131,15 @@ class EditTask extends GetView<TaskController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskStartDate = value.trim();
-                    print("Task will start on : ${taskmodel.taskStartDate}");
+                    if (value.length > 0)
+                      taskmodel.taskStartDate = value.trim();
+                    // print("Task will start on : ${taskmodel.taskStartDate}");
                   },
-                  validator: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task Start Date field is empty";
-                    }
-                  },
+                  // validator: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task Start Date field is empty";
+                  //   }
+                  // },
                 ),
                 SizedBox(
                   height: 25,
@@ -172,14 +174,14 @@ class EditTask extends GetView<TaskController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskDeadline = value.trim();
-                    print("Task will end on : ${taskmodel.taskDeadline}");
+                    if (value.length > 0) taskmodel.taskDeadline = value.trim();
+                    // print("Task will end on : ${taskmodel.taskDeadline}");
                   },
-                  validator: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task Deadline field is empty";
-                    }
-                  },
+                  // validator: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task Deadline field is empty";
+                  //   }
+                  // },
                 ),
               ],
             ),

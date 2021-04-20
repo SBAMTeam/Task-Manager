@@ -37,16 +37,18 @@ class Database extends _$Database {
   //       path: 'db.sqlite', logStatements: true));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onUpgrade: (Migrator migrator, from, to) async {
-          if (from < 2) {
-            await migrator.addColumn(
-                users,
-                users
-                    .userLastServer); //implement migrator when changing database after the app is published.
+          if (from == 1) {
+            await migrator.addColumn(users, users.userLastServer);
+            await migrator.addColumn(tasks, tasks.userAssignedTask);
+//implement migrator when changing database after the app is published.
             // await migrator.createTable(tags);
+          }
+          if (from == 2) {
+            await migrator.addColumn(tasks, tasks.userAssignedTask);
           }
         },
         // beforeOpen: (details) async {

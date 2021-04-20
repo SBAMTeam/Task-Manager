@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
-import 'package:taskmanager/View/Components/functions.dart';
 
 import 'text_builder.dart';
 
 class TaskListBuilder extends GetView<TaskController> {
-  final serverId;
   const TaskListBuilder({
     Key key,
-    @required this.serverId,
   }) : super(key: key);
 
   @override

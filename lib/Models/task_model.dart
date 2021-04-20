@@ -9,16 +9,16 @@ Taskmodel taskmodelFromJson(String str) => Taskmodel.fromJson(json.decode(str));
 String taskmodelToJson(Taskmodel data) => json.encode(data.toJson());
 
 class Taskmodel {
-  Taskmodel({
-    this.taskId,
-    this.taskName,
-    this.taskDetails,
-    this.taskStartDate,
-    this.taskDeadline,
-    this.taskUserId,
-    this.taskCreatorId,
-    this.taskServerId,
-  });
+  Taskmodel(
+      {this.taskId,
+      this.taskName,
+      this.taskDetails,
+      this.taskStartDate,
+      this.taskDeadline,
+      this.taskUserId,
+      this.taskCreatorId,
+      this.taskServerId,
+      this.userAssignedTask});
 
   String taskId;
   String taskName;
@@ -28,6 +28,7 @@ class Taskmodel {
   String taskUserId;
   String taskCreatorId;
   String taskServerId;
+  String userAssignedTask;
 
   factory Taskmodel.fromJson(Map<String, dynamic> json) => Taskmodel(
         taskId: json["taskId"],
@@ -38,6 +39,8 @@ class Taskmodel {
         taskUserId: json["taskUserId"],
         taskCreatorId: json["taskCreatorId"],
         taskServerId: json["taskServerId"],
+        userAssignedTask:
+            json["userAssignedTask"] == null ? null : json["userAssignedTask"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class Taskmodel {
         "taskUserId": taskUserId,
         "taskCreatorId": taskCreatorId,
         "taskServerId": taskServerId,
+        "userAssignedTask": userAssignedTask == null ? null : userAssignedTask
       };
 }

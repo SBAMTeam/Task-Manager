@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,19 +12,23 @@ import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
 import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
+import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Pages/tasks_list.dart';
 
-GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 class CreateTask extends GetView<ServerController> {
-  CreateTask({Key key, @required this.serverId}) : super(key: key);
-  final int serverId;
+  CreateTask({Key key}) : super(key: key);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    Servermodel servermodel = Servermodel();
+    // Servermodel servermodel = Servermodel();
     Taskmodel taskmodel = Taskmodel();
+    var assigned = false.obs;
+    RxString assignedTo = "".obs;
+    RxInt assignedToUserId = (-1).obs;
     // return Obx(() {
     return Scaffold(
       backgroundColor: Color(backgroundColor),
@@ -44,8 +49,8 @@ class CreateTask extends GetView<ServerController> {
                       return;
                     }
                     _formKey.currentState.save();
-                    int userId = await DBFunctions.getUserIdInteger();
-                    _createTask(taskmodel, serverId, userId);
+                    int creatorId = await DBFunctions.getUserIdInteger();
+                    _createTask(taskmodel, creatorId, taskmodel);
                     // _selectServer(controller, servermodel, serverId, userId);
                     Get.until((route) => Get.currentRoute == '/() => NavBar');
                   },
@@ -57,14 +62,12 @@ class CreateTask extends GetView<ServerController> {
                 TextFieldBuilder(
                   hint: 'Task name',
                   icon: Icons.add,
-                  // style: TextStyle(color: Colors.white),
                   maxLength: 20,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
-
-                  // de: InputDecoration(labelText: "Task Name"),
+                  autoFocus: true,
                   onSavedFunc: (value) {
-                    taskmodel.taskName = value.trim();
-                    print("Task name : ${taskmodel.taskName}");
+                    if (value.length > 0) taskmodel.taskName = value.trim();
+                    // print("Task name : ${taskmodel.taskName}");
                   },
                   validatorFunction: (String value) {
                     if (value.isEmpty) {
@@ -85,16 +88,19 @@ class CreateTask extends GetView<ServerController> {
                   minLines: 1,
                   maxLines: 10,
                   onSavedFunc: (value) {
-                    taskmodel.taskDetails = value.trim();
-                    print("Task details : ${taskmodel.taskDetails}");
+                    if (value.length > 0) taskmodel.taskDetails = value.trim();
+                    // print("Task details : ${taskmodel.taskDetails}");
                   },
-                  validatorFunction: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task details field is empty";
-                    }
-                  },
+                  // validatorFunction: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task details field is empty";
+                  //   }
+                  // },
                 ),
                 DateTimePicker(
+                  maxLength: 50,
+                  // controller:
+                  //     TextEditingController(text: DateTime.now().toString()),
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
@@ -122,19 +128,17 @@ class CreateTask extends GetView<ServerController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskStartDate = value.trim();
-                    print("Task will start on : ${taskmodel.taskStartDate}");
+                    if (value.length > 0) taskmodel.taskStartDate = value;
+                    // print("Task will start on : ${taskmodel.taskStartDate}");
                   },
-                  validator: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task Start Date field is empty";
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 25,
+                  // validator: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task Start Date field is empty";
+                  //   }
+                  // },
                 ),
                 DateTimePicker(
+                  maxLength: 50,
                   decoration: InputDecoration(
                     errorMaxLines: 3,
                     // helperText: '',
@@ -162,15 +166,49 @@ class CreateTask extends GetView<ServerController> {
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2030),
                   onSaved: (value) {
-                    taskmodel.taskDeadline = value.trim();
-                    print("Task will end on : ${taskmodel.taskDeadline}");
+                    if (value.length > 0) taskmodel.taskDeadline = value;
+                    // print("Task will end on : ${taskmodel.taskDeadline}");
                   },
-                  validator: (String value) {
-                    if (value.trim().isEmpty) {
-                      return "Task Deadline field is empty";
-                    }
-                  },
+                  // validator: (String value) {
+                  //   if (value.trim().isEmpty) {
+                  //     return "Task Deadline field is empty";
+                  //   }
+                  // },
                 ),
+                Obx(() {
+                  if (serverController.serverMembers.length > 0)
+                    return ButtonBuilder(
+                        text: assigned.value == false
+                            ? "Assign task to.."
+                            : "Assign task to ${assignedTo.value}",
+                        onPress: () async {
+                          showServerMembersInBottomSheet(
+                              assigned, assignedTo, assignedToUserId);
+                        }
+                        // child: Obx(
+                        //   () {
+
+                        //       return TextButton(
+                        //           // key: _formKey,
+                        //           child: Obx(() {
+                        // if (assigned.value == false)
+                        //           return AutoSizeText("Assign task to..");
+                        //         else
+                        //           return AutoSizeText(assignedTo.value);
+                        //       }), onPressed: () async {
+                        //         showServerMembersInBottomSheet(
+                        //             taskmodel, assigned, assignedTo);
+                        //       });
+
+                        //   }
+
+                        //   ),
+                        );
+                  else
+                    return SizedBox(
+                      height: 0,
+                    );
+                })
               ],
             ),
           ),
@@ -180,10 +218,10 @@ class CreateTask extends GetView<ServerController> {
   }
 }
 
-_createTask(Taskmodel taskmodel, serverId, userId) async {
-  taskmodel.taskServerId = serverId.toString();
-  taskmodel.taskCreatorId = userId.toString();
-  taskmodel.taskUserId = userId.toString();
+_createTask(Taskmodel taskmodel, creatorId, assignedTo) async {
+  taskmodel.taskServerId = serverController.currentServer.toString();
+  taskmodel.taskCreatorId = creatorId.toString();
+  taskmodel.userAssignedTask = assignedTo.toString();
 
   await taskController
       .createTask(taskmodel)

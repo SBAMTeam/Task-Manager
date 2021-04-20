@@ -53,18 +53,20 @@ class TaskController extends GetxController {
     print(
         "Deleting task.. Sent:\n ${taskmodel.toJson()} \n recieved data is.. \n ${response.body} \n with statusCode ${response.statusCode} \n");
     if (response.statusCode == 200) {
-      await DBFunctions.deleteTaskById(int.parse(taskmodel.taskId));
+      isLoading(true);
       if (serverTasksList.length > 0)
         serverTasksList.removeRange(0, serverTasksList.length);
+      DBFunctions.deleteTaskById(int.parse(taskmodel.taskId));
       // fetchUserServerTasks(int.parse(taskmodel.taskServerId));
-
-      await getServerTasksFromDB(int.parse(taskmodel.taskServerId));
+      print(serverTasksList.length);
+      await fetchUserServerTasks(int.parse(taskmodel.taskServerId));
     }
     return response.statusCode;
   }
 
   Future fetchUserServerTasks(int serverId) async {
     if (await checkInternetConnection()) {
+      serverTasksList.clear();
       if (serverId == null || serverId < 0) return;
       FetchTasksModelTemporary a = FetchTasksModelTemporary();
       a.serverId = serverId.toString();
@@ -83,9 +85,8 @@ class TaskController extends GetxController {
         servermodel.serverId = serverId.toString();
         try {
           isLoading(true);
+          // DBFunctions.deleteTable();
           await DBFunctions.insertTasks(servermodel.serverTasks, serverId);
-          if (serverTasksList.length > 0)
-            serverTasksList.removeRange(0, serverTasksList.length);
           // isLoading(true);
           await getServerTasksFromDB(serverId);
         } catch (e) {
