@@ -26,7 +26,7 @@ $serverId = $data->serverId;
 
 $query = "SELECT tasks.Task_id, tasks.Task_Descr, tasks.Task_Detail, 
                  tasks.Task_Start_Date, tasks.Task_End_Date , tasks.creator_Id
-          from tasks join user_tasks UT on tasks.Task_id = UT.Task_ID
+          from tasks join user_tasks UT on tasks.Task_id = UT.Task_ID and tasks.STATUS_CODE = 1
           where tasks.server_id = :serverId and UT.user_id = :userId";
 
 $stmt = $conn->prepare($query);

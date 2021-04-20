@@ -38,8 +38,19 @@ $stmt->bindParam(':serverCode', $serverCode);
 $stmt->bindParam(':ownerId', $serverOwnerId);
 if($stmt->execute())
 {
-    $serverId = $conn->lastInsertId();
+    $queryId = "select * from servers where Owner_ID = :ownerId and Login_CODE = :serverCode Limit 0,1";
 
+    $stmt1 = $conn->prepare($queryId);
+
+    $stmt1->bindParam(':ownerId', $serverOwnerId);
+    $stmt1->bindParam(':serverCode', $serverCode);
+    $stmt1->execute();
+
+    while($row = $stmt1->fetch(PDO::FETCH_ASSOC))
+    {
+    $serverId =   $row['Server_id'];
+    }
+  
     $queryUserServer = "INSERT into userservers SET User_ID = :userID, SERVER_ID = :serverID";
 	
     $stmt2 = $conn->prepare($queryUserServer);

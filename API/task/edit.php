@@ -7,13 +7,13 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+$taskId;
 $taskName;
 $taskDetails;
 $taskStartDate;
 $taskDeadline;
 $taskCreatorId;
 $taskServerId;
-$taskId;
 $conn = null;
 
 $databaseService = new DatabaseService();
@@ -21,9 +21,7 @@ $conn = $databaseService->getConnection();
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (((!isset($data->taskName)) || (!isset($data->taskStartDate))) 
-    || ((!isset($data->taskDeadline)) || (!isset($data->taskCreatorId)))
-    || (!isset($data->taskId)))
+if ( ! isset($data->taskName) || ! isset($data->taskCreatorId) || ! isset($data->taskServerId))
 {
     http_response_code(400);
     echo json_encode(array("LogMessages" => "Task Editing failed, Missing variables"));
@@ -40,7 +38,7 @@ $taskId = $data->taskId;
 
 $query = "UPDATE tasks SET Task_Descr  = :taskDescr,  Task_Detail = :taskDetail, 
                                 Task_Start_Date = :taskStartDate, Task_End_Date = :taskEndDate,
-                                creator_Id = :taskCreatorId, server_id = :taskServerId
+                                creator_Id = :taskCreatorId, server_id = :taskServerId, STATUS_CODE = 1
           WHERE Task_id = :taskId";
 
 $stmt = $conn->prepare($query);
