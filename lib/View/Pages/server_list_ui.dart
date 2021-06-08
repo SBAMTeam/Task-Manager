@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/server_list_builder.dart';
 import 'package:taskmanager/View/Components/user_info_bar.dart';

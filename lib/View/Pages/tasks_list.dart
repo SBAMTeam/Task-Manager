@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/View/Components/task_list_builder_stateless.dart';
-import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:taskmanager/View/Pages/create_task.dart';
 
 class TasksList extends StatelessWidget {

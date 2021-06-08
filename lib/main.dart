@@ -1,7 +1,9 @@
 import 'dart:ffi';
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:sqlite3/open.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
+import 'Controllers/firebase_controller.dart';
 import 'Database/database.dart' as myDB;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,11 +14,15 @@ import 'Controllers/task_controller.dart';
 import 'Controllers/user_controller.dart';
 import 'View/Pages/splash_screen.dart';
 
-main() {
+main() async {
   Get.lazyPut(() => TaskController(), fenix: true);
   Get.lazyPut(() => UserController(), fenix: true);
   Get.lazyPut(() => ServerController(), fenix: true);
   Get.lazyPut(() => NavigationController(), fenix: true);
+  Get.lazyPut(() => FirebaseController(), fenix: true);
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(TaskManager());
 }
 
@@ -33,7 +39,7 @@ DynamicLibrary _openOnWindows() {
 }
 
 class TaskManager extends StatelessWidget {
-  const TaskManager({Key key}) : super(key: key);
+  TaskManager({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

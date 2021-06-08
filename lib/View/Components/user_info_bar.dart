@@ -1,7 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/View/Components/constants.dart';

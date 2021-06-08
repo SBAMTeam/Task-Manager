@@ -4,10 +4,8 @@ import 'package:get/get.dart';
 import 'package:moor/ffi.dart';
 import 'package:taskmanager/Database/db_functions.dart';
 import 'package:taskmanager/Models/user_model.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 import 'dart:convert';
 
 import 'package:taskmanager/View/Components/functions.dart';

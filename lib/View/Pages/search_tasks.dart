@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
 
 class SearchTasks extends StatelessWidget {
   const SearchTasks({Key key}) : super(key: key);

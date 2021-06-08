@@ -4,7 +4,6 @@ import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
 import 'package:flutter/services.dart';
-import 'package:taskmanager/Database/db_functions.dart';
 
 class ServerCodeCreated extends StatelessWidget {
   final serverCode;

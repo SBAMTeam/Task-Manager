@@ -23,6 +23,7 @@ Future<bool> checkInternetConnection() async {
     showSnackBar("Check your internet connection");
     return false;
   }
+  return false;
 }
 
 showBottomSheet() {

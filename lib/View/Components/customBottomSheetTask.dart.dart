@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Models/task_model.dart';
-import 'package:taskmanager/Models/user_model.dart';
 import 'package:taskmanager/View/Pages/edit_task.dart';
 
 import 'constants.dart';

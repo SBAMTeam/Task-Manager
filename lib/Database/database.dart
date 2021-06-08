@@ -5,10 +5,7 @@ import 'Tables/users_table_init.dart';
 import 'Tables/servers_table_init.dart';
 import 'package:sqflite/sqflite.dart' show getDatabasesPath;
 import 'package:path/path.dart' as p;
-import 'dart:ffi';
 import 'dart:io';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3/open.dart';
 import 'package:moor/moor.dart';
 
 import 'db_functions.dart';
