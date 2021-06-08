@@ -5,7 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
+import 'package:taskmanager/View/Components/navigation_bar.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/empty_button_container_round.dart';

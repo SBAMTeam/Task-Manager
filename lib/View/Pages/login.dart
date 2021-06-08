@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:taskmanager/Controllers/user_controller.dart';
 import 'package:taskmanager/Models/user_model.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/functions.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
-import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+import 'package:taskmanager/View/Components/textfield_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:crypto/crypto.dart';
-import 'package:taskmanager/View/Pages/logged_in_page.dart';
-import 'package:taskmanager/View/Pages/server_list_ui.dart';
 import 'register.dart';
 
 class Login extends StatefulWidget {

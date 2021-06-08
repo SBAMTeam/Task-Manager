@@ -1,21 +1,16 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
-import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/server_model.dart';
 import 'package:taskmanager/Models/task_model.dart';
-import 'package:taskmanager/View/Components/TextFieldBuilder.dart';
+import 'package:taskmanager/View/Components/textfield_builder.dart';
 import 'package:taskmanager/View/Components/button_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/functions.dart';
-import 'package:taskmanager/View/Pages/tasks_list.dart';
 
 class EditTask extends StatefulWidget {
   EditTask({Key key, @required this.taskmodel}) : super(key: key);

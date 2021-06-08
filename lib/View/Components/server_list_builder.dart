@@ -1,20 +1,10 @@
-import 'dart:convert';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
-import 'package:taskmanager/Controllers/task_controller.dart';
 import 'package:taskmanager/Database/db_functions.dart';
-import 'package:taskmanager/Models/server_model.dart';
-import 'package:taskmanager/View/Components/NavigationBar.dart';
-
-import 'package:taskmanager/View/Components/functions.dart';
+import 'package:taskmanager/View/Components/navigation_bar.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
-
-import 'package:taskmanager/View/Pages/tasks_list.dart';
-
 import 'constants.dart';
 
 class ServerListBuilder extends GetView<ServerController> {
@@ -121,7 +111,7 @@ Widget serverListShimmer() {
         time = 800 + offset;
 
         // print(time);
-        double containerWidth = 280;
+        // double containerWidth = 280;
         double containerHeight = 20;
 
         return Container(

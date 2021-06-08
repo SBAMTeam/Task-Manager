@@ -5,7 +5,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:get/get.dart';
 
 import 'package:taskmanager/Controllers/task_controller.dart';
-import 'package:taskmanager/View/Components/CardBuilder.dart';
+import 'package:taskmanager/View/Components/card_builder.dart';
 import 'package:taskmanager/View/Components/constants.dart';
 import 'package:taskmanager/View/Components/customBottomSheetTask.dart.dart';
 import 'package:taskmanager/View/Components/text_builder.dart';
@@ -53,7 +53,7 @@ Widget shimmerTodoContainer() {
   int time = 800;
   time = 800 + offset;
 
-  int count = 1;
+  // int count = 1;
   double textHeight = 20;
 
   return Container(
