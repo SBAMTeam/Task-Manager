@@ -14,6 +14,7 @@ import 'package:taskmanager/View/Components/constants.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:taskmanager/View/Components/transparent_app_bar.dart';
 
+// ignore: must_be_immutable
 class JoinServer extends GetView<ServerController> {
   JoinServer({Key key}) : super(key: key);
   var txtController = TextEditingController();

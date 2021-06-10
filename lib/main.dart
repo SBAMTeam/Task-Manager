@@ -1,6 +1,5 @@
 import 'dart:ffi';
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:sqlite3/open.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
 import 'Controllers/firebase_controller.dart';
@@ -19,9 +18,10 @@ main() async {
   Get.lazyPut(() => UserController(), fenix: true);
   Get.lazyPut(() => ServerController(), fenix: true);
   Get.lazyPut(() => NavigationController(), fenix: true);
-  Get.lazyPut(() => FirebaseController(), fenix: true);
-
   WidgetsFlutterBinding.ensureInitialized();
+
+  Get.lazyPut(() => FirebaseController(), fenix: true);
+  Get.find<FirebaseController>();
 
   runApp(TaskManager());
 }

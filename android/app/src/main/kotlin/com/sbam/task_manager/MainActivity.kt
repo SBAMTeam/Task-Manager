@@ -1,4 +1,4 @@
-package com.sbam.task_manager
+package com.sbam.taskmanager
 
 import io.flutter.embedding.android.FlutterActivity
 

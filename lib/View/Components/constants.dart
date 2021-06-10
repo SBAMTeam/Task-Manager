@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:taskmanager/Controllers/firebase_controller.dart';
 import 'package:taskmanager/Controllers/navigation_controller.dart';
 import 'package:taskmanager/Controllers/server_controller.dart';
 import 'package:taskmanager/Controllers/task_controller.dart';
@@ -26,6 +27,7 @@ final taskController = Get.find<TaskController>();
 final userController = Get.find<UserController>();
 final serverController = Get.find<ServerController>();
 final navController = Get.find<NavigationController>();
+final firebaseController = Get.find<FirebaseController>();
 final defaultPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 8);
 final baseAPIURL = 'http://3.142.29.182';
 final loginUrl = baseAPIURL + '/user/login.php';
